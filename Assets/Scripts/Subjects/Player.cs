@@ -3,10 +3,9 @@ using UnityEngine;
 
 public class Player : Subject
 {
-
     void Start()
     {
-        WeaponEquiped = new Melee();
+        WeaponEquiped = new Pistol();
         Speed = 10f;
     }
 }

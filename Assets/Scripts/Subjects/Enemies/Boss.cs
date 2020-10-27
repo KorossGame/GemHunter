@@ -12,5 +12,4 @@ public class Boss : Enemy
         Speed = 5f;
         PathQueueManager.RequestPath(transform.position, target.transform.position, OnPathFound);
     }
-
 }

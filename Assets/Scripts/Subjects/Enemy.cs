@@ -57,17 +57,6 @@ abstract public class Enemy : Subject
         // Instanciate(powerUP, transform.position, transform.rotation);
     }
 
-    protected void Die()
-    {
-        // Animation of death
-
-        // Generate power up
-        GeneratePowerUP();
-
-        // Delete an object
-        Destroy(gameObject);
-    }
-
     public void OnDrawGizmos()
     {
         if (path != null)
@@ -78,13 +67,9 @@ abstract public class Enemy : Subject
                 Gizmos.DrawCube(path[i], Vector3.one);
 
                 if (i == targetIndex)
-                {
                     Gizmos.DrawLine(transform.position, path[i]);
-                }
                 else
-                {
                     Gizmos.DrawLine(path[i - 1], path[i]);
-                }
             }
         }
     }

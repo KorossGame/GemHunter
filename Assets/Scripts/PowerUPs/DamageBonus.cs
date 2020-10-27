@@ -14,8 +14,8 @@ public class DamageBonus : PowerUP
 
         // Apply powerup
         Player playerGameObject = player.GetComponent<Player>();
-        playerGameObject.WeaponEquiped.HpDamage *= multiplier;
-        Debug.Log(playerGameObject.WeaponEquiped.HpDamage);
+        playerGameObject.WeaponEquiped.DamagePerShot *= multiplier;
+        Debug.Log(playerGameObject.WeaponEquiped.DamagePerShot);
 
         // Get collider and mesh renderer components and Disable them
         gameObject.GetComponent<MeshRenderer>().enabled = false;
@@ -25,8 +25,8 @@ public class DamageBonus : PowerUP
         yield return new WaitForSeconds(activeTime);
 
         // Reverse powerup
-        playerGameObject.WeaponEquiped.HpDamage /= multiplier;
-        Debug.Log(playerGameObject.WeaponEquiped.HpDamage);
+        playerGameObject.WeaponEquiped.DamagePerShot /= multiplier;
+        Debug.Log(playerGameObject.WeaponEquiped.DamagePerShot);
 
         // Delete powerUP object
         Destroy(gameObject);

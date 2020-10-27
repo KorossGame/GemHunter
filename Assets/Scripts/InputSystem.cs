@@ -22,8 +22,27 @@ public class InputSystem : MonoBehaviour
 
     void HandleInput()
     {
+        // Movement
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
+        
+        // Shoot
+        if (Input.GetButtonDown("Fire1")) 
+            playerPhysicalObject.WeaponEquiped.Shoot(playerVisualObject);
+        
+        // Gun switch
+        if (Input.GetAxis("Mouse ScrollWheel") > 0)
+        {
+            // Next enabled weapon
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0)
+        {
+            // Previous enabled weapon
+        }
+
+        // Reload gun
+        if (Input.GetButtonDown("Reload"))
+            playerPhysicalObject.WeaponEquiped.Reload();
     }
 
     void ApplyMovement()
