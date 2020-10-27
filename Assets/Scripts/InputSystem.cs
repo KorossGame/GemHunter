@@ -25,24 +25,16 @@ public class InputSystem : MonoBehaviour
         // Movement
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
-        
+
         // Shoot
-        if (Input.GetButtonDown("Fire1")) 
-            playerPhysicalObject.WeaponEquiped.Shoot(playerVisualObject);
-        
-        // Gun switch
-        if (Input.GetAxis("Mouse ScrollWheel") > 0)
-        {
-            // Next enabled weapon
-        }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0)
-        {
-            // Previous enabled weapon
-        }
+        /*if (Input.GetButtonDown("Fire1"))
+            playerPhysicalObject.WeaponEquiped.Shoot(playerVisualObject);*/
+
+        SwitchGun();
 
         // Reload gun
-        if (Input.GetButtonDown("Reload"))
-            playerPhysicalObject.WeaponEquiped.Reload();
+        /*        if (Input.GetButtonDown("Reload"))
+                    playerPhysicalObject.WeaponEquiped.Reload();*/
     }
 
     void ApplyMovement()
@@ -65,6 +57,31 @@ public class InputSystem : MonoBehaviour
             targetRotation.x = 0;
             targetRotation.z = 0;
             playerVisualObject.transform.rotation = Quaternion.Slerp(playerVisualObject.transform.rotation, targetRotation, 7f * Time.deltaTime);
+        }
+    }
+
+    void SwitchGun()
+    {
+        // Gun switch
+        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+            playerPhysicalObject.inventory.selectedWeapon = 1;
+            playerPhysicalObject.inventory.SelectWeapon();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2)) {
+            playerPhysicalObject.inventory.selectedWeapon = 2;
+            playerPhysicalObject.inventory.SelectWeapon();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3)) {
+            playerPhysicalObject.inventory.selectedWeapon = 3;
+            playerPhysicalObject.inventory.SelectWeapon();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4)) { 
+            playerPhysicalObject.inventory.selectedWeapon = 4;
+            playerPhysicalObject.inventory.SelectWeapon();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha5)) {
+            playerPhysicalObject.inventory.selectedWeapon = 5;
+            playerPhysicalObject.inventory.SelectWeapon();
         }
     }
 }

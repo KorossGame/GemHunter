@@ -3,9 +3,15 @@ using UnityEngine;
 
 public class Player : Subject
 {
+    public WeaponSwitcher inventory;
+
     void Start()
     {
-        WeaponEquiped = new Pistol();
         Speed = 10f;
+    }
+
+    protected override void Die()
+    {
+        print("wadawd");
     }
 }

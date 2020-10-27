@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class Pistol : Gun
+public class RPG : Gun
 {
     void Start()
     {
@@ -22,7 +24,6 @@ public class Pistol : Gun
         cooldownTime = 0.15f;
 
         // Unlocked
-        Unlocked = true;
-        print("UNLOCKED!!!");
+        Unlocked = false;
     }
 }

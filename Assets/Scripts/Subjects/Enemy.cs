@@ -41,6 +41,17 @@ abstract public class Enemy : Subject
         }
     }
 
+    protected override void Die()
+    {
+        // Animation of death
+
+        // Generate power up
+        GeneratePowerUP();
+
+        // Delete an object
+        Destroy(gameObject);
+    }
+
     protected void GeneratePowerUP()
     {
         // Set random seed

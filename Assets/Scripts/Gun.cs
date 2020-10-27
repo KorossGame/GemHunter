@@ -1,35 +1,64 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 abstract public class Gun : MonoBehaviour
 {
-    protected int weaponID;
     public int DamagePerShot { get; set; }
     public int CurrentAmmo { get; set; }
+
+    // Is weapon unlocked or not
+    public bool Unlocked { get; protected set; }
+
+    // Ammo block
     protected int ammoInClip;
     protected int maxAmmo;
+    protected int ammoLeft;
+
+    // Range
     protected float effectiveRange;
-    protected float maxRange = 100;
+    protected float maxRange;
+
+    // Reload
     protected float reloadTime;
     protected float cooldownTime;
 
-    protected GameObject bulletPrefab;
-
     public void Shoot(GameObject player)
     {
-        RaycastHit hit;
+        // Check if gun have ammo
+        if (CurrentAmmo == 0)
+        {
+            Reload();
+            return;
+        }
 
+        // Substract each shot 
+        CurrentAmmo--;
+
+        // Calculate RayCast
+        RaycastHit hit;
         if (Physics.Raycast(player.transform.position, player.transform.forward, out hit, maxRange))
         {
             Subject target = hit.transform.GetComponent<Subject>();
-            target.applyDamage(DamagePerShot);
+
+            // Apply damage
+            if (target)
+                target.applyDamage(DamagePerShot);
         }
-        
-        // Instanciate bullet prefab
-        // Calc RayCast
     }
+
     public void Reload()
     {
-        // Reload logic
+        // Check if we have enought ammo for whole clip
+        if (ammoInClip > ammoLeft)
+        {
+            CurrentAmmo = ammoLeft;
+            ammoLeft = 0;
+        }
+        else
+        {
+            CurrentAmmo = ammoInClip;
+            ammoLeft -= ammoInClip;
+        }
     }
 
     public void SwitchWeapon(int currentWeapon, int newCurrentWeapon)
@@ -39,6 +68,10 @@ abstract public class Gun : MonoBehaviour
           * if player wants to change weapons by mouse wheel - switch to previous/next enabled weapon
           * if player wants to change weapon by numbers - change to specific weapon if enabled
           */
-          
+    }
+
+    public void UnlockWeapon(int weapon)
+    {
+        Unlocked = true;
     }
 }

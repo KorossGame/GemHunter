@@ -6,7 +6,7 @@ public class DamageBonus : PowerUP
     public GameObject pickupEffect;
     private int multiplier = 2;
 
-    protected override IEnumerator Pickup(Collider player)
+    /*protected override IEnumerator Pickup(Collider player)
     {
 
         // Create particles
@@ -30,5 +30,5 @@ public class DamageBonus : PowerUP
 
         // Delete powerUP object
         Destroy(gameObject);
-    }
+    }*/
 }

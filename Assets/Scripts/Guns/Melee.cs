@@ -1,6 +1,9 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System;
 
-public class Pistol : Gun
+public class Melee : Gun
 {
     void Start()
     {
@@ -23,6 +26,5 @@ public class Pistol : Gun
 
         // Unlocked
         Unlocked = true;
-        print("UNLOCKED!!!");
     }
 }
