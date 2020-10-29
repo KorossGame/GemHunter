@@ -21,9 +21,6 @@ public class Shotgun : Gun
 
         // Reload
         reloadTime = 2f;
-        cooldownTime = 0.15f;
-
-        // Unlocked
-        Unlocked = false;
+        fireRate = 0.15f;
     }
 }

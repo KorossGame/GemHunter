@@ -6,7 +6,7 @@ public class DamageBonus : PowerUP
     public GameObject pickupEffect;
     private int multiplier = 2;
 
-    /*protected override IEnumerator Pickup(Collider player)
+    protected override IEnumerator Pickup(Collider player)
     {
 
         // Create particles
@@ -14,8 +14,7 @@ public class DamageBonus : PowerUP
 
         // Apply powerup
         Player playerGameObject = player.GetComponent<Player>();
-        playerGameObject.WeaponEquiped.DamagePerShot *= multiplier;
-        Debug.Log(playerGameObject.WeaponEquiped.DamagePerShot);
+        playerGameObject.inventory.weaponEquiped.DamagePerShot *= multiplier;
 
         // Get collider and mesh renderer components and Disable them
         gameObject.GetComponent<MeshRenderer>().enabled = false;
@@ -25,10 +24,9 @@ public class DamageBonus : PowerUP
         yield return new WaitForSeconds(activeTime);
 
         // Reverse powerup
-        playerGameObject.WeaponEquiped.DamagePerShot /= multiplier;
-        Debug.Log(playerGameObject.WeaponEquiped.DamagePerShot);
+        playerGameObject.inventory.weaponEquiped.DamagePerShot /= multiplier;
 
         // Delete powerUP object
         Destroy(gameObject);
-    }*/
+    }
 }

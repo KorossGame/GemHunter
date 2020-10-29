@@ -8,6 +8,7 @@ public class Player : Subject
     void Start()
     {
         Speed = 10f;
+        HP = 100;
     }
 
     protected override void Die()

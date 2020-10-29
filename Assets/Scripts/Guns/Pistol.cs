@@ -8,21 +8,19 @@ public class Pistol : Gun
         DamagePerShot = 15;
 
         // Ammo
-        ammoInClip = 17;
-        maxAmmo = 108;
+        ammoInClip = 999999;
+        maxAmmo = 999999;
         ammoLeft = ammoInClip;
         CurrentAmmo = ammoInClip;
 
         // Range
-        effectiveRange = 10f;
-        maxRange = 200f;
+        effectiveRange = 5f;
+        maxRange = 25f;
 
         // Reload
         reloadTime = 2f;
-        cooldownTime = 0.15f;
 
-        // Unlocked
-        Unlocked = true;
-        print("UNLOCKED!!!");
+        // Fire Rate (1/fireRate)
+        fireRate = 4f;
     }
 }

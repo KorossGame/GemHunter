@@ -27,14 +27,14 @@ public class InputSystem : MonoBehaviour
         vertical = Input.GetAxis("Vertical");
 
         // Shoot
-        /*if (Input.GetButtonDown("Fire1"))
-            playerPhysicalObject.WeaponEquiped.Shoot(playerVisualObject);*/
+        if (Input.GetMouseButton(0))
+            playerPhysicalObject.inventory.weaponEquiped.Shoot(playerVisualObject);
 
         SwitchGun();
 
         // Reload gun
-        /*        if (Input.GetButtonDown("Reload"))
-                    playerPhysicalObject.WeaponEquiped.Reload();*/
+        if (Input.GetButtonDown("Reload"))
+            playerPhysicalObject.inventory.weaponEquiped.Reload();
     }
 
     void ApplyMovement()
@@ -62,25 +62,47 @@ public class InputSystem : MonoBehaviour
 
     void SwitchGun()
     {
-        // Gun switch
+        // Gun switch via scroll | ACCESSING INVENTORY OBJECT TRANSFORM SUCKS (new function in inventory class?)
+        if (Input.GetAxis("Mouse ScrollWheel") != 0)
+        {
+            if (Input.GetAxis("Mouse ScrollWheel") > 0)
+            {
+                // Current selected weapon > childCount-1 (checking if next child exists)
+                if (playerPhysicalObject.inventory.selectedWeapon >= playerPhysicalObject.inventory.transform.childCount - 1)
+                    playerPhysicalObject.inventory.selectedWeapon = 0;
+                else
+                    playerPhysicalObject.inventory.selectedWeapon++;
+            }
+            else
+            {
+                // Check if current selected weapon is the last?
+                if (playerPhysicalObject.inventory.selectedWeapon <= 0)
+                    playerPhysicalObject.inventory.selectedWeapon = playerPhysicalObject.inventory.transform.childCount - 1;
+                else
+                    playerPhysicalObject.inventory.selectedWeapon--;
+            }
+        }
+
+        // Gun switch via number keys
         if (Input.GetKeyDown(KeyCode.Alpha1)) {
+            playerPhysicalObject.inventory.selectedWeapon = 0;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2) && playerPhysicalObject.inventory.transform.childCount - 1 >= 1) {
             playerPhysicalObject.inventory.selectedWeapon = 1;
-            playerPhysicalObject.inventory.SelectWeapon();
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2)) {
+        else if (Input.GetKeyDown(KeyCode.Alpha3) && playerPhysicalObject.inventory.transform.childCount - 1 >= 2) {
             playerPhysicalObject.inventory.selectedWeapon = 2;
-            playerPhysicalObject.inventory.SelectWeapon();
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3)) {
+        else if (Input.GetKeyDown(KeyCode.Alpha4) && playerPhysicalObject.inventory.transform.childCount - 1 >= 3) {
             playerPhysicalObject.inventory.selectedWeapon = 3;
-            playerPhysicalObject.inventory.SelectWeapon();
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha4)) { 
+        else if (Input.GetKeyDown(KeyCode.Alpha5) && playerPhysicalObject.inventory.transform.childCount - 1 >= 4) {
             playerPhysicalObject.inventory.selectedWeapon = 4;
-            playerPhysicalObject.inventory.SelectWeapon();
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha5)) {
-            playerPhysicalObject.inventory.selectedWeapon = 5;
+
+        // Switch if player changed the weapon
+        if (playerPhysicalObject.inventory.selectedWeapon!= playerPhysicalObject.inventory.previousWeapon)
+        {
             playerPhysicalObject.inventory.SelectWeapon();
         }
     }

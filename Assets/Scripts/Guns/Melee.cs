@@ -8,13 +8,10 @@ public class Melee : Gun
     void Start()
     {
         // Damage
-        DamagePerShot = 15;
+        DamagePerShot = 5;
 
         // Ammo
-        ammoInClip = 17;
-        maxAmmo = 108;
-        ammoLeft = ammoInClip;
-        CurrentAmmo = ammoInClip;
+        CurrentAmmo = -1;
 
         // Range
         effectiveRange = 10f;
@@ -22,9 +19,6 @@ public class Melee : Gun
 
         // Reload
         reloadTime = 2f;
-        cooldownTime = 0.15f;
-
-        // Unlocked
-        Unlocked = true;
+        fireRate = 0.15f;
     }
 }

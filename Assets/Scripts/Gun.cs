@@ -6,9 +6,6 @@ abstract public class Gun : MonoBehaviour
     public int DamagePerShot { get; set; }
     public int CurrentAmmo { get; set; }
 
-    // Is weapon unlocked or not
-    public bool Unlocked { get; protected set; }
-
     // Ammo block
     protected int ammoInClip;
     protected int maxAmmo;
@@ -20,30 +17,66 @@ abstract public class Gun : MonoBehaviour
 
     // Reload
     protected float reloadTime;
-    protected float cooldownTime;
+    protected float fireRate;
+    private float nextShootTime = 0f;
+
+    // Layer Mask
+    LayerMask ignoreObjects;
 
     public void Shoot(GameObject player)
     {
-        // Check if gun have ammo
-        if (CurrentAmmo == 0)
+        // If gun is not melee
+        if (CurrentAmmo != -1)
         {
-            Reload();
-            return;
+            // Check if gun have ammo
+            if (CurrentAmmo == 0)
+            {
+                Reload();
+                return;
+            }
+
+            // Check if we can shoot
+            if (Time.time >= nextShootTime)
+            {
+                nextShootTime = Time.time + 1f / fireRate;
+
+                // Substract each shot 
+                CurrentAmmo--;
+
+                // Calculate RayCast
+                RaycastHit hit;
+
+                //Creating layer mask
+                if (Physics.Raycast(player.transform.position, player.transform.forward, out hit, maxRange))
+                {
+                    Debug.DrawRay(player.transform.position, player.transform.forward * maxRange, Color.red,10);
+                    Debug.Log(hit.distance);
+                    Subject target = hit.transform.GetComponent<Subject>();
+
+                    // Apply damage
+                    if (target)
+                    {
+                        // Check if shoot is in effective range
+                        if (hit.distance <= effectiveRange)
+                        {
+                            target.applyDamage(DamagePerShot);
+                        }
+                        else
+                        {
+                            // newDamage = Damage * 0.85**(Range)
+                            int newDamage = Mathf.RoundToInt((float)(DamagePerShot * Math.Pow(0.85f, hit.distance)));
+                            target.applyDamage(newDamage);
+                        }
+                    }
+                }
+            }
+            else return;
         }
-
-        // Substract each shot 
-        CurrentAmmo--;
-
-        // Calculate RayCast
-        RaycastHit hit;
-        if (Physics.Raycast(player.transform.position, player.transform.forward, out hit, maxRange))
+        else
         {
-            Subject target = hit.transform.GetComponent<Subject>();
-
-            // Apply damage
-            if (target)
-                target.applyDamage(DamagePerShot);
+            // Melee weapon logic
         }
+        
     }
 
     public void Reload()
@@ -59,19 +92,5 @@ abstract public class Gun : MonoBehaviour
             CurrentAmmo = ammoInClip;
             ammoLeft -= ammoInClip;
         }
-    }
-
-    public void SwitchWeapon(int currentWeapon, int newCurrentWeapon)
-    {
-         /*
-          * if player picked new weapon, it becomes enabled
-          * if player wants to change weapons by mouse wheel - switch to previous/next enabled weapon
-          * if player wants to change weapon by numbers - change to specific weapon if enabled
-          */
-    }
-
-    public void UnlockWeapon(int weapon)
-    {
-        Unlocked = true;
     }
 }
