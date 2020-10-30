@@ -5,7 +5,7 @@ using UnityEngine;
 abstract public class Gun : MonoBehaviour
 {
     public int DamagePerShot { get; set; }
-    public int CurrentAmmo { get; set; }
+    public int CurrentAmmo { get; protected set;}
 
     // Ammo block
     protected int ammoInClip;
@@ -28,14 +28,19 @@ abstract public class Gun : MonoBehaviour
     // LayerMask for specific layers (10 stands for enemy)
     private LayerMask enemyLayers = 1 << 10;
 
-    // If player switch the weapon while reloading, we need to reset reload process
-    void OnEnable()
+    // If powerUp is activated
+
+    private void OnEnable()
     {
+        // If player switches the weapon while reloading, we need to reset reload process
         reloadProcess = false;
     }
 
     public void Shoot(GameObject player)
     {
+        // Check if power up is activated
+        int powerUPMultiplier = player.transform.parent.GetComponent<Player>().GunPowerUPMultiplier;
+
         // If gun is not melee
         if (CurrentAmmo != -1)
         {
@@ -57,10 +62,10 @@ abstract public class Gun : MonoBehaviour
                 // Calculate RayCast
                 RaycastHit hit;
 
-                // Use raycast with inverted layer mask (LayerMask which Colliders to ignore when casting a ray)
-                if (Physics.Raycast(player.transform.position, player.transform.forward, out hit, maxRange, ~enemyLayers))
+                // Use raycast with layer mask (only against colliders in specific layers)
+                if (Physics.Raycast(player.transform.position, player.transform.forward, out hit, maxRange, enemyLayers))
                 {
-                    //Debug.DrawRay(player.transform.position, player.transform.forward * maxRange, Color.red,2);
+                    Debug.DrawRay(player.transform.position, player.transform.forward * maxRange, Color.red,2);
                     Subject target = hit.transform.GetComponent<Subject>();
 
                     // Apply damage
@@ -69,13 +74,13 @@ abstract public class Gun : MonoBehaviour
                         // Check if shoot is in effective range
                         if (hit.distance <= effectiveRange)
                         {
-                            target.applyDamage(DamagePerShot);
+                            target.applyDamage(DamagePerShot * powerUPMultiplier);
                         }
                         else
                         {
                             // Formula: newDamage = Damage * 0.85**(Range)
                             int newDamage = Mathf.RoundToInt((float)(DamagePerShot * Math.Pow(0.85f, hit.distance)));
-                            target.applyDamage(newDamage);
+                            target.applyDamage(newDamage * powerUPMultiplier);
                         }
                     }
                 }
@@ -103,7 +108,7 @@ abstract public class Gun : MonoBehaviour
                     // Apply damage
                     if (target)
                     {
-                        target.applyDamage(DamagePerShot);
+                        target.applyDamage(DamagePerShot * powerUPMultiplier);
                     }
                 }
             }

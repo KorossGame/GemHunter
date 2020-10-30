@@ -4,6 +4,7 @@ using UnityEngine;
 public class Player : Subject
 {
     public WeaponSwitcher inventory;
+    public int GunPowerUPMultiplier { get; set; } = 1;
 
     void Start()
     {
@@ -15,4 +16,7 @@ public class Player : Subject
     {
         print("Player is dead");
     }
+    
+
+
 }
