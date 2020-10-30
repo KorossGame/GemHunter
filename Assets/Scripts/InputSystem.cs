@@ -7,7 +7,7 @@ public class InputSystem : MonoBehaviour
 {
     public Player playerPhysicalObject;
     public GameObject playerVisualObject;
-    float horizontal, vertical;
+    private float horizontal, vertical;
 
     void Update()
     {
@@ -34,7 +34,7 @@ public class InputSystem : MonoBehaviour
 
         // Reload gun
         if (Input.GetButtonDown("Reload"))
-            playerPhysicalObject.inventory.weaponEquiped.Reload();
+            playerPhysicalObject.inventory.weaponEquiped.ForceReload();
     }
 
     void ApplyMovement()

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 abstract public class Gun : MonoBehaviour
@@ -19,9 +20,19 @@ abstract public class Gun : MonoBehaviour
     protected float reloadTime;
     protected float fireRate;
     private float nextShootTime = 0f;
+    private bool reloadProcess = false;
 
-    // Layer Mask
-    LayerMask ignoreObjects;
+    // Melee point reference
+    public Transform attackPoint;
+
+    // LayerMask for specific layers (10 stands for enemy)
+    private LayerMask enemyLayers = 1 << 10;
+
+    // If player switch the weapon while reloading, we need to reset reload process
+    void OnEnable()
+    {
+        reloadProcess = false;
+    }
 
     public void Shoot(GameObject player)
     {
@@ -31,7 +42,7 @@ abstract public class Gun : MonoBehaviour
             // Check if gun have ammo
             if (CurrentAmmo == 0)
             {
-                Reload();
+                ForceReload();
                 return;
             }
 
@@ -46,11 +57,10 @@ abstract public class Gun : MonoBehaviour
                 // Calculate RayCast
                 RaycastHit hit;
 
-                //Creating layer mask
-                if (Physics.Raycast(player.transform.position, player.transform.forward, out hit, maxRange))
+                // Use raycast with inverted layer mask (LayerMask which Colliders to ignore when casting a ray)
+                if (Physics.Raycast(player.transform.position, player.transform.forward, out hit, maxRange, ~enemyLayers))
                 {
-                    Debug.DrawRay(player.transform.position, player.transform.forward * maxRange, Color.red,10);
-                    Debug.Log(hit.distance);
+                    //Debug.DrawRay(player.transform.position, player.transform.forward * maxRange, Color.red,2);
                     Subject target = hit.transform.GetComponent<Subject>();
 
                     // Apply damage
@@ -63,7 +73,7 @@ abstract public class Gun : MonoBehaviour
                         }
                         else
                         {
-                            // newDamage = Damage * 0.85**(Range)
+                            // Formula: newDamage = Damage * 0.85**(Range)
                             int newDamage = Mathf.RoundToInt((float)(DamagePerShot * Math.Pow(0.85f, hit.distance)));
                             target.applyDamage(newDamage);
                         }
@@ -72,25 +82,68 @@ abstract public class Gun : MonoBehaviour
             }
             else return;
         }
+
+        // If weapon is melee
         else
         {
-            // Melee weapon logic
+            // Check if we can attack
+            if (Time.time >= nextShootTime)
+            {
+                // Calc next attack
+                nextShootTime = Time.time + 1f / fireRate;
+
+                // Detect all objects in sphere for specific layers
+                Collider[] hit = Physics.OverlapSphere(attackPoint.position, effectiveRange, enemyLayers);
+
+                // Apply damage to all objects
+                foreach (Collider enemy in hit)
+                {
+                    Subject target = enemy.transform.GetComponent<Subject>();
+
+                    // Apply damage
+                    if (target)
+                    {
+                        target.applyDamage(DamagePerShot);
+                    }
+                }
+            }
         }
-        
     }
 
-    public void Reload()
+    public void ForceReload()
     {
-        // Check if we have enought ammo for whole clip
-        if (ammoInClip > ammoLeft)
+        StartCoroutine(Reload());
+    }
+
+    IEnumerator Reload()
+    {
+        if (!reloadProcess)
         {
-            CurrentAmmo = ammoLeft;
-            ammoLeft = 0;
-        }
-        else
-        {
-            CurrentAmmo = ammoInClip;
-            ammoLeft -= ammoInClip;
+            print(CurrentAmmo);
+            if (ammoLeft != 0 && ammoInClip != CurrentAmmo)
+            {
+                
+                reloadProcess = true;
+
+                // Play animation + sound
+
+                // Wait for time
+                yield return new WaitForSeconds(reloadTime);
+
+                // Check if we have enought ammo for whole clip
+                if (ammoInClip > ammoLeft)
+                {
+                    CurrentAmmo = ammoLeft;
+                    ammoLeft = 0;
+                }
+                else
+                {
+                    CurrentAmmo = ammoInClip;
+                    ammoLeft -= ammoInClip;
+                }
+                reloadProcess = false;
+                print("Finished reload");
+            }
         }
     }
 }

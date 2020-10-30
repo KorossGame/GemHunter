@@ -8,17 +8,17 @@ public class Pistol : Gun
         DamagePerShot = 15;
 
         // Ammo
-        ammoInClip = 999999;
-        maxAmmo = 999999;
-        ammoLeft = ammoInClip;
+        ammoInClip = 17;
+        maxAmmo = 102;
+        ammoLeft = maxAmmo;
         CurrentAmmo = ammoInClip;
 
         // Range
-        effectiveRange = 5f;
+        effectiveRange = 10f;
         maxRange = 25f;
 
         // Reload
-        reloadTime = 2f;
+        reloadTime = 3f;
 
         // Fire Rate (1/fireRate)
         fireRate = 4f;

@@ -13,7 +13,6 @@ abstract public class Subject : MonoBehaviour
 
         // Substract hp and check if player should die
         HP -= damage;
-        Debug.Log(HP);
         if (HP <= 0)
             Die();
     }

@@ -13,6 +13,6 @@ public class Player : Subject
 
     protected override void Die()
     {
-        print("wadawd");
+        print("Player is dead");
     }
 }
