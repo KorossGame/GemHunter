@@ -10,6 +10,5 @@ public class Boss : Enemy
     {
         HP = 500;
         Speed = 5f;
-        PathQueueManager.RequestPath(transform.position, target.transform.position, OnPathFound);
     }
 }

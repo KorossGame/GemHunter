@@ -4,13 +4,11 @@ abstract public class Subject : MonoBehaviour
 {
     public int HP { get; protected set; }
     public int Shield { get; protected set; }
-    public float Speed { get; protected set; }
+    public float Speed { get; set; }
 
     // !!!!MAKE ME ABSTRACT!!!!
-    public void applyDamage(int damage)
+    public virtual void applyDamage(int damage)
     {
-        // Play sound and annimation
-
         // Substract hp and check if player should die
         HP -= damage;
         print(HP);
@@ -18,5 +16,8 @@ abstract public class Subject : MonoBehaviour
             Die();
     }
 
-    protected abstract void Die();
+    protected virtual void Die()
+    {
+        Destroy(gameObject);
+    }
 }

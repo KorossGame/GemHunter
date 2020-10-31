@@ -12,11 +12,19 @@ public class Player : Subject
         HP = 100;
     }
 
+    public override void applyDamage(int damage)
+    {
+        // Play custom animation and sound
+
+        // Calc damage
+        base.applyDamage(damage);
+    }
+
     protected override void Die()
     {
-        print("Player is dead");
+        // Play custom animation and sound
+
+        // Die
+        base.Die();
     }
-    
-
-
 }

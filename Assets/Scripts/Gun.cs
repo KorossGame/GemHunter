@@ -13,7 +13,7 @@ abstract public class Gun : MonoBehaviour
     protected int ammoLeft;
 
     // Range
-    protected float effectiveRange;
+    public float EffectiveRange { get; protected set; }
     protected float maxRange;
 
     // Reload
@@ -22,13 +22,15 @@ abstract public class Gun : MonoBehaviour
     private float nextShootTime = 0f;
     private bool reloadProcess = false;
 
-    // Melee point reference
+    // Attack point/Bullet point reference
     public Transform attackPoint;
 
     // LayerMask for specific layers (10 stands for enemy)
     private LayerMask enemyLayers = 1 << 10;
 
-    // If powerUp is activated
+    // Projectile
+    public Projectile bullet;
+    public int BulletSpeed { get; protected set; }
 
     private void OnEnable()
     {
@@ -36,12 +38,12 @@ abstract public class Gun : MonoBehaviour
         reloadProcess = false;
     }
 
-    public void Shoot(GameObject player)
+    public void Shoot()
     {
         // Check if power up is activated
-        int powerUPMultiplier = player.transform.parent.GetComponent<Player>().GunPowerUPMultiplier;
+        int powerUPMultiplier = PlayerManager.instance.player.GetComponent<Player>().GunPowerUPMultiplier;
 
-        // If gun is not melee
+        // If weapon is not melee
         if (CurrentAmmo != -1)
         {
             // Check if gun have ammo
@@ -59,31 +61,10 @@ abstract public class Gun : MonoBehaviour
                 // Substract each shot 
                 CurrentAmmo--;
 
-                // Calculate RayCast
-                RaycastHit hit;
-
-                // Use raycast with layer mask (only against colliders in specific layers)
-                if (Physics.Raycast(player.transform.position, player.transform.forward, out hit, maxRange, enemyLayers))
-                {
-                    Debug.DrawRay(player.transform.position, player.transform.forward * maxRange, Color.red,2);
-                    Subject target = hit.transform.GetComponent<Subject>();
-
-                    // Apply damage
-                    if (target)
-                    {
-                        // Check if shoot is in effective range
-                        if (hit.distance <= effectiveRange)
-                        {
-                            target.applyDamage(DamagePerShot * powerUPMultiplier);
-                        }
-                        else
-                        {
-                            // Formula: newDamage = Damage * 0.85**(Range)
-                            int newDamage = Mathf.RoundToInt((float)(DamagePerShot * Math.Pow(0.85f, hit.distance)));
-                            target.applyDamage(newDamage * powerUPMultiplier);
-                        }
-                    }
-                }
+                Projectile newShoot = Instantiate(bullet, attackPoint.position, attackPoint.rotation);
+                newShoot.transform.parent = gameObject.transform;
+                newShoot.PowerUPMultiplier = powerUPMultiplier;
+                newShoot.Speed = BulletSpeed;
             }
             else return;
         }
@@ -98,7 +79,7 @@ abstract public class Gun : MonoBehaviour
                 nextShootTime = Time.time + 1f / fireRate;
 
                 // Detect all objects in sphere for specific layers
-                Collider[] hit = Physics.OverlapSphere(attackPoint.position, effectiveRange, enemyLayers);
+                Collider[] hit = Physics.OverlapSphere(attackPoint.position, EffectiveRange, enemyLayers);
 
                 // Apply damage to all objects
                 foreach (Collider enemy in hit)

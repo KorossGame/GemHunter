@@ -7,6 +7,9 @@ public class Pistol : Gun
         // Damage
         DamagePerShot = 15;
 
+        // Bullet speed
+        BulletSpeed = 25;
+
         // Ammo
         ammoInClip = 17;
         maxAmmo = 102;
@@ -14,7 +17,7 @@ public class Pistol : Gun
         CurrentAmmo = ammoInClip;
 
         // Range
-        effectiveRange = 10f;
+        EffectiveRange = 10f;
         maxRange = 25f;
 
         // Reload

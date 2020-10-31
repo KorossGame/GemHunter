@@ -16,7 +16,7 @@ public class RPG : Gun
         CurrentAmmo = ammoInClip;
 
         // Range
-        effectiveRange = 10f;
+        EffectiveRange = 10f;
         maxRange = 200f;
 
         // Reload

@@ -1,55 +1,76 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 abstract public class Enemy : Subject
 {
-    public Transform target;
-    protected Vector3[] path;
-    protected int targetIndex;
-
+    // PowerUP spawn
     private int powerUPcount = 3;
     private float powerUPdropChange = 0.1f;
     private float maxValue = 1;
 
-    protected void OnPathFound(Vector3[] newPath, bool pathSuccessful)
+    // Pathfinder
+    private NavMeshAgent pathFinder;
+    protected Transform player;
+    private bool notRunned = true;
+
+    void Start()
     {
-        if (pathSuccessful)
+    }
+
+    void Update()
+    {
+        if (!pathFinder)
         {
-            path = newPath;
-            StopCoroutine("FollowPath");
-            StartCoroutine("FollowPath");
+            pathFinder = GetComponent<NavMeshAgent>();
+            pathFinder.speed = Speed;
+        }
+        if (!player)
+        {
+            player = PlayerManager.instance.player.transform;
+        }
+        if (player && pathFinder && notRunned)
+        {
+            StartCoroutine(UpdatePath());
+            notRunned = false;
         }
     }
 
-    protected IEnumerator FollowPath()
+    IEnumerator UpdatePath()
     {
-        Vector3 currentWaypoint = path[0];
-
-        while (true)
+        float refreshRate = 0.5f;
+        while (player)
         {
-            if (transform.position == currentWaypoint)
-            {
-                targetIndex++;
-                if (targetIndex >= path.Length)
-                {
-                    yield break;
-                }
-                currentWaypoint = path[targetIndex];
-            }
-            transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, Speed * Time.deltaTime);
-            yield return null;
+            Vector3 PlayerPos = new Vector3(player.transform.position.x, 0, player.transform.position.z);
+            pathFinder.SetDestination(PlayerPos);
+            FaceTarget();
+            yield return new WaitForSeconds(refreshRate);
+
         }
+    }
+
+    protected void FaceTarget()
+    {
+        Vector3 direction = (player.position - transform.position).normalized;
+        Quaternion checkRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+        transform.rotation = Quaternion.Slerp(transform.rotation, checkRotation, Time.deltaTime * 10f);
     }
 
     protected override void Die()
     {
-        // Animation of death
+        // Animation and Sound of death
 
         // Generate power up
         GeneratePowerUP();
 
-        // Delete an object
-        Destroy(gameObject);
+        base.Die();
+    }
+    public override void applyDamage(int damage)
+    {
+        // Play custom animation and sound
+
+        // Calc damage
+        base.applyDamage(damage);
     }
 
     protected void GeneratePowerUP()
@@ -66,22 +87,5 @@ abstract public class Enemy : Subject
         // Which powerUP going to be dropped
         int randomPowerUP = Random.Range(0, powerUPcount);
         // Instanciate(powerUP, transform.position, transform.rotation);
-    }
-
-    public void OnDrawGizmos()
-    {
-        if (path != null)
-        {
-            for (int i = targetIndex; i<path.Length; i++)
-            {
-                Gizmos.color = Color.black;
-                Gizmos.DrawCube(path[i], Vector3.one);
-
-                if (i == targetIndex)
-                    Gizmos.DrawLine(transform.position, path[i]);
-                else
-                    Gizmos.DrawLine(path[i - 1], path[i]);
-            }
-        }
     }
 }

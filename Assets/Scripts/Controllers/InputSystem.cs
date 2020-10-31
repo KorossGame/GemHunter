@@ -1,13 +1,22 @@
 ﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent (typeof (Player))]
 public class InputSystem : MonoBehaviour
 {
-    public Player playerPhysicalObject;
+    private Player playerPhysicalObject;
     public GameObject playerVisualObject;
     private float horizontal, vertical;
+
+    private bool boosted = false;
+
+    void Start()
+    {
+        playerPhysicalObject = GetComponent<Player>();
+    }
 
     void Update()
     {
@@ -22,19 +31,45 @@ public class InputSystem : MonoBehaviour
 
     void HandleInput()
     {
-        // Movement
+        // Movement boost
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            if (!boosted)
+            {
+                playerPhysicalObject.Speed *= 2;
+                boosted = true;
+            }
+        }
+        else
+        {
+            if (boosted)
+            {
+                playerPhysicalObject.Speed /= 2;
+                boosted = false;
+            }
+        }
+
+        // Get movement axis value
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
 
-        // Shoot
-        if (Input.GetMouseButton(0))
-            playerPhysicalObject.inventory.weaponEquiped.Shoot(playerVisualObject);
+        // Weapons
+        if (playerPhysicalObject.inventory.weaponEquiped)
+        {
+            // Shoot
+            if (Input.GetMouseButton(0))
+            {
+                playerPhysicalObject.inventory.weaponEquiped.Shoot();
+            }
 
-        SwitchGun();
+            SwitchGun();
 
-        // Reload gun
-        if (Input.GetButtonDown("Reload"))
-            playerPhysicalObject.inventory.weaponEquiped.ForceReload();
+            // Reload gun
+            if (Input.GetButtonDown("Reload"))
+            {
+                playerPhysicalObject.inventory.weaponEquiped.ForceReload();
+            }
+        }
     }
 
     void ApplyMovement()
@@ -62,6 +97,7 @@ public class InputSystem : MonoBehaviour
 
     void SwitchGun()
     {
+        /*
         // Gun switch via scroll | ACCESSING INVENTORY OBJECT TRANSFORM SUCKS (new function in inventory class?)
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {
@@ -103,7 +139,8 @@ public class InputSystem : MonoBehaviour
         // Switch if player changed the weapon
         if (playerPhysicalObject.inventory.selectedWeapon!= playerPhysicalObject.inventory.previousWeapon)
         {
-            playerPhysicalObject.inventory.SelectWeapon();
+            //playerPhysicalObject.inventory.SelectWeapon();
         }
+        */
     }
 }
