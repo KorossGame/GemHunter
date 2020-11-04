@@ -43,8 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5170e86260c3294c8a7abe8ddf862d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultWeapon: {fileID: 2612050729990362858, guid: 4e54f4fe1d5854d43b69b721c97ce5cf, type: 3}
-  weaponEquiped: {fileID: 0}
+  defaultWeapon: {fileID: 3008785848275776804, guid: e8d500867e35303448295ca4a43ce0af, type: 3}
 --- !u!1 &8567047989890510884
 GameObject:
   m_ObjectHideFlags: 0
@@ -56,7 +55,6 @@ GameObject:
   - component: {fileID: 8567047989757032969}
   - component: {fileID: 8567047989890510906}
   - component: {fileID: 8567047989890510905}
-  - component: {fileID: 4363529331115468170}
   m_Layer: 9
   m_Name: PlayerVisualObject
   m_TagString: Player
@@ -128,19 +126,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &4363529331115468170
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8567047989890510884}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8567047990131211985
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,7 +152,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8567047990131211985}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.42, y: 1, z: -3.92}
+  m_LocalPosition: {x: 13.25, y: 0, z: -27.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8567047989757032969}

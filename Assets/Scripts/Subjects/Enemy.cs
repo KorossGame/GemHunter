@@ -13,13 +13,21 @@ abstract public class Enemy : Subject
     private NavMeshAgent pathFinder;
     protected Transform player;
     private bool notRunned = true;
+    private bool dead = false;
 
-    void Start()
-    {
-    }
+    // Enemy dead event
+    public event System.Action OnDeath;
+
+    // Chances of spawn enemy with particular weapon
+    protected double meleeChance;
+    protected double pistolChance;
+    protected double ShotgunChance;
+    protected double AssaultChance;
+    protected double RPGChance;
 
     void Update()
     {
+        // BAD SOLUTION
         if (!pathFinder)
         {
             pathFinder = GetComponent<NavMeshAgent>();
@@ -39,13 +47,12 @@ abstract public class Enemy : Subject
     IEnumerator UpdatePath()
     {
         float refreshRate = 0.5f;
-        while (player)
+        while (player && !dead)
         {
             Vector3 PlayerPos = new Vector3(player.transform.position.x, 0, player.transform.position.z);
             pathFinder.SetDestination(PlayerPos);
             FaceTarget();
             yield return new WaitForSeconds(refreshRate);
-
         }
     }
 
@@ -58,11 +65,17 @@ abstract public class Enemy : Subject
 
     protected override void Die()
     {
+        dead = true;
         // Animation and Sound of death
 
         // Generate power up
         GeneratePowerUP();
 
+        // Spawner interaction event
+        OnDeath?.Invoke();
+
+
+        // Destroy GameObject
         base.Die();
     }
     public override void applyDamage(int damage)

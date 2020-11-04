@@ -2,18 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boss : Enemy
+public class Default : Enemy
 {
-    private byte phase;
-
     void Start()
     {
         // HP and Speed of movement
-        HP = 500;
+        HP = 45;
         Speed = 5f;
 
         // Weapon
-        meleeChance = 0;
+        meleeChance = 100;
         pistolChance = 0;
         ShotgunChance = 0;
         AssaultChance = 0;

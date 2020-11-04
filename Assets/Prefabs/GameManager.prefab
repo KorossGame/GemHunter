@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8486106855256016247
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8486106855256016008}
+  - component: {fileID: 8486106855256016009}
+  - component: {fileID: 1974418136}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8486106855256016008
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8486106855256016247}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.9398117, y: 0.8327246, z: 4.5160937}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8486106855256016009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8486106855256016247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9b099af4fed4364fa84e263da91de99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 8567047990131211985, guid: c77d1d674782cff4883d4d6d529ca3d5, type: 3}
+--- !u!114 &1974418136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8486106855256016247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9ba77345eee5514aadb7a6fd3276611, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waves:
+  - maxEnemies: 20
+    currentEnemies: 0
+    timeBetweenSpawn: 1
+    enemyObjective: 100
+  enemyTypes:
+  - {fileID: 6330121581187433680, guid: 3c34c5a792b480442957403f737f4b01, type: 3}
+  - {fileID: 6153408326170639183, guid: b30f4749803da19419e9083d1020d14b, type: 3}
+  - {fileID: 4298978263104249439, guid: 2c463f9c419181b4fbef56d7a3bfbd0e, type: 3}
+  - {fileID: 8862280774052710149, guid: 2ed092d5866334849ad2a88037fe72f6, type: 3}
+  - {fileID: 2065181690516665068, guid: 706ca4ad461dce04d94d2c7545b70765, type: 3}
+  parentObject: {fileID: 3067504836162658090, guid: 15cafa1b7660c504983da59eedafa669, type: 3}

@@ -1,5 +1,4 @@
 ﻿using System;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,22 +9,25 @@ public class InputSystem : MonoBehaviour
     private Player playerPhysicalObject;
     public GameObject playerVisualObject;
     private float horizontal, vertical;
+    private float boostCoefficient = 1.25f;
+    private Rigidbody rb;
 
     private bool boosted = false;
 
     void Start()
     {
         playerPhysicalObject = GetComponent<Player>();
+        rb = GetComponent<Rigidbody>();
     }
 
     void Update()
     {
         HandleInput();
-        HandleRotation();
     }
 
     void FixedUpdate()
     {
+        HandleRotation();
         ApplyMovement();
     }
 
@@ -36,7 +38,7 @@ public class InputSystem : MonoBehaviour
         {
             if (!boosted)
             {
-                playerPhysicalObject.Speed *= 2;
+                playerPhysicalObject.Speed *= boostCoefficient;
                 boosted = true;
             }
         }
@@ -44,7 +46,7 @@ public class InputSystem : MonoBehaviour
         {
             if (boosted)
             {
-                playerPhysicalObject.Speed /= 2;
+                playerPhysicalObject.Speed /= boostCoefficient;
                 boosted = false;
             }
         }
@@ -54,12 +56,12 @@ public class InputSystem : MonoBehaviour
         vertical = Input.GetAxis("Vertical");
 
         // Weapons
-        if (playerPhysicalObject.inventory.weaponEquiped)
+        if (playerPhysicalObject.inventory.WeaponEquiped)
         {
             // Shoot
             if (Input.GetMouseButton(0))
             {
-                playerPhysicalObject.inventory.weaponEquiped.Shoot();
+                playerPhysicalObject.inventory.WeaponEquiped.Shoot();
             }
 
             SwitchGun();
@@ -67,7 +69,7 @@ public class InputSystem : MonoBehaviour
             // Reload gun
             if (Input.GetButtonDown("Reload"))
             {
-                playerPhysicalObject.inventory.weaponEquiped.ForceReload();
+                playerPhysicalObject.inventory.WeaponEquiped.ForceReload();
             }
         }
     }
@@ -76,7 +78,7 @@ public class InputSystem : MonoBehaviour
     {
         Vector3 movement = new Vector3(horizontal, 0, vertical);
         movement = Vector3.ClampMagnitude(movement, 1);
-        transform.Translate(movement * Time.fixedDeltaTime * playerPhysicalObject.Speed);
+        rb.velocity = movement * playerPhysicalObject.Speed;
     }
 
     void HandleRotation()

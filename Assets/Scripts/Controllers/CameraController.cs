@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public Transform target;
+    private Transform target;
     public float movementSpeed;
     public Vector3 targetOffset = new Vector3(0,0,0);
+
+    void Start()
+    {
+        target = PlayerManager.instance.player.transform;
+    }
 
     void FixedUpdate()
     {

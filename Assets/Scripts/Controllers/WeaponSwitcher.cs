@@ -6,13 +6,13 @@ using UnityEngine;
 public class WeaponSwitcher : MonoBehaviour
 {
     public Gun defaultWeapon;
-    public Gun weaponEquiped;
+    public Gun WeaponEquiped { get; set; }
     private Transform holderPoint;
 
     void Start()
     {
         holderPoint = gameObject.transform;
-        if (!weaponEquiped)
+        if (!WeaponEquiped)
         {
             EquipWeapon(defaultWeapon);
         }
@@ -20,12 +20,12 @@ public class WeaponSwitcher : MonoBehaviour
 
     public void EquipWeapon(Gun toEquip)
     {
-        if (weaponEquiped)
+        if (WeaponEquiped)
         {
-            Destroy(weaponEquiped.gameObject);
+            Destroy(WeaponEquiped.gameObject);
         }
-        weaponEquiped = Instantiate(toEquip, holderPoint.position, holderPoint.rotation);
-        weaponEquiped.transform.parent = holderPoint;
+        WeaponEquiped = Instantiate(toEquip, holderPoint.position, holderPoint.rotation);
+        WeaponEquiped.transform.parent = holderPoint;
     }
 
     
