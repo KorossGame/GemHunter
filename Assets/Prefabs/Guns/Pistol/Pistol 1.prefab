@@ -172,6 +172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 8674428835621832870}
+  bulletHolder: {fileID: 0}
   bullet: {fileID: -7774822217667158408, guid: 99ed0575673d0634a94d64ee54dd45c0, type: 3}
 --- !u!1 &8674428835621832871
 GameObject:

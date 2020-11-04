@@ -15,6 +15,11 @@ abstract public class Enemy : Subject
     private bool notRunned = true;
     private bool dead = false;
 
+    // Enemy attack
+    protected bool hasMelee;
+    protected float attackDistance;
+    protected Gun currentWeapon;
+
     // Enemy dead event
     public event System.Action OnDeath;
 
@@ -99,6 +104,11 @@ abstract public class Enemy : Subject
 
         // Which powerUP going to be dropped
         int randomPowerUP = Random.Range(0, powerUPcount);
-        // Instanciate(powerUP, transform.position, transform.rotation);
+        //Instantiate(powerUP, transform.position, transform.rotation);
     }
+
+    /*protected Gun generateWeapon()
+    {
+
+    }*/
 }

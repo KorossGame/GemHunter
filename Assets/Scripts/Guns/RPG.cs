@@ -7,20 +7,25 @@ public class RPG : Gun
     void Start()
     {
         // Damage
-        DamagePerShot = 15;
+        DamagePerBullet = 500;
+
+        // Bullet speed
+        BulletSpeed = 15;
 
         // Ammo
-        ammoInClip = 17;
-        maxAmmo = 108;
-        ammoLeft = ammoInClip;
+        ammoInClip = 1;
+        maxAmmo = 2;
+        ammoLeft = maxAmmo;
         CurrentAmmo = ammoInClip;
 
         // Range
-        EffectiveRange = 10f;
-        maxRange = 200f;
+        EffectiveRange = 1000f;
+        maxRange = 1000f;
 
         // Reload
-        reloadTime = 2f;
-        fireRate = 0.15f;
+        reloadTime = 5f;
+
+        // Fire Rate (1/fireRate)
+        fireRate = 1f;
     }
 }

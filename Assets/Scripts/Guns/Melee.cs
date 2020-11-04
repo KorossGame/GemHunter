@@ -8,7 +8,7 @@ public class Melee : Gun
     void Start()
     {
         // Damage
-        DamagePerShot = 5;
+        DamagePerBullet = 5;
 
         // Ammo
         CurrentAmmo = -1;
@@ -19,5 +19,26 @@ public class Melee : Gun
 
         // Reload
         fireRate = 2f;
+    }
+
+    protected override void ShootBullet()
+    {
+        // Check if power up is activated
+        int powerUPMultiplier = PlayerManager.instance.player.GetComponent<Player>().GunPowerUPMultiplier;
+
+        // Detect all objects in sphere for specific layers
+        Collider[] hit = Physics.OverlapSphere(attackPoint.position, EffectiveRange, enemyLayers);
+
+        // Apply damage to all objects
+        foreach (Collider enemy in hit)
+        {
+            Subject target = enemy.transform.GetComponent<Subject>();
+
+            // Apply damage
+            if (target)
+            {
+                target.applyDamage(DamagePerBullet * powerUPMultiplier);
+            }
+        }
     }
 }

@@ -5,7 +5,7 @@ public class Pistol : Gun
     void Start()
     {
         // Damage
-        DamagePerShot = 15;
+        DamagePerBullet = 15;
 
         // Bullet speed
         BulletSpeed = 25;

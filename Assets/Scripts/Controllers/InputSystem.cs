@@ -6,13 +6,17 @@ using UnityEngine;
 [RequireComponent (typeof (Player))]
 public class InputSystem : MonoBehaviour
 {
+    // Physics
     private Player playerPhysicalObject;
     public GameObject playerVisualObject;
-    private float horizontal, vertical;
-    private float boostCoefficient = 1.25f;
     private Rigidbody rb;
 
+    // Input
+    private float horizontal, vertical;
+
+    // Movement Boost
     private bool boosted = false;
+    private float boostCoefficient = 1.25f;
 
     void Start()
     {

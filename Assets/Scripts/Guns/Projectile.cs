@@ -10,7 +10,7 @@ public class Projectile : MonoBehaviour
 
     public float Speed { private get; set; } = 10f;
 
-    private Gun currentGun;
+    public Gun CurrentGun { private get; set; }
     public int PowerUPMultiplier { private get; set; }
 
     private Transform player;
@@ -18,13 +18,13 @@ public class Projectile : MonoBehaviour
     void Start()
     {
         player = PlayerManager.instance.player.transform;
-        currentGun = gameObject.transform.parent.GetComponent<Gun>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        float moveDistance = Speed * Time.deltaTime;
+        float moveDistance = Speed * Time.fixedDeltaTime;
         DetectCollisions(moveDistance);
+        // !!!USE RIGIDBODY!!!
         transform.Translate(Vector3.forward * moveDistance);
     }
 
@@ -45,14 +45,14 @@ public class Projectile : MonoBehaviour
             if (target)
             {
                 // Check if shoot is in effective range
-                if (hitDistance <= currentGun.EffectiveRange)
+                if (hitDistance <= CurrentGun.EffectiveRange)
                 {
-                    target.applyDamage(currentGun.DamagePerShot * PowerUPMultiplier);
+                    target.applyDamage(CurrentGun.DamagePerBullet * PowerUPMultiplier);
                 }
                 else
                 {
                     // Formula: newDamage = Damage * 0.85**(Range)
-                    int newDamage = Mathf.RoundToInt((float)(currentGun.DamagePerShot * Math.Pow(0.85f, hitDistance / 2)));
+                    int newDamage = Mathf.RoundToInt((float)(CurrentGun.DamagePerBullet * Math.Pow(0.85f, hitDistance / 2)));
                     target.applyDamage(newDamage * PowerUPMultiplier);
                 }
                 

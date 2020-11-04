@@ -7,20 +7,25 @@ public class Assault : Gun
     void Start()
     {
         // Damage
-        DamagePerShot = 15;
+        DamagePerBullet = 30;
+
+        // Bullet speed
+        BulletSpeed = 40;
 
         // Ammo
-        ammoInClip = 17;
-        maxAmmo = 108;
-        ammoLeft = ammoInClip;
+        ammoInClip = 30;
+        maxAmmo = 90;
+        ammoLeft = maxAmmo;
         CurrentAmmo = ammoInClip;
 
         // Range
-        EffectiveRange = 10f;
-        maxRange = 200f;
+        EffectiveRange = 7f;
+        maxRange = 25f;
 
         // Reload
-        reloadTime = 2f;
-        fireRate = 0.15f;
+        reloadTime = 3.5f;
+
+        // Fire Rate (1/fireRate)
+        fireRate = 13.5f;
     }
 }

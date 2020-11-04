@@ -4,7 +4,7 @@ using UnityEngine;
 
 abstract public class Gun : MonoBehaviour
 {
-    public int DamagePerShot { get; set; }
+    public int DamagePerBullet { get; protected set; }
     public int CurrentAmmo { get; protected set;}
 
     // Ammo block
@@ -19,14 +19,14 @@ abstract public class Gun : MonoBehaviour
     // Reload
     protected float reloadTime;
     protected float fireRate;
-    private float nextShootTime = 0f;
+    protected float nextShootTime = 0f;
     private bool reloadProcess = false;
 
     // Attack point/Bullet point reference
     public Transform attackPoint;
 
     // LayerMask for specific layers (10 stands for enemy)
-    private LayerMask enemyLayers = 1 << 10;
+    protected LayerMask enemyLayers = 1 << 10;
 
     // Projectile
     public Projectile bullet;
@@ -40,60 +40,35 @@ abstract public class Gun : MonoBehaviour
 
     public void Shoot()
     {
+        // Check if gun have ammo
+        if (CurrentAmmo == 0)
+        {
+            ForceReload();
+            return;
+        }
+
+        // Check if we can shoot
+        if (Time.time >= nextShootTime)
+        {
+            nextShootTime = Time.time + 1f / fireRate;
+            ShootBullet();
+        }
+        else return;
+    }
+
+    protected virtual void ShootBullet()
+    {
         // Check if power up is activated
         int powerUPMultiplier = PlayerManager.instance.player.GetComponent<Player>().GunPowerUPMultiplier;
 
-        // If weapon is not melee
-        if (CurrentAmmo != -1)
-        {
-            // Check if gun have ammo
-            if (CurrentAmmo == 0)
-            {
-                ForceReload();
-                return;
-            }
+        // Substract each shot
+        CurrentAmmo--;
 
-            // Check if we can shoot
-            if (Time.time >= nextShootTime)
-            {
-                nextShootTime = Time.time + 1f / fireRate;
-
-                // Substract each shot 
-                CurrentAmmo--;
-
-                Projectile newShoot = Instantiate(bullet, attackPoint.position, attackPoint.rotation);
-                newShoot.transform.parent = gameObject.transform;
-                newShoot.PowerUPMultiplier = powerUPMultiplier;
-                newShoot.Speed = BulletSpeed;
-            }
-            else return;
-        }
-
-        // If weapon is melee
-        else
-        {
-            // Check if we can attack
-            if (Time.time >= nextShootTime)
-            {
-                // Calc next attack
-                nextShootTime = Time.time + 1f / fireRate;
-
-                // Detect all objects in sphere for specific layers
-                Collider[] hit = Physics.OverlapSphere(attackPoint.position, EffectiveRange, enemyLayers);
-
-                // Apply damage to all objects
-                foreach (Collider enemy in hit)
-                {
-                    Subject target = enemy.transform.GetComponent<Subject>();
-
-                    // Apply damage
-                    if (target)
-                    {
-                        target.applyDamage(DamagePerShot * powerUPMultiplier);
-                    }
-                }
-            }
-        }
+        // Create new bullet with passing Gun there
+        Projectile newShoot = Instantiate(bullet, attackPoint.position, attackPoint.rotation);
+        newShoot.CurrentGun = this;
+        newShoot.PowerUPMultiplier = powerUPMultiplier;
+        newShoot.Speed = BulletSpeed;
     }
 
     public void ForceReload()

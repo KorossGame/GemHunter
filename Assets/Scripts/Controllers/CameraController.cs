@@ -6,7 +6,7 @@ public class CameraController : MonoBehaviour
 {
     private Transform target;
     public float movementSpeed;
-    public Vector3 targetOffset = new Vector3(0,0,0);
+    public Vector3 targetOffset;
 
     void Start()
     {

@@ -24,8 +24,7 @@ public class WeaponSwitcher : MonoBehaviour
         {
             Destroy(WeaponEquiped.gameObject);
         }
-        WeaponEquiped = Instantiate(toEquip, holderPoint.position, holderPoint.rotation);
-        WeaponEquiped.transform.parent = holderPoint;
+        WeaponEquiped = Instantiate(toEquip, holderPoint.position, holderPoint.rotation, holderPoint);
     }
 
     

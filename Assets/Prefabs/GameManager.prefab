@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9b099af4fed4364fa84e263da91de99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 8567047990131211985, guid: c77d1d674782cff4883d4d6d529ca3d5, type: 3}
+  player: {fileID: 0}
 --- !u!114 &1974418136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,11 +61,15 @@ MonoBehaviour:
   - maxEnemies: 20
     currentEnemies: 0
     timeBetweenSpawn: 1
-    enemyObjective: 100
+    enemyToKill: 1
+  - maxEnemies: 20
+    currentEnemies: 0
+    timeBetweenSpawn: 1
+    enemyToKill: 1
   enemyTypes:
   - {fileID: 6330121581187433680, guid: 3c34c5a792b480442957403f737f4b01, type: 3}
   - {fileID: 6153408326170639183, guid: b30f4749803da19419e9083d1020d14b, type: 3}
   - {fileID: 4298978263104249439, guid: 2c463f9c419181b4fbef56d7a3bfbd0e, type: 3}
   - {fileID: 8862280774052710149, guid: 2ed092d5866334849ad2a88037fe72f6, type: 3}
   - {fileID: 2065181690516665068, guid: 706ca4ad461dce04d94d2c7545b70765, type: 3}
-  parentObject: {fileID: 3067504836162658090, guid: 15cafa1b7660c504983da59eedafa669, type: 3}
+  parentObject: {fileID: 0}
