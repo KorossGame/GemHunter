@@ -14,8 +14,8 @@ public class Military : Enemy
         // Weapon
         meleeChance = 0;
         pistolChance = 20;
-        ShotgunChance = 30;
-        AssaultChance = 45;
-        RPGChance = 5;
+        shotgunChance = 50;
+        assaultChance = 95;
+        RPGChance = 100;
     }
 }

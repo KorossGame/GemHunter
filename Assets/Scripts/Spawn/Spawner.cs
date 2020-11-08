@@ -39,6 +39,10 @@ public class Spawner : MonoBehaviour
 
     void SpawnEnemy()
     {
+        // Set random seed
+        Random.InitState((int)System.DateTime.Now.Ticks);
+
+        // Generate random number
         int randomNumber = Random.Range(0, 100);
         int enemyIndexToSpawn = (int)(randomNumber / chanceOfSpawn);
         Enemy spawnedEnemy = Instantiate(enemyTypes[enemyIndexToSpawn], Vector3.zero, Quaternion.identity, parentObject);

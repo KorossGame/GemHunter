@@ -5,7 +5,7 @@ using System;
 
 public class Melee : Gun
 {
-    void Start()
+    void Awake()
     {
         // Damage
         DamagePerBullet = 5;

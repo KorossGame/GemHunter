@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,8 +7,8 @@ abstract public class Enemy : Subject
 {
     // PowerUP spawn
     private int powerUPcount = 3;
-    private float powerUPdropChange = 0.1f;
-    private float maxValue = 1;
+    private float powerUPdropChange = 10f;
+    private float maxValue = 100;
 
     // Pathfinder
     private NavMeshAgent pathFinder;
@@ -23,12 +24,55 @@ abstract public class Enemy : Subject
     // Enemy dead event
     public event System.Action OnDeath;
 
-    // Chances of spawn enemy with particular weapon
+    // Chances of spawn enemy with particular weapon (e.g. 10 for melee - represents values (0-10])
     protected double meleeChance;
     protected double pistolChance;
-    protected double ShotgunChance;
-    protected double AssaultChance;
+    protected double shotgunChance;
+    protected double assaultChance;
     protected double RPGChance;
+
+    // Weapon holder point
+    public Transform holderPoint;
+
+    protected void getWeapon()
+    {
+        // Set random seed
+        Random.InitState((int)System.DateTime.Now.Ticks);
+
+        // Get random number
+        float gunRandom = Random.Range(0f, 100.0f);
+
+        // Set current weapon
+        if (gunRandom <= meleeChance)
+        {
+            currentWeapon = GunManager.instance.meleeWeapon;
+        }
+        else if (gunRandom <= pistolChance)
+        {
+            currentWeapon = GunManager.instance.pistolWeapon;
+        }
+        else if (gunRandom <= shotgunChance)
+        {
+            currentWeapon = GunManager.instance.shotgunWeapon;
+        }
+        else if (gunRandom <= assaultChance)
+        {
+            currentWeapon = GunManager.instance.assaultWeapon;
+        }
+        else if (gunRandom <= RPGChance)
+        {
+            currentWeapon = GunManager.instance.RPGWeapon;
+        }
+
+        // Create a new gun for enemy in holder point position
+        Instantiate(currentWeapon, holderPoint.transform.position, gameObject.transform.rotation, holderPoint.transform);
+        
+        // Enemies have infinite ammo
+        currentWeapon.MaxAmmo = -1;
+
+        // Change Nav Mesh agent stopping distance depending on gun got
+        ChangeStopDistance();
+    }
 
     void Update()
     {
@@ -46,6 +90,19 @@ abstract public class Enemy : Subject
         {
             StartCoroutine(UpdatePath());
             notRunned = false;
+        }
+        if (!currentWeapon)
+        {
+            getWeapon();
+        }
+        if (!holderPoint)
+        {
+            holderPoint = transform.Find("HolderPoint");
+        }
+
+        if (pathFinder.remainingDistance <= pathFinder.stoppingDistance)
+        {
+            currentWeapon.Shoot();
         }
     }
 
@@ -107,8 +164,10 @@ abstract public class Enemy : Subject
         //Instantiate(powerUP, transform.position, transform.rotation);
     }
 
-    /*protected Gun generateWeapon()
-    {
 
-    }*/
+    // Change Nav Mesh agent stopping distance depending on gun got
+    protected void ChangeStopDistance()
+    {
+        pathFinder.stoppingDistance = currentWeapon.EffectiveRange;
+    }
 }

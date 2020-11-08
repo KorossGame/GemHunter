@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Assault : Gun
 {
-    void Start()
+    void Awake()
     {
         // Damage
         DamagePerBullet = 30;
@@ -14,8 +14,8 @@ public class Assault : Gun
 
         // Ammo
         ammoInClip = 30;
-        maxAmmo = 90;
-        ammoLeft = maxAmmo;
+        MaxAmmo = 90;
+        ammoLeft = MaxAmmo;
         CurrentAmmo = ammoInClip;
 
         // Range

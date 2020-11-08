@@ -13,9 +13,9 @@ public class Police : Enemy
 
         // Weapon
         meleeChance = 30;
-        pistolChance = 40;
-        ShotgunChance = 14;
-        AssaultChance = 15;
-        RPGChance = 1;
+        pistolChance = 70;
+        shotgunChance = 84;
+        assaultChance = 99;
+        RPGChance = 100;
     }
 }

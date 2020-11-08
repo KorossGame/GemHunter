@@ -7,7 +7,7 @@ public class Shotgun : Gun
     private int bulletShootCount = 5;
     private float angle = 15f;
 
-    void Start()
+    void Awake()
     {
         // Damage
         DamagePerBullet = 24;
@@ -17,8 +17,8 @@ public class Shotgun : Gun
 
         // Ammo
         ammoInClip = 5;
-        maxAmmo = 25;
-        ammoLeft = maxAmmo;
+        MaxAmmo = 25;
+        ammoLeft = MaxAmmo;
         CurrentAmmo = ammoInClip;
 
         // Range

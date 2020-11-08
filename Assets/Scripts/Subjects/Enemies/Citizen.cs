@@ -12,9 +12,9 @@ public class Citizen : Enemy
 
         // Weapon
         meleeChance = 70;
-        pistolChance = 15;
-        ShotgunChance = 10;
-        AssaultChance = 4.9;
-        RPGChance = 0.1;
+        pistolChance = 85;
+        shotgunChance = 95;
+        assaultChance = 99.9;
+        RPGChance = 100;
     }
 }

@@ -9,7 +9,7 @@ abstract public class Gun : MonoBehaviour
 
     // Ammo block
     protected int ammoInClip;
-    protected int maxAmmo;
+    public int MaxAmmo { protected get; set; }
     protected int ammoLeft;
 
     // Range
@@ -19,13 +19,13 @@ abstract public class Gun : MonoBehaviour
     // Reload
     protected float reloadTime;
     protected float fireRate;
-    protected float nextShootTime = 0f;
+    private float nextShootTime = 1f;
     private bool reloadProcess = false;
 
     // Attack point/Bullet point reference
     public Transform attackPoint;
 
-    // LayerMask for specific layers (10 stands for enemy)
+    // LayerMask for specific layers (10 stands for enemy, 9 for player)
     protected LayerMask enemyLayers = 1 << 10;
 
     // Projectile
@@ -40,6 +40,7 @@ abstract public class Gun : MonoBehaviour
 
     public void Shoot()
     {
+        print(CurrentAmmo);
         // Check if gun have ammo
         if (CurrentAmmo == 0)
         {
@@ -76,11 +77,10 @@ abstract public class Gun : MonoBehaviour
         StartCoroutine(Reload());
     }
 
-    IEnumerator Reload()
+    protected IEnumerator Reload()
     {
         if (!reloadProcess)
         {
-            print(CurrentAmmo);
             if (ammoLeft != 0 && ammoInClip != CurrentAmmo)
             {
                 
@@ -91,8 +91,13 @@ abstract public class Gun : MonoBehaviour
                 // Wait for time
                 yield return new WaitForSeconds(reloadTime);
 
+                // Enemies have infinite ammo
+                if (MaxAmmo == -1)
+                {
+                    CurrentAmmo = ammoInClip;
+                }
                 // Check if we have enought ammo for whole clip
-                if (ammoInClip > ammoLeft)
+                else if (ammoInClip > ammoLeft)
                 {
                     CurrentAmmo = ammoLeft;
                     ammoLeft = 0;
@@ -103,7 +108,6 @@ abstract public class Gun : MonoBehaviour
                     ammoLeft -= ammoInClip;
                 }
                 reloadProcess = false;
-                print("Finished reload");
             }
         }
     }

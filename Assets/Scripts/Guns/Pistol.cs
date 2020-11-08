@@ -2,7 +2,7 @@
 
 public class Pistol : Gun
 {
-    void Start()
+    void Awake()
     {
         // Damage
         DamagePerBullet = 15;
@@ -12,8 +12,8 @@ public class Pistol : Gun
 
         // Ammo
         ammoInClip = 17;
-        maxAmmo = 102;
-        ammoLeft = maxAmmo;
+        MaxAmmo = 102;
+        ammoLeft = MaxAmmo;
         CurrentAmmo = ammoInClip;
 
         // Range

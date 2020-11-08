@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RPG : Gun
 {
-    void Start()
+    void Awake()
     {
         // Damage
         DamagePerBullet = 500;
@@ -14,8 +14,8 @@ public class RPG : Gun
 
         // Ammo
         ammoInClip = 1;
-        maxAmmo = 2;
-        ammoLeft = maxAmmo;
+        MaxAmmo = 2;
+        ammoLeft = MaxAmmo;
         CurrentAmmo = ammoInClip;
 
         // Range
