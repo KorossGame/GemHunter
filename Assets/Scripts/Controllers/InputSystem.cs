@@ -65,7 +65,7 @@ public class InputSystem : MonoBehaviour
             // Shoot
             if (Input.GetMouseButton(0))
             {
-                playerPhysicalObject.inventory.WeaponEquiped.Shoot();
+                playerPhysicalObject.inventory.WeaponEquiped.Shoot(playerPhysicalObject);
             }
 
             SwitchGun();

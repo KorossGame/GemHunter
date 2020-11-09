@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Default : Enemy
 {
-    void Start()
+    void Awake()
     {
         // HP and Speed of movement
         HP = 45;

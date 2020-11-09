@@ -32,18 +32,27 @@ public class Shotgun : Gun
         fireRate = 1.3f;
     }
 
-    protected override void ShootBullet()
+    protected override void ShootBullet(Subject shooter)
     {
-        // Check if power up is activated
-        int powerUPMultiplier = PlayerManager.instance.player.GetComponent<Player>().GunPowerUPMultiplier;
+        int powerUPMultiplier;
+        // Check if power shooter is player or enemy
+        if (shooter.transform.tag == "Player")
+        {
+            powerUPMultiplier = PlayerManager.instance.player.GetComponent<Player>().GunPowerUPMultiplier;
 
-        // Substract each shot
-        CurrentAmmo--;
+            // Substract each shot for player
+            CurrentAmmo--;
+        }
+        else
+        {
+            powerUPMultiplier = 1;
+        }
 
         for (int bulletCount = 0; bulletCount < bulletShootCount; bulletCount++)
         {
             // Create new bullet with passing Gun there
             Projectile newShoot = Instantiate(bullet, attackPoint.position, attackPoint.rotation);
+            newShoot.shooter = shooter.transform;
             newShoot.CurrentGun = this;
             newShoot.PowerUPMultiplier = powerUPMultiplier;
             newShoot.Speed = BulletSpeed;

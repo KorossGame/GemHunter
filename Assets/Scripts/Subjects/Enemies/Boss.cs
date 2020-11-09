@@ -6,7 +6,7 @@ public class Boss : Enemy
 {
     private byte phase;
 
-    void Start()
+    void Awake()
     {
         // HP and Speed of movement
         HP = 500;

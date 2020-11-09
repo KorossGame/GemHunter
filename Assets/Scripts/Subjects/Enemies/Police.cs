@@ -5,7 +5,7 @@ using UnityEngine;
 public class Police : Enemy
 {
 
-    void Start()
+    void Awake()
     {
         // HP and Speed of movement
         HP = 70;

@@ -5,27 +5,34 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    // LayerMask for specific layers (10 stands for enemy)
-    private LayerMask enemyLayers = 1 << 10;
+    // LayerMask for specific layers
+    private LayerMask enemyLayers;
 
+    // Speed of bullet
     public float Speed { private get; set; } = 10f;
 
     public Gun CurrentGun { private get; set; }
     public int PowerUPMultiplier { private get; set; }
 
-    private Transform player;
+    private float livingEntityTime = 10f;
+
+    // Reference to player
+    public Transform shooter;
+
+    // Reference to rigidbody
+    private Rigidbody rb;
 
     void Start()
     {
-        player = PlayerManager.instance.player.transform;
+        rb = GetComponent<Rigidbody>();
+        Despawn();
     }
 
     void FixedUpdate()
     {
         float moveDistance = Speed * Time.fixedDeltaTime;
         DetectCollisions(moveDistance);
-        // !!!USE RIGIDBODY!!!
-        transform.Translate(Vector3.forward * moveDistance);
+        rb.MovePosition(transform.position + (transform.forward * moveDistance));
     }
 
     void DetectCollisions(float moveDistance)
@@ -33,18 +40,27 @@ public class Projectile : MonoBehaviour
         Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
 
+        // Ignore the shooter layer
+        if (shooter.transform.tag == "Player")
+        {
+            enemyLayers = 1 << 9;
+        }
+        else
+        {
+            enemyLayers = 1 << 10;
+        }
+
         // Use raycast with layer mask (only against colliders in specific layers)
-        if (Physics.Raycast(ray, out hit, moveDistance, enemyLayers))
+        if (Physics.Raycast(ray, out hit, moveDistance, ~enemyLayers))
         {
             Subject target = hit.transform.GetComponent<Subject>();
 
-            // Length of 2D vector
-            float hitDistance = Vector2.Distance(target.transform.position, player.position);
-
-            // Apply damage depending on lenght of vector
             if (target)
             {
-                // Check if shoot is in effective range
+                // Length of 2D vector
+                float hitDistance = Vector2.Distance(target.transform.position, shooter.position);
+
+                // Apply damage depending on lenght of vector
                 if (hitDistance <= CurrentGun.EffectiveRange)
                 {
                     target.applyDamage(CurrentGun.DamagePerBullet * PowerUPMultiplier);
@@ -55,11 +71,16 @@ public class Projectile : MonoBehaviour
                     int newDamage = Mathf.RoundToInt((float)(CurrentGun.DamagePerBullet * Math.Pow(0.85f, hitDistance / 2)));
                     target.applyDamage(newDamage * PowerUPMultiplier);
                 }
-                
-            }
 
+            }
+            
             // Destroy the projectile
-            GameObject.Destroy(gameObject);
+            Destroy(gameObject);
         }
+    }
+
+    void Despawn()
+    {
+        Destroy(gameObject, livingEntityTime);
     }
 }

@@ -13,7 +13,6 @@ abstract public class Enemy : Subject
     // Pathfinder
     private NavMeshAgent pathFinder;
     protected Transform player;
-    private bool notRunned = true;
     private bool dead = false;
 
     // Enemy attack
@@ -33,6 +32,34 @@ abstract public class Enemy : Subject
 
     // Weapon holder point
     public Transform holderPoint;
+
+    void Start()
+    {
+
+        // Get player reference
+        player = PlayerManager.instance.player.transform;
+
+        // Set AI movement speed
+        pathFinder = gameObject.GetComponent<NavMeshAgent>();
+        pathFinder.speed = Speed;
+
+        // Set weapon holder
+        holderPoint = transform.Find("HolderPoint");
+
+        // Get Weapon for Enemy
+        getWeapon();
+
+        // Start infinite loop of finding path to player
+        StartCoroutine(UpdatePath());
+    }
+
+    void Update()
+    {
+        if (pathFinder.remainingDistance <= pathFinder.stoppingDistance)
+        {
+            //currentWeapon.Shoot();
+        }
+    }
 
     protected void getWeapon()
     {
@@ -66,44 +93,12 @@ abstract public class Enemy : Subject
 
         // Create a new gun for enemy in holder point position
         Instantiate(currentWeapon, holderPoint.transform.position, gameObject.transform.rotation, holderPoint.transform);
-        
+
         // Enemies have infinite ammo
         currentWeapon.MaxAmmo = -1;
 
         // Change Nav Mesh agent stopping distance depending on gun got
         ChangeStopDistance();
-    }
-
-    void Update()
-    {
-        // BAD SOLUTION
-        if (!pathFinder)
-        {
-            pathFinder = GetComponent<NavMeshAgent>();
-            pathFinder.speed = Speed;
-        }
-        if (!player)
-        {
-            player = PlayerManager.instance.player.transform;
-        }
-        if (player && pathFinder && notRunned)
-        {
-            StartCoroutine(UpdatePath());
-            notRunned = false;
-        }
-        if (!currentWeapon)
-        {
-            getWeapon();
-        }
-        if (!holderPoint)
-        {
-            holderPoint = transform.Find("HolderPoint");
-        }
-
-        if (pathFinder.remainingDistance <= pathFinder.stoppingDistance)
-        {
-            currentWeapon.Shoot();
-        }
     }
 
     IEnumerator UpdatePath()

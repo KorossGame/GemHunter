@@ -25,12 +25,9 @@ abstract public class Gun : MonoBehaviour
     // Attack point/Bullet point reference
     public Transform attackPoint;
 
-    // LayerMask for specific layers (10 stands for enemy, 9 for player)
-    protected LayerMask enemyLayers = 1 << 10;
-
     // Projectile
     public Projectile bullet;
-    public int BulletSpeed { get; protected set; }
+    public int BulletSpeed;
 
     private void OnEnable()
     {
@@ -38,9 +35,8 @@ abstract public class Gun : MonoBehaviour
         reloadProcess = false;
     }
 
-    public void Shoot()
+    public void Shoot(Subject shooter)
     {
-        print(CurrentAmmo);
         // Check if gun have ammo
         if (CurrentAmmo == 0)
         {
@@ -52,21 +48,30 @@ abstract public class Gun : MonoBehaviour
         if (Time.time >= nextShootTime)
         {
             nextShootTime = Time.time + 1f / fireRate;
-            ShootBullet();
+            ShootBullet(shooter);
         }
         else return;
     }
 
-    protected virtual void ShootBullet()
+    protected virtual void ShootBullet(Subject shooter)
     {
-        // Check if power up is activated
-        int powerUPMultiplier = PlayerManager.instance.player.GetComponent<Player>().GunPowerUPMultiplier;
+        int powerUPMultiplier;
+        // Check if power shooter is player or enemy
+        if (shooter.transform.tag == "Player")
+        {
+            powerUPMultiplier = PlayerManager.instance.player.GetComponent<Player>().GunPowerUPMultiplier;
+            
+            // Substract each shot for player
+            CurrentAmmo--;
+        }
+        else
+        {
+            powerUPMultiplier = 1;
+        }
 
-        // Substract each shot
-        CurrentAmmo--;
-
-        // Create new bullet with passing Gun there
+        // Create new bullet with passing Gun and Shooter objects there
         Projectile newShoot = Instantiate(bullet, attackPoint.position, attackPoint.rotation);
+        newShoot.shooter = shooter.transform;
         newShoot.CurrentGun = this;
         newShoot.PowerUPMultiplier = powerUPMultiplier;
         newShoot.Speed = BulletSpeed;
