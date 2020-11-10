@@ -15,7 +15,10 @@ public class CameraController : MonoBehaviour
 
     void FixedUpdate()
     {
-        MoveCamera();
+        if (target)
+        {
+            MoveCamera();
+        }
     }
 
     void MoveCamera()

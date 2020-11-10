@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
     // LayerMask for specific layers
-    private LayerMask enemyLayers;
+    public LayerMask enemyLayers;
 
     // Speed of bullet
     public float Speed { private get; set; } = 10f;
@@ -24,8 +25,22 @@ public class Projectile : MonoBehaviour
 
     void Start()
     {
+        // Get Rigidbody reference
         rb = GetComponent<Rigidbody>();
+
+        // Call self-destruction after 10 seconds
         Despawn();
+
+        // Invert layer mask to ignore layers
+        if (shooter.tag == "Player")
+        {
+            enemyLayers |= 1 << 9;
+        }
+        else
+        {
+            enemyLayers |= 1 << 10;
+        }
+        enemyLayers = ~enemyLayers;
     }
 
     void FixedUpdate()
@@ -40,19 +55,11 @@ public class Projectile : MonoBehaviour
         Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
 
-        // Ignore the shooter layer
-        if (shooter.transform.tag == "Player")
-        {
-            enemyLayers = 1 << 9;
-        }
-        else
-        {
-            enemyLayers = 1 << 10;
-        }
-
         // Use raycast with layer mask (only against colliders in specific layers)
-        if (Physics.Raycast(ray, out hit, moveDistance, ~enemyLayers))
+        if (Physics.Raycast(ray, out hit, moveDistance, enemyLayers))
         {
+
+            // Get a subject we hit
             Subject target = hit.transform.GetComponent<Subject>();
 
             if (target)

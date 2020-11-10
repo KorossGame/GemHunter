@@ -18,10 +18,14 @@ public class InputSystem : MonoBehaviour
     private bool boosted = false;
     private float boostCoefficient = 1.25f;
 
+    // Player
+    private Plane playerPlane;
+
     void Start()
     {
         playerPhysicalObject = GetComponent<Player>();
         rb = GetComponent<Rigidbody>();
+        playerPlane = new Plane(Vector3.up, playerVisualObject.transform.position);
     }
 
     void Update()
@@ -87,7 +91,7 @@ public class InputSystem : MonoBehaviour
 
     void HandleRotation()
     {
-        Plane playerPlane = new Plane(Vector3.up, playerVisualObject.transform.position);
+        // Ray to mousePosition
         Ray _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         float hitDist = 1.0f;
 

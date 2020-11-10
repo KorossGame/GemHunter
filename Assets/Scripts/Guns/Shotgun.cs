@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Shotgun : Gun
@@ -13,7 +12,7 @@ public class Shotgun : Gun
         DamagePerBullet = 24;
 
         // Bullet speed
-        BulletSpeed = 35;
+        BulletSpeed = 30;
 
         // Ammo
         ammoInClip = 5;
@@ -48,17 +47,20 @@ public class Shotgun : Gun
             powerUPMultiplier = 1;
         }
 
+        // Spawn count of bullets defined by variable
         for (int bulletCount = 0; bulletCount < bulletShootCount; bulletCount++)
         {
-            // Create new bullet with passing Gun there
+            // Create new bullet
             Projectile newShoot = Instantiate(bullet, attackPoint.position, attackPoint.rotation);
+
+            // Set Up Physics for bullet
             newShoot.shooter = shooter.transform;
             newShoot.CurrentGun = this;
             newShoot.PowerUPMultiplier = powerUPMultiplier;
             newShoot.Speed = BulletSpeed;
 
             // Dispersion of bullets
-            newShoot.transform.rotation = Quaternion.RotateTowards(transform.rotation, Random.rotation, angle);
+            newShoot.transform.rotation = Quaternion.RotateTowards(newShoot.transform.rotation, Random.rotation, angle);
         }
     }
 }

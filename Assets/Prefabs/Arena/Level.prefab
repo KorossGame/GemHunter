@@ -1220,7 +1220,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4954733019962329811}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Level
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1257,6 +1257,10 @@ PrefabInstance:
     - target: {fileID: 4483447864011570358, guid: e4b0fee9620060d4c80e9bbd4fc782d8, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967263
+      objectReference: {fileID: 0}
+    - target: {fileID: 4483447864011570358, guid: e4b0fee9620060d4c80e9bbd4fc782d8, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4483447864011570362, guid: e4b0fee9620060d4c80e9bbd4fc782d8, type: 3}
       propertyPath: m_RootOrder

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 108686683836071831}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 108686683887606266}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 108686684158322647}
   - component: {fileID: 108686684158322646}
   - component: {fileID: 108686684158322641}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -170,7 +170,7 @@ GameObject:
   - component: {fileID: 108686684735846660}
   - component: {fileID: 108686684735846663}
   - component: {fileID: 108686684735846662}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -265,7 +265,7 @@ GameObject:
   - component: {fileID: 108686685244554911}
   - component: {fileID: 108686685244554910}
   - component: {fileID: 108686685244554905}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: v
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -358,7 +358,7 @@ GameObject:
   m_Component:
   - component: {fileID: 108686685440199452}
   - component: {fileID: 108686685440199453}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Assault
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -395,3 +395,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 108686683836071831}
   bullet: {fileID: -7774822217667158408, guid: ebe85e4ad1e0af34a91046718d7b0c4d, type: 3}
+  BulletSpeed: 0

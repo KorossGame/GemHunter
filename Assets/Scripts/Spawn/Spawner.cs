@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
+    public static Spawner instance;
+
     [Header("Waves")]
     // Waves
     public Wave[] waves;
@@ -22,15 +24,23 @@ public class Spawner : MonoBehaviour
     [Header("Parent for Enemies")]
     public Transform parentObject;
 
+    void Awake()
+    {
+        instance = this;
+    }
+
     void Start()
     {
         chanceOfSpawn = 100.0f / enemyTypes.Length;
         NextWave();
+
+        // Set random seed
+        Random.InitState((int)System.DateTime.Now.Ticks);
     }
 
     void Update()
     {
-        if (Time.time > nextSpawnTime && currentWave.currentEnemies < currentWave.maxEnemies)
+        if (Time.time > nextSpawnTime && currentWave.currentEnemies < currentWave.maxEnemies && PlayerManager.instance.player)
         {
             nextSpawnTime = Time.time + currentWave.timeBetweenSpawn;
             SpawnEnemy();
@@ -39,15 +49,35 @@ public class Spawner : MonoBehaviour
 
     void SpawnEnemy()
     {
-        // Set random seed
-        Random.InitState((int)System.DateTime.Now.Ticks);
+        // Create random spawn point
+        int maxSpawnPoints = (currentWave.spawnPoints.Length);
+        if (maxSpawnPoints > 0)
+        {
+            int newPoint = Random.Range(0, maxSpawnPoints);
+            SpawnPoint randomSpawnPoint = currentWave.spawnPoints[newPoint];
 
-        // Generate random number
-        int randomNumber = Random.Range(0, 100);
-        int enemyIndexToSpawn = (int)(randomNumber / chanceOfSpawn);
-        Enemy spawnedEnemy = Instantiate(enemyTypes[enemyIndexToSpawn], Vector3.zero, Quaternion.identity, parentObject);
-        spawnedEnemy.OnDeath += OnEnemyDeath;
-        currentWave.currentEnemies++;
+            // Generate spawn chances depending on position difference
+            randomSpawnPoint.GenerateSpawnChances();
+
+            // Generate random number
+            int randomNumber = Random.Range(0, 100);
+            int enemyIndexToSpawn = 0;
+
+            // Get enemy index to spawn depending on partial sums
+            for (int i = 0; i < enemyTypes.Length - 1; i++)
+            {
+                if (randomNumber <= randomSpawnPoint.spawnChance[i])
+                {
+                    enemyIndexToSpawn = i;
+                    break;
+                }
+            }
+
+            // Array of pointers for spawning enemies
+            Enemy spawnedEnemy = Instantiate(enemyTypes[enemyIndexToSpawn], randomSpawnPoint.transform.position, Quaternion.identity, parentObject);
+            spawnedEnemy.OnDeath += OnEnemyDeath;
+            currentWave.currentEnemies++;
+        }
     }
 
     void OnEnemyDeath()

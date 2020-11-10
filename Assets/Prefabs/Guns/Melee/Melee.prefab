@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2612050729990362859}
   - component: {fileID: 2612050729990362858}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Melee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 2612050730075958314}
   bullet: {fileID: 0}
+  BulletSpeed: 0
 --- !u!1 &2612050730012062354
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,7 +59,7 @@ GameObject:
   - component: {fileID: 2612050730012062353}
   - component: {fileID: 2612050730012062350}
   - component: {fileID: 2612050730012062351}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,7 +138,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2612050730075958314}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,7 +170,7 @@ GameObject:
   - component: {fileID: 2612050730510016744}
   - component: {fileID: 2612050730510016740}
   - component: {fileID: 2612050730510016741}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -248,7 +249,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1069808095117220728}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}

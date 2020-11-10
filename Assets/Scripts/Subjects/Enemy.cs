@@ -33,8 +33,13 @@ abstract public class Enemy : Subject
     // Weapon holder point
     public Transform holderPoint;
 
+    // Object of enemy
+    public Subject enemyObject;
+
     void Start()
     {
+        // Get object itself
+        enemyObject = gameObject.GetComponent<Subject>();
 
         // Get player reference
         player = PlayerManager.instance.player.transform;
@@ -55,10 +60,18 @@ abstract public class Enemy : Subject
 
     void Update()
     {
-        if (pathFinder.remainingDistance <= pathFinder.stoppingDistance)
+        if (player)
         {
-            //currentWeapon.Shoot();
+            if (pathFinder.remainingDistance <= pathFinder.stoppingDistance)
+            {
+                currentWeapon.Shoot(enemyObject);
+            }
         }
+    }
+
+    void FixedUpdate()
+    {
+        FaceTarget();
     }
 
     protected void getWeapon()
@@ -92,7 +105,7 @@ abstract public class Enemy : Subject
         }
 
         // Create a new gun for enemy in holder point position
-        Instantiate(currentWeapon, holderPoint.transform.position, gameObject.transform.rotation, holderPoint.transform);
+        currentWeapon = Instantiate(currentWeapon, holderPoint.transform.position, gameObject.transform.rotation, holderPoint.transform);
 
         // Enemies have infinite ammo
         currentWeapon.MaxAmmo = -1;
@@ -103,21 +116,27 @@ abstract public class Enemy : Subject
 
     IEnumerator UpdatePath()
     {
-        float refreshRate = 0.5f;
+        float refreshRate = 0.25f;
         while (player && !dead)
         {
             Vector3 PlayerPos = new Vector3(player.transform.position.x, 0, player.transform.position.z);
             pathFinder.SetDestination(PlayerPos);
-            FaceTarget();
             yield return new WaitForSeconds(refreshRate);
+        }
+        if (!player)
+        {
+            pathFinder.SetDestination(transform.position);
         }
     }
 
     protected void FaceTarget()
     {
-        Vector3 direction = (player.position - transform.position).normalized;
-        Quaternion checkRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-        transform.rotation = Quaternion.Slerp(transform.rotation, checkRotation, Time.deltaTime * 10f);
+        if (player)
+        {
+            Vector3 direction = (player.position - transform.position).normalized;
+            Quaternion checkRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+            transform.rotation = Quaternion.Slerp(transform.rotation, checkRotation, Time.fixedDeltaTime * pathFinder.angularSpeed);
+        }
     }
 
     protected override void Die()

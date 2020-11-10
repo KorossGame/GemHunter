@@ -9,7 +9,7 @@ public class Player : Subject
     void Start()
     {
         Speed = 10f;
-        HP = 100;
+        HP = 10000;
     }
 
     public override void applyDamage(int damage)

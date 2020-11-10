@@ -13,4 +13,6 @@ public class Wave
     public float timeBetweenSpawn;
     // How much enemies need to die
     public byte enemyToKill;
+    // Spawn points with dynamic spawn chances
+    public SpawnPoint[] spawnPoints;
 }
