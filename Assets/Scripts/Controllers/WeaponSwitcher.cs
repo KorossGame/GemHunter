@@ -5,26 +5,59 @@ using UnityEngine;
 
 public class WeaponSwitcher : MonoBehaviour
 {
-    public Gun defaultWeapon;
-    public Gun WeaponEquiped { get; set; }
-    private Transform holderPoint;
+    public Gun WeaponEquiped { get; private set; }
+    public Gun[] availableGuns;
 
     void Start()
     {
-        holderPoint = gameObject.transform;
-        if (!WeaponEquiped)
+        availableGuns = new Gun[GunManager.instance.guns.Length];
+    }
+
+    public void EquipWeapon(int gunIndex)
+    {
+        // Check if Gun present
+        if (availableGuns[gunIndex])
         {
-            EquipWeapon(defaultWeapon);
+            // Disable current weapon
+            if (WeaponEquiped)
+            {
+                WeaponEquiped.gameObject.SetActive(false);
+            }
+
+            // Activate new weapon
+            WeaponEquiped = availableGuns[gunIndex];
+            WeaponEquiped.gameObject.SetActive(true);
         }
     }
 
-    public void EquipWeapon(Gun toEquip)
+    public void UnlockWeapon(Gun toUnlock)
     {
-        if (WeaponEquiped)
+        foreach (Gun gun in availableGuns)
         {
-            Destroy(WeaponEquiped.gameObject);
+            if (gun == toUnlock) return;
         }
-        WeaponEquiped = Instantiate(toEquip, holderPoint.position, holderPoint.rotation, holderPoint);
+
+        // Place gun in array of guns by guns ID
+        availableGuns[toUnlock.ID] = toUnlock;
+
+        // Reset position, rotation of picked gun
+        
+
+        // Move gun to inventory of player
+        toUnlock.transform.parent = gameObject.transform;
+        toUnlock.gameObject.SetActive(false);
+    }
+
+    public int GetCurrentWeaponID()
+    {
+        for (int index=0; index < availableGuns.Length; index++)
+        {
+            if (availableGuns[index] == WeaponEquiped)
+            {
+                return index;
+            }
+        }
+        return -1;
     }
 
     

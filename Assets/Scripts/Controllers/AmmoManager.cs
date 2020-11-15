@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GunManager : MonoBehaviour
+public class AmmoManager : MonoBehaviour
 {
-    public static GunManager instance;
-
-    public Gun[] guns;
+    public static AmmoManager instance;
+    public AmmoBox[] ammoBoxes;
 
     void Awake()
     {

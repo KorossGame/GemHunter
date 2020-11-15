@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2065181690516665068}
   m_Layer: 10
   m_Name: Military
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holderPoint: {fileID: 9054905455003154529}
+  enemyObject: {fileID: 0}
 --- !u!1 &662922346181530014
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,9 +6,7 @@ using UnityEngine.AI;
 abstract public class Enemy : Subject
 {
     // PowerUP spawn
-    private int powerUPcount = 3;
-    private float powerUPdropChange = 10f;
-    private float maxValue = 100;
+    private float powerUPdropChance = 10f;
 
     // Pathfinder
     private NavMeshAgent pathFinder;
@@ -38,6 +36,9 @@ abstract public class Enemy : Subject
 
     void Start()
     {
+        // Set random seed
+        Random.InitState((int)System.DateTime.Now.Ticks);
+
         // Get object itself
         enemyObject = gameObject.GetComponent<Subject>();
 
@@ -76,39 +77,33 @@ abstract public class Enemy : Subject
 
     protected void getWeapon()
     {
-        // Set random seed
-        Random.InitState((int)System.DateTime.Now.Ticks);
-
         // Get random number
         float gunRandom = Random.Range(0f, 100.0f);
 
         // Set current weapon
         if (gunRandom <= meleeChance)
         {
-            currentWeapon = GunManager.instance.meleeWeapon;
+            currentWeapon = GunManager.instance.guns[0];
         }
         else if (gunRandom <= pistolChance)
         {
-            currentWeapon = GunManager.instance.pistolWeapon;
+            currentWeapon = GunManager.instance.guns[1];
         }
         else if (gunRandom <= shotgunChance)
         {
-            currentWeapon = GunManager.instance.shotgunWeapon;
+            currentWeapon = GunManager.instance.guns[2];
         }
         else if (gunRandom <= assaultChance)
         {
-            currentWeapon = GunManager.instance.assaultWeapon;
+            currentWeapon = GunManager.instance.guns[3];
         }
         else if (gunRandom <= RPGChance)
         {
-            currentWeapon = GunManager.instance.RPGWeapon;
+            currentWeapon = GunManager.instance.guns[4];
         }
 
         // Create a new gun for enemy in holder point position
         currentWeapon = Instantiate(currentWeapon, holderPoint.transform.position, gameObject.transform.rotation, holderPoint.transform);
-
-        // Enemies have infinite ammo
-        currentWeapon.MaxAmmo = -1;
 
         // Change Nav Mesh agent stopping distance depending on gun got
         ChangeStopDistance();
@@ -164,24 +159,25 @@ abstract public class Enemy : Subject
 
     protected void GeneratePowerUP()
     {
-        // Set random seed
-        Random.InitState((int)System.DateTime.Now.Ticks);
-        
         // Generate new number to define if generate powerUP is needed
-        int randomNumber = (int)Random.Range(0, maxValue);
+        int randomNumber = (int)Random.Range(0, 100);
 
-        // Calc if we got value in drop chance
-        if (randomNumber > maxValue * powerUPdropChange) return;
+        print(randomNumber);
 
-        // Which powerUP going to be dropped
-        int randomPowerUP = Random.Range(0, powerUPcount);
-        //Instantiate(powerUP, transform.position, transform.rotation);
+        if (randomNumber <= powerUPdropChance)
+        {
+            // Which powerUP going to be dropped
+            int randomPowerUP = Random.Range(0, PowerUPManager.instance.powerUPs.Length - 1);
+
+            // Create PowerUP object
+            Instantiate(PowerUPManager.instance.powerUPs[randomPowerUP], transform.position + new Vector3(0, 0.5f, 0), transform.rotation);
+        }
     }
 
 
     // Change Nav Mesh agent stopping distance depending on gun got
     protected void ChangeStopDistance()
     {
-        pathFinder.stoppingDistance = currentWeapon.EffectiveRange;
+        pathFinder.stoppingDistance = currentWeapon.EffectiveRange * 1.5f;
     }
 }

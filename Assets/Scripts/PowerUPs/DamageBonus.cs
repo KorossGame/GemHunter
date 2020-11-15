@@ -13,7 +13,7 @@ public class DamageBonus : PowerUP
         //Instantiate(pickupEffect, transform.position, transform.rotation);
 
         // Get Player class from visual object
-        Player playerGameObject = player.transform.parent.GetComponent<Player>();
+        Player playerGameObject = player.GetComponent<Player>();
         
         // Apply powerup
         if (playerGameObject)

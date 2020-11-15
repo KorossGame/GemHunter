@@ -4,8 +4,9 @@ using UnityEngine;
 
 abstract public class Gun : MonoBehaviour
 {
+    public int ID { get; protected set; }
     public int DamagePerBullet { get; protected set; }
-    public int CurrentAmmo { get; protected set;}
+    public int CurrentAmmo { get; protected set; }
 
     // Ammo block
     protected int ammoInClip;
@@ -45,7 +46,7 @@ abstract public class Gun : MonoBehaviour
         }
 
         // Check if we can shoot
-        if (Time.time >= nextShootTime)
+        if (Time.time >= nextShootTime && !reloadProcess)
         {
             nextShootTime = Time.time + 1f / fireRate;
             ShootBullet(shooter);
@@ -60,7 +61,7 @@ abstract public class Gun : MonoBehaviour
         if (shooter.transform.tag == "Player")
         {
             powerUPMultiplier = PlayerManager.instance.player.GetComponent<Player>().GunPowerUPMultiplier;
-            
+
             // Substract each shot for player
             CurrentAmmo--;
         }
@@ -88,7 +89,7 @@ abstract public class Gun : MonoBehaviour
         {
             if (ammoLeft != 0 && ammoInClip != CurrentAmmo)
             {
-                
+
                 reloadProcess = true;
 
                 // Play animation + sound
@@ -96,13 +97,8 @@ abstract public class Gun : MonoBehaviour
                 // Wait for time
                 yield return new WaitForSeconds(reloadTime);
 
-                // Enemies have infinite ammo
-                if (MaxAmmo == -1)
-                {
-                    CurrentAmmo = ammoInClip;
-                }
                 // Check if we have enought ammo for whole clip
-                else if (ammoInClip > ammoLeft)
+                if (ammoInClip > ammoLeft)
                 {
                     CurrentAmmo = ammoLeft;
                     ammoLeft = 0;
@@ -114,6 +110,21 @@ abstract public class Gun : MonoBehaviour
                 }
                 reloadProcess = false;
             }
+        }
+    }
+
+    public void RefillAmmo()
+    {
+        ammoLeft = MaxAmmo;
+    }
+
+    // Pick up weapon
+    protected void OnTriggerEnter(Collider col)
+    {
+        if (col.transform.CompareTag("Player") && gameObject.transform.CompareTag("NewWeapon"))
+        {
+            WeaponSwitcher playerInventory = PlayerManager.instance.player.GetComponent<Player>().inventory;
+            playerInventory.UnlockWeapon(this);
         }
     }
 }

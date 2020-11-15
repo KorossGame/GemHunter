@@ -8,6 +8,9 @@ public class Shotgun : Gun
 
     void Awake()
     {
+        // ID of gun
+        ID = 2;
+
         // Damage
         DamagePerBullet = 24;
 

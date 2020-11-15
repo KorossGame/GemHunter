@@ -6,6 +6,9 @@ public class Assault : Gun
 {
     void Awake()
     {
+        // ID of gun
+        ID = 3;
+
         // Damage
         DamagePerBullet = 30;
 

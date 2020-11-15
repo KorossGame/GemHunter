@@ -4,6 +4,9 @@ public class Pistol : Gun
 {
     void Awake()
     {
+        // ID of gun
+        ID = 1;
+
         // Damage
         DamagePerBullet = 15;
 

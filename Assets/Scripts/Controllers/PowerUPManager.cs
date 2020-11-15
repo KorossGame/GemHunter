@@ -6,9 +6,7 @@ public class PowerUPManager : MonoBehaviour
 {
     public static PowerUPManager instance;
 
-    public PowerUP damageBonus;
-    public PowerUP godBonus;
-    public PowerUP speedBonus;
+    public PowerUP[] powerUPs;
 
     void Awake()
     {

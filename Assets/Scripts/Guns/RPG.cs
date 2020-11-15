@@ -6,6 +6,9 @@ public class RPG : Gun
 {
     void Awake()
     {
+        // ID of gun
+        ID = 4;
+
         // Damage
         DamagePerBullet = 500;
 
@@ -27,5 +30,10 @@ public class RPG : Gun
 
         // Fire Rate (1/fireRate)
         fireRate = 1f;
+    }
+
+    private void applyShereDamage()
+    {
+        //
     }
 }

@@ -11,7 +11,6 @@ abstract public class Subject : MonoBehaviour
     {
         // Substract hp and check if player should die
         HP -= damage;
-        print(HP);
         if (HP <= 0)
             Die();
     }

@@ -24,8 +24,13 @@ public class SpawnPoint : MonoBehaviour
 
     void Start()
     {
+        // Get player transform
         playerTransform = PlayerManager.instance.player.transform;
-        enemyTypes = Spawner.instance.enemyTypes.Length;
+        
+        // Get lenght of enemy types array
+        enemyTypes = GameObject.FindGameObjectWithTag("GameController").GetComponent<Spawner>().enemyTypes.Length;
+        
+        // Create new array to store spawn numbers
         spawnChance = new float[enemyTypes];
     }
 

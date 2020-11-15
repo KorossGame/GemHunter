@@ -10,6 +10,9 @@ public class Melee : Gun
 
     void Awake()
     {
+        // ID of gun
+        ID = 0;
+
         // Damage
         DamagePerBullet = 5;
 

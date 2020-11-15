@@ -24,6 +24,9 @@ public class Spawner : MonoBehaviour
     [Header("Parent for Enemies")]
     public Transform parentObject;
 
+    [Header("Flags")]
+    public bool active;
+    
     void Awake()
     {
         instance = this;
@@ -31,19 +34,29 @@ public class Spawner : MonoBehaviour
 
     void Start()
     {
-        chanceOfSpawn = 100.0f / enemyTypes.Length;
-        NextWave();
+        if (enemyTypes.Length > 0)
+        {
+            active = true;
 
-        // Set random seed
-        Random.InitState((int)System.DateTime.Now.Ticks);
+            chanceOfSpawn = 100.0f / enemyTypes.Length;
+            NextWave();
+
+            // Set random seed
+            Random.InitState((int)System.DateTime.Now.Ticks);
+        }
     }
 
     void Update()
     {
-        if (Time.time > nextSpawnTime && currentWave.currentEnemies < currentWave.maxEnemies && PlayerManager.instance.player)
+        // Check if spawner is activated
+        if (Time.time > nextSpawnTime && PlayerManager.instance.player && active && currentWave != null)
         {
-            nextSpawnTime = Time.time + currentWave.timeBetweenSpawn;
-            SpawnEnemy();
+            // Check if enemies count is less than max
+            if (currentWave.currentEnemies < currentWave.maxEnemies)
+            {
+                nextSpawnTime = Time.time + currentWave.timeBetweenSpawn;
+                SpawnEnemy();
+            }
         }
     }
 
@@ -97,5 +110,15 @@ public class Spawner : MonoBehaviour
             currentWave = waves[currentWaveNumber];
             currentWaveNumber++;
         }
+    }
+
+    public void KillAllEnemies()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemyObject in enemies)
+        {
+            Destroy(enemyObject);
+        }
+        currentWave.currentEnemies = 0;
     }
 }
