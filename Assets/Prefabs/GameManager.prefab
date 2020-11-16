@@ -149,6 +149,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WestSpawnPoint
       objectReference: {fileID: 0}
+    - target: {fileID: 1903875566723857287, guid: fd8d55929a794904db617ed64915a237, type: 3}
+      propertyPath: spawnChance.Array.size
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1903875566723857288, guid: fd8d55929a794904db617ed64915a237, type: 3}
       propertyPath: m_LocalPosition.z
       value: 20

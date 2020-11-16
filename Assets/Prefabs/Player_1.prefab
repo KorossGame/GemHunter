@@ -175,8 +175,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visualObject: {fileID: 8567047989890510884}
   spawnPoint: {fileID: 0}
-  inventory: {fileID: 4363529331246827505}
   respawning: 0
+  inventory: {fileID: 4363529331246827505}
 --- !u!114 &8567047990131211990
 MonoBehaviour:
   m_ObjectHideFlags: 0
