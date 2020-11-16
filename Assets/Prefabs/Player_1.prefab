@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4363529331246827505}
   m_Layer: 9
   m_Name: WeaponList
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5170e86260c3294c8a7abe8ddf862d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultWeapon: {fileID: 3008785848275776804, guid: e8d500867e35303448295ca4a43ce0af, type: 3}
+  availableGuns: []
 --- !u!1 &8567047989890510884
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,7 +173,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0b54794ecea5e44fb92b4aa52d2604f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  visualObject: {fileID: 8567047989890510884}
+  spawnPoint: {fileID: 0}
   inventory: {fileID: 4363529331246827505}
+  respawning: 0
 --- !u!114 &8567047990131211990
 MonoBehaviour:
   m_ObjectHideFlags: 0

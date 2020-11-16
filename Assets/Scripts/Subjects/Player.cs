@@ -4,17 +4,20 @@ using UnityEngine;
 
 public class Player : Subject
 {
+    // Visual Object reference
+    public GameObject visualObject;
+
     // Respawn point
     public Transform spawnPoint;
 
     // Time till respawn the player
     private float respawnTime = 5f;
 
+    // Flag to check if respawn in process
+    public bool respawning = false;
+
     // Inventory system
     public WeaponSwitcher inventory;
-
-    // Flag to check if respawn in process
-    private bool respawning = false;
 
     // Store PowerUP multiplier value
     public int GunPowerUPMultiplier { get; set; } = 1;
@@ -40,6 +43,15 @@ public class Player : Subject
 
         if (!respawning)
         {
+            // Disable Visual player object and Gun visual object
+            visualObject.GetComponent<MeshRenderer>().enabled = false;
+
+            if (inventory.WeaponEquiped)
+            {
+                inventory.WeaponEquiped.RefillAmmo();
+                inventory.gameObject.SetActive(false);
+            }
+
             // Kill all enemies and set spawner inactive
             Spawner.instance.KillAllEnemies();
             Spawner.instance.active = false;
@@ -47,21 +59,6 @@ public class Player : Subject
             // Respawn player
             StartCoroutine(Respawn());
         }
-    }
-
-    private IEnumerator Respawn()
-    {
-        // Set respawn process to True
-        respawning = true;
-
-        // Wait for some time
-        yield return new WaitForSeconds(respawnTime);
-
-        // Spawn
-        Spawn();
-
-        // Set respawning process to false
-        respawning = false;
     }
 
     private void Spawn()
@@ -82,5 +79,29 @@ public class Player : Subject
 
         // Set spawner status back to active
         Spawner.instance.active = true;
+
+        // Enable Visual player object
+        visualObject.GetComponent<MeshRenderer>().enabled = true;
+
+        // Enable gun visual
+        if (inventory.WeaponEquiped)
+        {
+            inventory.gameObject.SetActive(true);
+        }
+    }
+
+    private IEnumerator Respawn()
+    {
+        // Set respawn process to True
+        respawning = true;
+
+        // Wait for some time
+        yield return new WaitForSeconds(respawnTime);
+
+        // Spawn
+        Spawn();
+
+        // Set respawning process to false
+        respawning = false;
     }
 }

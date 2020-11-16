@@ -6,10 +6,9 @@ abstract public class Subject : MonoBehaviour
     public int Shield { get; protected set; }
     public float Speed { get; set; }
 
-    // !!!!MAKE ME ABSTRACT!!!!
     public virtual void applyDamage(int damage)
     {
-        // Substract hp and check if player should die
+        // Substract hp and check if object should die
         HP -= damage;
         if (HP <= 0)
             Die();

@@ -118,13 +118,16 @@ abstract public class Gun : MonoBehaviour
         ammoLeft = MaxAmmo;
     }
 
-    // Pick up weapon
     protected void OnTriggerEnter(Collider col)
     {
-        if (col.transform.CompareTag("Player") && gameObject.transform.CompareTag("NewWeapon"))
+        // Pickup the new weapon
+        if (col.transform.CompareTag("Player") && gameObject.CompareTag("NewWeapon"))
         {
             WeaponSwitcher playerInventory = PlayerManager.instance.player.GetComponent<Player>().inventory;
             playerInventory.UnlockWeapon(this);
+
+            // Switch weapon tag
+            gameObject.tag = "Untagged";
         }
     }
 }

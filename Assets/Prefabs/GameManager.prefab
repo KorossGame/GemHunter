@@ -62,7 +62,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waves:
-  - maxEnemies: 0
+  - maxEnemies: 1
     currentEnemies: 0
     timeBetweenSpawn: 1
     enemyToKill: 20
@@ -133,13 +133,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8486106855256016008}
     m_Modifications:
+    - target: {fileID: 1903875566453792486, guid: fd8d55929a794904db617ed64915a237, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1903875566453792486, guid: fd8d55929a794904db617ed64915a237, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1903875566453792486, guid: fd8d55929a794904db617ed64915a237, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1903875566453792487, guid: fd8d55929a794904db617ed64915a237, type: 3}
       propertyPath: m_Name
       value: WestSpawnPoint
       objectReference: {fileID: 0}
     - target: {fileID: 1903875566723857288, guid: fd8d55929a794904db617ed64915a237, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 19.17
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1903875566723857288, guid: fd8d55929a794904db617ed64915a237, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1903875566723857289, guid: fd8d55929a794904db617ed64915a237, type: 3}
       propertyPath: m_Name
@@ -147,15 +163,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1903875567010123888, guid: fd8d55929a794904db617ed64915a237, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.45690754
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1903875567010123888, guid: fd8d55929a794904db617ed64915a237, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1903875567010123888, guid: fd8d55929a794904db617ed64915a237, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.812387
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1903875567010123888, guid: fd8d55929a794904db617ed64915a237, type: 3}
       propertyPath: m_LocalRotation.x
@@ -193,13 +209,41 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpawnPoints
       objectReference: {fileID: 0}
+    - target: {fileID: 1903875567133062865, guid: fd8d55929a794904db617ed64915a237, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1903875567133062865, guid: fd8d55929a794904db617ed64915a237, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1903875567133062865, guid: fd8d55929a794904db617ed64915a237, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1903875567133062866, guid: fd8d55929a794904db617ed64915a237, type: 3}
       propertyPath: m_Name
       value: EastSpawnPoint
       objectReference: {fileID: 0}
+    - target: {fileID: 1903875567634050976, guid: fd8d55929a794904db617ed64915a237, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1903875567634050976, guid: fd8d55929a794904db617ed64915a237, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1903875567634050977, guid: fd8d55929a794904db617ed64915a237, type: 3}
       propertyPath: m_Name
       value: MapCenter
+      objectReference: {fileID: 0}
+    - target: {fileID: 1903875568066303520, guid: fd8d55929a794904db617ed64915a237, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1903875568066303520, guid: fd8d55929a794904db617ed64915a237, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 1903875568066303521, guid: fd8d55929a794904db617ed64915a237, type: 3}
       propertyPath: m_Name

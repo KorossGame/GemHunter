@@ -53,19 +53,19 @@ public class Projectile : MonoBehaviour
     void DetectCollisions(float moveDistance)
     {
         Ray ray = new Ray(transform.position, transform.forward);
+        Debug.DrawRay(transform.position, transform.forward);
         RaycastHit hit;
 
         // Use raycast with layer mask (only against colliders in specific layers)
         if (Physics.Raycast(ray, out hit, moveDistance, enemyLayers))
         {
-
             // Get a subject we hit
             Subject target = hit.transform.GetComponent<Subject>();
 
             if (target)
             {
-                // Length of 2D vector
-                float hitDistance = Vector2.Distance(target.transform.position, shooter.position);
+                // Length of 3D vector
+                float hitDistance = Vector3.Distance(target.transform.position, shooter.position);
 
                 // Apply damage depending on lenght of vector
                 if (hitDistance <= CurrentGun.EffectiveRange)

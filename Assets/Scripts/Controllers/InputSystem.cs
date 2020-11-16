@@ -18,7 +18,7 @@ public class InputSystem : MonoBehaviour
     private bool boosted = false;
     private float boostCoefficient = 1.25f;
 
-    // Player
+    // Players vision
     private Plane playerPlane;
 
     void Start()
@@ -41,6 +41,14 @@ public class InputSystem : MonoBehaviour
 
     void HandleInput()
     {
+        // Check if player is respawning
+        if (playerPhysicalObject.respawning)
+        {
+            horizontal = 0;
+            vertical = 0;
+            return;
+        }
+        
         // Movement boost
         if (Input.GetKey(KeyCode.LeftShift))
         {
@@ -90,7 +98,11 @@ public class InputSystem : MonoBehaviour
     void ApplyMovement()
     {
         Vector3 movement = new Vector3(horizontal, 0, vertical);
+
+        // Normalize the magnitude of movement vector
         movement = Vector3.ClampMagnitude(movement, 1);
+
+        // Set velocity of player
         rb.velocity = movement * playerPhysicalObject.Speed;
     }
 

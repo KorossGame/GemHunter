@@ -32,7 +32,7 @@ abstract public class Enemy : Subject
     public Transform holderPoint;
 
     // Object of enemy
-    public Subject enemyObject;
+    private Subject enemyObject;
 
     void Start()
     {
@@ -40,13 +40,13 @@ abstract public class Enemy : Subject
         Random.InitState((int)System.DateTime.Now.Ticks);
 
         // Get object itself
-        enemyObject = gameObject.GetComponent<Subject>();
+        enemyObject = GetComponent<Subject>();
 
         // Get player reference
         player = PlayerManager.instance.player.transform;
 
         // Set AI movement speed
-        pathFinder = gameObject.GetComponent<NavMeshAgent>();
+        pathFinder = GetComponent<NavMeshAgent>();
         pathFinder.speed = Speed;
 
         // Set weapon holder
@@ -114,7 +114,7 @@ abstract public class Enemy : Subject
         float refreshRate = 0.25f;
         while (player && !dead)
         {
-            Vector3 PlayerPos = new Vector3(player.transform.position.x, 0, player.transform.position.z);
+            Vector3 PlayerPos = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
             pathFinder.SetDestination(PlayerPos);
             yield return new WaitForSeconds(refreshRate);
         }
@@ -161,8 +161,6 @@ abstract public class Enemy : Subject
     {
         // Generate new number to define if generate powerUP is needed
         int randomNumber = (int)Random.Range(0, 100);
-
-        print(randomNumber);
 
         if (randomNumber <= powerUPdropChance)
         {

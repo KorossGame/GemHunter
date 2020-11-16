@@ -26,6 +26,12 @@ public class WeaponSwitcher : MonoBehaviour
 
             // Activate new weapon
             WeaponEquiped = availableGuns[gunIndex];
+
+            // Reset position and rotation of gun
+            WeaponEquiped.transform.localPosition = Vector3.zero;
+            WeaponEquiped.transform.localRotation = new Quaternion(0, 0, 0, 0);
+
+            // Set weapon active
             WeaponEquiped.gameObject.SetActive(true);
         }
     }
@@ -39,9 +45,6 @@ public class WeaponSwitcher : MonoBehaviour
 
         // Place gun in array of guns by guns ID
         availableGuns[toUnlock.ID] = toUnlock;
-
-        // Reset position, rotation of picked gun
-        
 
         // Move gun to inventory of player
         toUnlock.transform.parent = gameObject.transform;

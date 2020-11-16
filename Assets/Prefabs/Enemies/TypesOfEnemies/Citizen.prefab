@@ -84,7 +84,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &4298978263104249439
@@ -100,7 +100,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holderPoint: {fileID: 4966118958020825301}
-  enemyObject: {fileID: 0}
 --- !u!1 &662922346181530014
 GameObject:
   m_ObjectHideFlags: 0
