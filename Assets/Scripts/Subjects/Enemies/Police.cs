@@ -11,11 +11,7 @@ public class Police : Enemy
         HP = 70;
         Speed = 7f;
 
-        // Weapon
-        meleeChance = 30;
-        pistolChance = 70;
-        shotgunChance = 84;
-        assaultChance = 99;
-        RPGChance = 100;
+        // Weapon chances
+        weaponChance = new double[] { 30, 40, 14, 15, 1 };
     }
 }

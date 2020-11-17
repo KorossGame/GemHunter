@@ -5,32 +5,30 @@ using UnityEngine.AI;
 
 abstract public class Enemy : Subject
 {
-    // PowerUP spawn
+    [Header("PowerUP")]
     private float powerUPdropChance = 10f;
 
-    // Pathfinder
+    [Header("Pathfinder")]
     private NavMeshAgent pathFinder;
     protected Transform player;
     private bool dead = false;
 
-    // Enemy attack
+    [Header("Enemy Attack")]
     protected bool hasMelee;
     protected float attackDistance;
     protected Gun currentWeapon;
-
-    // Enemy dead event
+    
+    [HideInInspector]
     public event System.Action OnDeath;
 
+    [Header("Weapon")]
     // Chances of spawn enemy with particular weapon (e.g. 10 for melee - represents values (0-10])
-    protected double meleeChance;
-    protected double pistolChance;
-    protected double shotgunChance;
-    protected double assaultChance;
-    protected double RPGChance;
+    protected double[] weaponChance;
 
     // Weapon holder point
     public Transform holderPoint;
 
+    [HideInInspector]
     // Object of enemy
     private Subject enemyObject;
 
@@ -38,6 +36,9 @@ abstract public class Enemy : Subject
     {
         // Set random seed
         Random.InitState((int)System.DateTime.Now.Ticks);
+
+        // Weapon chance array
+        generatePartialSum();
 
         // Get object itself
         enemyObject = GetComponent<Subject>();
@@ -81,23 +82,23 @@ abstract public class Enemy : Subject
         float gunRandom = Random.Range(0f, 100.0f);
 
         // Set current weapon
-        if (gunRandom <= meleeChance)
+        if (gunRandom <= weaponChance[0])
         {
             currentWeapon = GunManager.instance.guns[0];
         }
-        else if (gunRandom <= pistolChance)
+        else if (gunRandom <= weaponChance[1])
         {
             currentWeapon = GunManager.instance.guns[1];
         }
-        else if (gunRandom <= shotgunChance)
+        else if (gunRandom <= weaponChance[2])
         {
             currentWeapon = GunManager.instance.guns[2];
         }
-        else if (gunRandom <= assaultChance)
+        else if (gunRandom <= weaponChance[3])
         {
             currentWeapon = GunManager.instance.guns[3];
         }
-        else if (gunRandom <= RPGChance)
+        else if (gunRandom <= weaponChance[4])
         {
             currentWeapon = GunManager.instance.guns[4];
         }
@@ -149,6 +150,7 @@ abstract public class Enemy : Subject
         // Destroy GameObject
         base.Die();
     }
+
     public override void applyDamage(int damage)
     {
         // Play custom animation and sound
@@ -177,5 +179,15 @@ abstract public class Enemy : Subject
     protected void ChangeStopDistance()
     {
         pathFinder.stoppingDistance = currentWeapon.EffectiveRange * 1.5f;
+    }
+
+    protected void generatePartialSum()
+    {
+        double counter = 0;
+        for (int i = 0; i < weaponChance.Length; i++)
+        {
+            counter += weaponChance[i];
+            weaponChance[i] = counter;
+        }
     }
 }

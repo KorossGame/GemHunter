@@ -53,7 +53,6 @@ public class Projectile : MonoBehaviour
     void DetectCollisions(float moveDistance)
     {
         Ray ray = new Ray(transform.position, transform.forward);
-        Debug.DrawRay(transform.position, transform.forward);
         RaycastHit hit;
 
         // Use raycast with layer mask (only against colliders in specific layers)

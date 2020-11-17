@@ -12,11 +12,7 @@ public class Boss : Enemy
         HP = 500;
         Speed = 5f;
 
-        // Weapon
-        meleeChance = 0;
-        pistolChance = 0;
-        shotgunChance = 0;
-        assaultChance = 0;
-        RPGChance = 0;
+        // Weapon chances
+        weaponChance = new double[] { 0, 0, 0, 0, 0 };
     }
 }

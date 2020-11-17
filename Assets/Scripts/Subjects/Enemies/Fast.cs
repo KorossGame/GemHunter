@@ -10,11 +10,7 @@ public class Fast : Enemy
         HP = 10;
         Speed = 15f;
 
-        // Weapon
-        meleeChance = 100;
-        pistolChance = 0;
-        shotgunChance = 0;
-        assaultChance = 0;
-        RPGChance = 0;
+        // Weapon chances
+        weaponChance = new double[] { 100, 0, 0, 0, 0 };
     }
 }
