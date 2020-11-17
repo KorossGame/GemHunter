@@ -48,12 +48,20 @@ public class WeaponSwitcher : MonoBehaviour
 
         // Move gun to inventory of player
         toUnlock.transform.parent = gameObject.transform;
-        toUnlock.gameObject.SetActive(false);
+        
+        if (WeaponEquiped == null)
+        {
+            EquipWeapon(toUnlock.ID);
+        }
+        else
+        {
+            toUnlock.gameObject.SetActive(false);
+        }
     }
 
     public int GetCurrentWeaponID()
     {
-        for (int index=0; index < availableGuns.Length; index++)
+        for (int index = 0; index < availableGuns.Length; index++)
         {
             if (availableGuns[index] == WeaponEquiped)
             {
@@ -63,5 +71,49 @@ public class WeaponSwitcher : MonoBehaviour
         return -1;
     }
 
-    
+    public int getNextWeapon()
+    {
+        int index = GetCurrentWeaponID();
+
+        for (int i = index + 1; i < availableGuns.Length; i++)
+        {
+            if (availableGuns[i])
+            {
+                return i;
+            }
+        }
+
+        for (int i = 0; i < index; i++)
+        {
+            if (availableGuns[i])
+            {
+                return i;
+            }
+        }
+
+        return index;
+    }
+
+    public int getPreviousWeapon()
+    {
+        int index = GetCurrentWeaponID();
+
+        for (int i = index - 1; i >= 0; i--)
+        {
+            if (availableGuns[i])
+            {
+                return i;
+            }
+        }
+
+        for (int i = availableGuns.Length - 1; i > index; i--)
+        {
+            if (availableGuns[i])
+            {
+                return i;
+            }
+        }
+
+        return index;
+    }
 }
