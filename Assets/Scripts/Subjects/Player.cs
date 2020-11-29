@@ -20,7 +20,7 @@ public class Player : Subject
     public WeaponSwitcher inventory;
 
     // Store PowerUP multiplier value
-    public int GunPowerUPMultiplier { get; set; } = 1;
+    public byte GunPowerUPMultiplier { get; set; } = 1;
 
     void Start()
     {

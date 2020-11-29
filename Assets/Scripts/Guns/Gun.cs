@@ -4,9 +4,9 @@ using UnityEngine;
 
 abstract public class Gun : MonoBehaviour
 {
-    public int ID { get; protected set; }
+    public byte ID { get; protected set; }
     public int DamagePerBullet { get; protected set; }
-    public int CurrentAmmo { get; protected set; }
+    protected int CurrentAmmo { get; set; }
 
     // Ammo block
     protected int ammoInClip;
@@ -23,12 +23,16 @@ abstract public class Gun : MonoBehaviour
     private float nextShootTime = 1f;
     private bool reloadProcess = false;
 
+    // Switch weapon trigger
+    private bool switchProcess = false;
+    private float switchTime = 0.5f;
+
     // Attack point/Bullet point reference
     public Transform attackPoint;
 
     // Projectile
     public Projectile bullet;
-    public int BulletSpeed;
+    protected int BulletSpeed { get; set; }
 
     private void OnEnable()
     {
@@ -46,7 +50,7 @@ abstract public class Gun : MonoBehaviour
         }
 
         // Check if we can shoot
-        if (Time.time >= nextShootTime && !reloadProcess)
+        if (Time.time >= nextShootTime && !reloadProcess && !switchProcess)
         {
             nextShootTime = Time.time + 1f / fireRate;
             ShootBullet(shooter);
@@ -81,6 +85,21 @@ abstract public class Gun : MonoBehaviour
     public void ForceReload()
     {
         StartCoroutine(Reload());
+    }
+
+    public void ForceDelayShot()
+    {
+        switchProcess = true;
+        StartCoroutine(DelayShot());
+    }
+
+    protected IEnumerator DelayShot()
+    {
+        if (switchProcess)
+        {
+            yield return new WaitForSeconds(switchTime);
+            switchProcess = false;
+        }
     }
 
     protected IEnumerator Reload()

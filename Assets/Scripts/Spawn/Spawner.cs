@@ -19,7 +19,6 @@ public class Spawner : MonoBehaviour
     [Header("Enemy Types Available")]
     // Reference to all types of enemies
     public Enemy[] enemyTypes;
-    private float chanceOfSpawn;
 
     [Header("Parent for Enemies")]
     public Transform parentObject;
@@ -37,8 +36,6 @@ public class Spawner : MonoBehaviour
         if (enemyTypes.Length > 0)
         {
             active = true;
-
-            chanceOfSpawn = 100.0f / enemyTypes.Length;
             NextWave();
 
             // Set random seed
@@ -48,9 +45,15 @@ public class Spawner : MonoBehaviour
 
     void Update()
     {
-        // Check if spawner is activated
+
+        // Spawn the enemy if spawner is activated
         if (Time.time > nextSpawnTime && PlayerManager.instance.player && active && currentWave != null)
         {
+            // Check if wave time passed and we need to call next wave
+            if (Time.time > currentWave.timeToNextWave)
+            {
+                NextWave();
+            }
             // Check if enemies count is less than max
             if (currentWave.currentEnemies < currentWave.maxEnemies)
             {
@@ -96,18 +99,29 @@ public class Spawner : MonoBehaviour
     void OnEnemyDeath()
     {
         currentWave.currentEnemies--;
+        /*
         currentWave.enemyToKill--;
         if (currentWave.enemyToKill == 0)
         {
             NextWave();
         }
+        */
     }
 
     void NextWave()
     {
         if (currentWaveNumber+1 <= waves.Length)
         {
+            // We need to kill all enemies till set a new wave
+            KillAllEnemies();
+
+            // Set current wave as new one
             currentWave = waves[currentWaveNumber];
+
+            // Reset timer till next wave
+            currentWave.timeToNextWave = Time.time + currentWave.timeToNextWave;
+
+            // Increment current wave number
             currentWaveNumber++;
         }
     }

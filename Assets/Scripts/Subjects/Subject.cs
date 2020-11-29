@@ -3,7 +3,7 @@
 abstract public class Subject : MonoBehaviour
 {
     public int HP { get; protected set; }
-    public int Shield { get; protected set; }
+    public byte Shield { get; protected set; }
     public float Speed { get; set; }
 
     public virtual void applyDamage(int damage)

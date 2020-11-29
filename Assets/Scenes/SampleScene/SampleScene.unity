@@ -332,12 +332,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1974418136, guid: db3f6c40e2908f14098a73303539a8e1, type: 3}
+      propertyPath: waves.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974418136, guid: db3f6c40e2908f14098a73303539a8e1, type: 3}
+      propertyPath: waves.Array.data[1].spawnPoints.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974418136, guid: db3f6c40e2908f14098a73303539a8e1, type: 3}
       propertyPath: parentObject
       value: 
       objectReference: {fileID: 349022487}
     - target: {fileID: 1974418136, guid: db3f6c40e2908f14098a73303539a8e1, type: 3}
       propertyPath: waves.Array.data[0].maxEnemies
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1974418136, guid: db3f6c40e2908f14098a73303539a8e1, type: 3}
       propertyPath: waves.Array.data[0].timeBetweenSpawn
@@ -347,6 +355,26 @@ PrefabInstance:
       propertyPath: waves.Array.data[0].enemyToKill
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1974418136, guid: db3f6c40e2908f14098a73303539a8e1, type: 3}
+      propertyPath: waves.Array.data[0].timeToNextWave
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974418136, guid: db3f6c40e2908f14098a73303539a8e1, type: 3}
+      propertyPath: waves.Array.data[1].maxEnemies
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974418136, guid: db3f6c40e2908f14098a73303539a8e1, type: 3}
+      propertyPath: waves.Array.data[1].timeBetweenSpawn
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974418136, guid: db3f6c40e2908f14098a73303539a8e1, type: 3}
+      propertyPath: waves.Array.data[1].timeToNextWave
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974418136, guid: db3f6c40e2908f14098a73303539a8e1, type: 3}
+      propertyPath: waves.Array.data[1].spawnPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 706988490}
     - target: {fileID: 8486106855256016008, guid: db3f6c40e2908f14098a73303539a8e1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -401,6 +429,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db3f6c40e2908f14098a73303539a8e1, type: 3}
+--- !u!114 &706988490 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 172868737, guid: db3f6c40e2908f14098a73303539a8e1, type: 3}
+  m_PrefabInstance: {fileID: 706988489}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6762f9acd2a2e9b4f85d068192f77d7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &771820830
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -516,6 +555,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 108686685440199452, guid: 082a5eb184b260f4f8a8910385e040b7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 108686685440199453, guid: 082a5eb184b260f4f8a8910385e040b7, type: 3}
+      propertyPath: BulletSpeed
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 108686685440199455, guid: 082a5eb184b260f4f8a8910385e040b7, type: 3}

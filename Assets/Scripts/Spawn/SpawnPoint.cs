@@ -46,7 +46,7 @@ public class SpawnPoint : MonoBehaviour
             spawnChance[1] = 40;
 
             // All ranged enemies have equal chance
-            for (int i = 2; i < enemyTypes; i++)
+            for (byte i = 2; i < enemyTypes; i++)
             {
                 spawnChance[i] = 20 / (enemyTypes - 2);
             }
@@ -60,7 +60,7 @@ public class SpawnPoint : MonoBehaviour
             spawnChance[1] = 25;
 
             // All ranged enemies have equal chance
-            for (int i = 2; i < enemyTypes; i++)
+            for (byte i = 2; i < enemyTypes; i++)
             {
                 spawnChance[i] = 50 / (enemyTypes - 2);
             }
@@ -74,7 +74,7 @@ public class SpawnPoint : MonoBehaviour
             spawnChance[1] = 15;
 
             // Spawn of ranged enemies are 70%
-            for (int i = 2; i < enemyTypes; i++)
+            for (byte i = 2; i < enemyTypes; i++)
             {
                 spawnChance[i] = 70 / (enemyTypes - 2);
             }
@@ -87,7 +87,7 @@ public class SpawnPoint : MonoBehaviour
             spawnChance[1] = 5;
 
             // All ranged enemies have equal chance
-            for (int i = 2; i < enemyTypes; i++)
+            for (byte i = 2; i < enemyTypes; i++)
             {
                 spawnChance[i] = 90 / (enemyTypes - 2);
             }
@@ -100,7 +100,7 @@ public class SpawnPoint : MonoBehaviour
     private void generatePartialSum()
     {
         float counter = 0;
-        for (int i=0; i < spawnChance.Length; i++)
+        for (byte i=0; i < spawnChance.Length; i++)
         {
             counter += spawnChance[i];
             spawnChance[i] = counter;

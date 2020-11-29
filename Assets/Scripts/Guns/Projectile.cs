@@ -15,15 +15,15 @@ public class Projectile : MonoBehaviour
     public Gun CurrentGun { private get; set; }
     public int PowerUPMultiplier { private get; set; }
 
-    private float livingEntityTime = 10f;
+    protected float livingEntityTime = 10f;
 
     // Reference to player
     public Transform shooter;
 
     // Reference to rigidbody
-    private Rigidbody rb;
+    protected Rigidbody rb;
 
-    void Start()
+    private void Start()
     {
         // Get Rigidbody reference
         rb = GetComponent<Rigidbody>();
@@ -43,14 +43,14 @@ public class Projectile : MonoBehaviour
         enemyLayers = ~enemyLayers;
     }
 
-    void FixedUpdate()
+    protected void FixedUpdate()
     {
         float moveDistance = Speed * Time.fixedDeltaTime;
         DetectCollisions(moveDistance);
         rb.MovePosition(transform.position + (transform.forward * moveDistance));
     }
 
-    void DetectCollisions(float moveDistance)
+    protected virtual void DetectCollisions(float moveDistance)
     {
         Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
@@ -77,7 +77,6 @@ public class Projectile : MonoBehaviour
                     int newDamage = Mathf.RoundToInt((float)(CurrentGun.DamagePerBullet * Math.Pow(0.85f, hitDistance / 2)));
                     target.applyDamage(newDamage * PowerUPMultiplier);
                 }
-
             }
             
             // Destroy the projectile
@@ -85,7 +84,7 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    void Despawn()
+    protected void Despawn()
     {
         Destroy(gameObject, livingEntityTime);
     }

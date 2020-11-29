@@ -4,7 +4,7 @@ using System.Collections;
 public class DamageBonus : PowerUP
 {
     public GameObject pickupEffect;
-    private int multiplier = 2;
+    private byte multiplier = 2;
 
     protected override IEnumerator Pickup(Collider player)
     {

@@ -9,7 +9,7 @@ abstract public class Enemy : Subject
     private float powerUPdropChance = 10f;
 
     [Header("Pathfinder")]
-    private NavMeshAgent pathFinder;
+    protected NavMeshAgent pathFinder;
     protected Transform player;
     private bool dead = false;
 
@@ -62,7 +62,7 @@ abstract public class Enemy : Subject
 
     void Update()
     {
-        if (player)
+        if (player && currentWeapon)
         {
             if (pathFinder.remainingDistance <= pathFinder.stoppingDistance)
             {
@@ -71,46 +71,49 @@ abstract public class Enemy : Subject
         }
     }
 
-    void FixedUpdate()
+    protected void FixedUpdate()
     {
         FaceTarget();
     }
 
-    protected void getWeapon()
+    protected virtual void getWeapon()
     {
-        // Get random number
-        float gunRandom = Random.Range(0f, 100.0f);
+        if (weaponChance != null)
+        {
+            // Get random number
+            float gunRandom = Random.Range(0f, 100.0f);
 
-        // Set current weapon
-        if (gunRandom <= weaponChance[0])
-        {
-            currentWeapon = GunManager.instance.guns[0];
-        }
-        else if (gunRandom <= weaponChance[1])
-        {
-            currentWeapon = GunManager.instance.guns[1];
-        }
-        else if (gunRandom <= weaponChance[2])
-        {
-            currentWeapon = GunManager.instance.guns[2];
-        }
-        else if (gunRandom <= weaponChance[3])
-        {
-            currentWeapon = GunManager.instance.guns[3];
-        }
-        else if (gunRandom <= weaponChance[4])
-        {
-            currentWeapon = GunManager.instance.guns[4];
-        }
+            // Set current weapon
+            if (gunRandom <= weaponChance[0])
+            {
+                currentWeapon = GunManager.instance.guns[0];
+            }
+            else if (gunRandom <= weaponChance[1])
+            {
+                currentWeapon = GunManager.instance.guns[1];
+            }
+            else if (gunRandom <= weaponChance[2])
+            {
+                currentWeapon = GunManager.instance.guns[2];
+            }
+            else if (gunRandom <= weaponChance[3])
+            {
+                currentWeapon = GunManager.instance.guns[3];
+            }
+            else if (gunRandom <= weaponChance[4])
+            {
+                currentWeapon = GunManager.instance.guns[4];
+            }
 
-        // Create a new gun for enemy in holder point position
-        currentWeapon = Instantiate(currentWeapon, holderPoint.transform.position, gameObject.transform.rotation, holderPoint.transform);
+            // Create a new gun for enemy in holder point position
+            currentWeapon = Instantiate(currentWeapon, holderPoint.transform.position, gameObject.transform.rotation, holderPoint.transform);
 
-        // Change Nav Mesh agent stopping distance depending on gun got
-        ChangeStopDistance();
+            // Change Nav Mesh agent stopping distance depending on gun got
+            ChangeStopDistance();
+        }
     }
 
-    IEnumerator UpdatePath()
+    protected IEnumerator UpdatePath()
     {
         float refreshRate = 0.25f;
         while (player && !dead)
@@ -119,6 +122,8 @@ abstract public class Enemy : Subject
             pathFinder.SetDestination(PlayerPos);
             yield return new WaitForSeconds(refreshRate);
         }
+
+        // If no player - stay on place
         if (!player)
         {
             pathFinder.SetDestination(transform.position);
@@ -145,7 +150,6 @@ abstract public class Enemy : Subject
 
         // Spawner interaction event
         OnDeath?.Invoke();
-
 
         // Destroy GameObject
         base.Die();
@@ -176,7 +180,7 @@ abstract public class Enemy : Subject
 
 
     // Change Nav Mesh agent stopping distance depending on gun got
-    protected void ChangeStopDistance()
+    protected virtual void ChangeStopDistance()
     {
         pathFinder.stoppingDistance = currentWeapon.EffectiveRange * 1.5f;
     }
@@ -184,7 +188,7 @@ abstract public class Enemy : Subject
     protected void generatePartialSum()
     {
         double counter = 0;
-        for (int i = 0; i < weaponChance.Length; i++)
+        for (byte i = 0; i < weaponChance.Length; i++)
         {
             counter += weaponChance[i];
             weaponChance[i] = counter;

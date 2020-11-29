@@ -33,6 +33,9 @@ public class WeaponSwitcher : MonoBehaviour
 
             // Set weapon active
             WeaponEquiped.gameObject.SetActive(true);
+
+            // Activate switch process
+            WeaponEquiped.ForceDelayShot();
         }
     }
 
