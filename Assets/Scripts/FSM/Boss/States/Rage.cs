@@ -5,14 +5,24 @@ using UnityEngine;
 public class Rage : BossState
 {
     private Transform bossZeroPoint;
+    private Transform frontAttackPoint;
 
-    private float pointsCount = 30;
+    private float pointsCount = 20;
     private float radius = 5f;
+
+    private float angleToRotate;
 
     public Rage(BossFSM bossFSM, BossBullet projectile, Animator animator, Transform bossZero) : base(bossFSM, projectile, animator)
     {
         bossZeroPoint = bossZero;
+        frontAttackPoint = bossZeroPoint.GetChild(0).transform;
+        
+        // Shooting delay
         delayAttackTime = 0.5f;
+
+        // Angle to rotate
+        angleToRotate = (360 / pointsCount) * Mathf.Deg2Rad;
+
     }
 
     public override IEnumerator Enter()
@@ -33,27 +43,33 @@ public class Rage : BossState
 
     public void CircleAttack()
     {
-        Vector3 initialPoint = Vector3.forward;
-        Vector3 newPos = initialPoint;
-        Quaternion newRot = new Quaternion(0, 0, 0, 0);
+        // Local position of attack point relatively of boss zero point
+        Vector3 localAttackPoint = frontAttackPoint.position - bossZeroPoint.transform.position;
 
-        // Angle to rotate
-        float angleToRotate = (360 / pointsCount) * Mathf.Deg2Rad;
-        
+        // Store first attack points vector
+        Vector3 firstAttackPoint = localAttackPoint;
+
+        // Calculate angle relatively boss rotation
+        float angle = Vector3.SignedAngle(Vector3.forward, firstAttackPoint, Vector3.up);
+
+        // Set rotation for first bullet on orbit
+        Quaternion newRot = Quaternion.Euler(0, angle, 0);
+
         // For each point we need to create
         for (int i = 0; i < pointsCount; i++)
         {
-            BossBullet ob = UnityEngine.Object.Instantiate(bossProjectile, bossZeroPoint.transform.position + newPos * radius, newRot);
+            // Create new object
+            UnityEngine.Object.Instantiate(bossProjectile, bossZeroPoint.transform.position + localAttackPoint, newRot);
 
-            // Calc new bullet transform on orbit depending on previous value of variable
-            float X_pos = Mathf.Cos(angleToRotate) * newPos.x - Mathf.Sin(angleToRotate) * newPos.z;
-            float Z_pos = Mathf.Sin(angleToRotate) * newPos.x + Mathf.Cos(angleToRotate) * newPos.z;
+            // Calc new bullet transform on orbit depending on previous value of x and z
+            float X_pos = Mathf.Cos(angleToRotate) * localAttackPoint.x - Mathf.Sin(angleToRotate) * localAttackPoint.z;
+            float Z_pos = Mathf.Sin(angleToRotate) * localAttackPoint.x + Mathf.Cos(angleToRotate) * localAttackPoint.z;
 
-            // New values of orbit
-            newPos = new Vector3(X_pos, initialPoint.y, Z_pos);
+            // Save new values of orbit
+            localAttackPoint = new Vector3(X_pos, localAttackPoint.y, Z_pos);
 
-            // Calc new rotation for each bullet on orbit
-            newRot = Quaternion.Euler(0, Vector3.SignedAngle(initialPoint, newPos, Vector3.up), 0);
+            // Calc new rotation for each bullet on orbit (angle - relative to boss object)
+            newRot = Quaternion.Euler(0, angle + Vector3.SignedAngle(firstAttackPoint, localAttackPoint, Vector3.up), 0);
         }
     }
 }
