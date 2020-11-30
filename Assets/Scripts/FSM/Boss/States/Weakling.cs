@@ -5,9 +5,11 @@ using UnityEngine;
 
 public class Weakling : BossState
 {
-    public Weakling(BossFSM bossFSM, Boss boss) : base(bossFSM, boss)
+    private Transform bossHolderPoint;
+
+    public Weakling(BossFSM bossFSM, BossBullet projectile, Animator animator, Transform holderPoint) : base(bossFSM, projectile, animator)
     {
-        delayAttackTime = 1f;
+        bossHolderPoint = holderPoint;
     }
 
     public override IEnumerator Enter()
@@ -18,11 +20,12 @@ public class Weakling : BossState
 
     public override IEnumerator Attack()
     {
-
         if (nextAttackTime <= Time.time)
         {
             nextAttackTime = Time.time + 1 / delayAttackTime;
-            Instantiate(bossObject.attackProjectile, bossObject.holderPoint.position, bossObject.holderPoint.rotation);
+
+            // Spawn bullet
+            UnityEngine.Object.Instantiate(bossProjectile, bossHolderPoint.position, bossHolderPoint.rotation);
         }
         return base.Attack();
     }

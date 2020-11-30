@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class BossBullet : Projectile
 {
+    // Boss does not have any weapon, we need to hardcode the damage
     byte damage = 35;
 
-    void Start()
+    private void Start()
     {
         // Get Rigidbody reference
         rb = GetComponent<Rigidbody>();
@@ -21,20 +22,19 @@ public class BossBullet : Projectile
 
     protected override void DetectCollisions(float moveDistance)
     {
-        Ray ray = new Ray(transform.position, transform.forward);
-        RaycastHit hit;
+        /* As boss bullets are huge spheres we can not use raycast */
+
+        // Detect all objects in sphere for specific layers
+        Collider[] hit = Physics.OverlapSphere(transform.position, transform.localScale.x, enemyLayers);
 
         // Use raycast with layer mask (only against colliders in specific layers)
-        if (Physics.Raycast(ray, out hit, moveDistance, enemyLayers))
+        foreach (Collider enemy in hit)
         {
             // Get a subject we hit
-            Subject target = hit.transform.GetComponent<Subject>();
+            Subject target = enemy.transform.GetComponent<Subject>();
 
             if (target)
             {
-                // Length of 3D vector
-                float hitDistance = Vector3.Distance(target.transform.position, shooter.position);
-
                 // Apply damage depending on lenght of vector
                 target.applyDamage(damage);
             }

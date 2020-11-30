@@ -12,11 +12,14 @@ public class Boss : Enemy
     [Header("FSM")]
     private BossFSM stateMachine;
 
-    [HideInInspector]
-    private float stoppingDistance = 100f;
+    [Header("Animator")]
+    private Animator animator;
 
     [Header("Attack projectiles for different states")]
-    public BossBullet attackProjectile;
+    public BossBullet[] attackProjectiles;
+
+    [Header("Attack types")]
+    public Transform starAttackPointParent;
 
     void Awake()
     {
@@ -43,32 +46,24 @@ public class Boss : Enemy
 
         // Activate FSM
         stateMachine = GetComponent<BossFSM>();
-        stateMachine.changeState(new Weakling(stateMachine, this));
+        stateMachine.changeState(new Rage(stateMachine, attackProjectiles[0], animator, starAttackPointParent));
+        //stateMachine.changeState(new Sorcerer(stateMachine, attackProjectiles[0], animator, starAttackPointParent));
     }
 
     private void Update()
     {
         FaceTarget();
-        StartCoroutine(stateMachine.currentState.Attack());
+        StartCoroutine(stateMachine.currentBossState.Attack());
     }
 
     public override void applyDamage(int damage)
     {
-        // As boss activates godMode, we need to check if damage wouldn't be letal
-        if (HP - damage > 0)
-        {
-            base.applyDamage(damage);
-        }
+        stateMachine.currentBossState.applyDamage(damage);
     }
 
     protected override void Die()
     {
         //stateMachine.changeState(new Dead(stateMachine, this));
         base.Die();
-    }
-
-    protected override void ChangeStopDistance()
-    {
-        pathFinder.stoppingDistance = stoppingDistance;
     }
 }

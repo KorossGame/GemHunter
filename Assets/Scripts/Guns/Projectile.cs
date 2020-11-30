@@ -48,6 +48,7 @@ public class Projectile : MonoBehaviour
         float moveDistance = Speed * Time.fixedDeltaTime;
         DetectCollisions(moveDistance);
         rb.MovePosition(transform.position + (transform.forward * moveDistance));
+        //Debug.DrawLine(transform.position, transform.position + (transform.forward * moveDistance));
     }
 
     protected virtual void DetectCollisions(float moveDistance)

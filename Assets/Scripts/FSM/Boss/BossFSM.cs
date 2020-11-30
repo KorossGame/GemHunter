@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class BossFSM : FSM
 {
-    public new BossState currentState;
+    public BossState currentBossState;
 
     public void changeState(BossState newState)
     {
-        if (currentState != null)
+        if (currentBossState != null)
         {
             // Exit from previous state
-            StartCoroutine(currentState.Exit());
+            StartCoroutine(currentBossState.Exit());
         }
 
         // Set current state to a new one
-        currentState = newState;
+        currentBossState = newState;
 
         // Initialize new phase
-        StartCoroutine(currentState.Enter());
+        StartCoroutine(currentBossState.Enter());
     }
 }
