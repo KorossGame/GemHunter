@@ -46,7 +46,8 @@ public class Boss : Enemy
 
         // Activate FSM
         stateMachine = GetComponent<BossFSM>();
-        stateMachine.changeState(new Rage(stateMachine, attackProjectiles[0], animator, starAttackPointParent));
+        stateMachine.changeState(new Berserk(stateMachine, attackProjectiles[0], animator));
+        //stateMachine.changeState(new Rage(stateMachine, attackProjectiles[0], animator, starAttackPointParent));
         //stateMachine.changeState(new Sorcerer(stateMachine, attackProjectiles[0], animator, starAttackPointParent));
     }
 

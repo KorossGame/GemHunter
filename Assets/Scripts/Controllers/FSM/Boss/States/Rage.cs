@@ -8,8 +8,6 @@ public class Rage : BossState
     private Transform frontAttackPoint;
 
     private float pointsCount = 20;
-    private float radius = 5f;
-
     private float angleToRotate;
 
     public Rage(BossFSM bossFSM, BossBullet projectile, Animator animator, Transform bossZero) : base(bossFSM, projectile, animator)
@@ -18,7 +16,7 @@ public class Rage : BossState
         frontAttackPoint = bossZeroPoint.GetChild(0).transform;
         
         // Shooting delay
-        delayAttackTime = 0.5f;
+        delayAttackTime = 2f;
 
         // Angle to rotate
         angleToRotate = (360 / pointsCount) * Mathf.Deg2Rad;
@@ -35,7 +33,7 @@ public class Rage : BossState
     {
         if (nextAttackTime <= Time.time)
         {
-            nextAttackTime = Time.time + delayAttackTime;
+            nextAttackTime = Time.time + 1 / delayAttackTime;
             CircleAttack();
         }
         return base.Attack();
