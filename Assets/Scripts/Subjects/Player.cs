@@ -25,7 +25,7 @@ public class Player : Subject
     void Start()
     {
         Speed = 10f;
-        HP = 100;
+        HP = 9999999;
         Spawn();
     }
 

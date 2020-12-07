@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Grid : MonoBehaviour
 {
-	public Grid instance;
+	public static Grid instance;
 
 	// If we want to displya the grid or not
 	public bool visible = false;
@@ -21,19 +21,16 @@ public class Grid : MonoBehaviour
 	private int gridXCount, gridZCount;
 
 	// Node List
-	private Node[,] nodeList;
+	public Node[,] nodeList;
 
 	private void Awake()
     {
 		instance = this;
-	}
-
-	private void Start()
-    {
 		SetupGrid();
+		GenerateGrid();
 	}
 
-	private void Update()
+	private void FixedUpdate()
     {
 		GenerateGrid();
 	}

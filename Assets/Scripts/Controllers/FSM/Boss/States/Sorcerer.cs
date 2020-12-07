@@ -1,19 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Sorcerer : BossState
 {
     private Transform starAttackPoints;
 
-    public Sorcerer(BossFSM bossFSM, BossBullet projectile, Animator animator, Transform starAttackPointParent) : base(bossFSM, projectile, animator)
+    public Sorcerer(BossFSM bossFSM, BossBullet projectile, Animator animator, NavMeshAgent pathFinder, Transform starAttackPointParent) : base(bossFSM, projectile, animator, pathFinder)
     {
         starAttackPoints = starAttackPointParent;
     }
 
     public override IEnumerator Enter()
     {
-        Debug.Log("Sorcerer");
         return base.Enter();
     }
 
@@ -27,7 +27,7 @@ public class Sorcerer : BossState
             // For each child spawn enemy bullet
             foreach (Transform child in starAttackPoints)
             {
-                GameObject.Instantiate(bossProjectile, child.position, child.rotation);
+                UnityEngine.Object.Instantiate(bossProjectile, child.position, child.rotation);
             }
         }
         return base.Attack();

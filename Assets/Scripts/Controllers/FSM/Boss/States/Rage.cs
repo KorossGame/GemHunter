@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Rage : BossState
 {
@@ -10,7 +11,7 @@ public class Rage : BossState
     private float pointsCount = 20;
     private float angleToRotate;
 
-    public Rage(BossFSM bossFSM, BossBullet projectile, Animator animator, Transform bossZero) : base(bossFSM, projectile, animator)
+    public Rage(BossFSM bossFSM, BossBullet projectile, Animator animator, NavMeshAgent pathFinder, Transform bossZero) : base(bossFSM, projectile, animator, pathFinder )
     {
         bossZeroPoint = bossZero;
         frontAttackPoint = bossZeroPoint.GetChild(0).transform;
@@ -25,7 +26,6 @@ public class Rage : BossState
 
     public override IEnumerator Enter()
     {
-        Debug.Log("Sorcerer");
         return base.Enter();
     }
 

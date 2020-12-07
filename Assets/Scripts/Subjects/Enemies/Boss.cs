@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class Boss : Enemy
 {
     [Header("Stats")]
-    private float maxHP;
+    private int maxHP;
 
     [Header("FSM")]
     private BossFSM stateMachine;
@@ -19,7 +19,10 @@ public class Boss : Enemy
     public BossBullet[] attackProjectiles;
 
     [Header("Attack types")]
-    public Transform starAttackPointParent;
+    public Transform[] attackPoints;
+
+    // Object for last phase
+    public GameObject energeticField;
 
     void Awake()
     {
@@ -46,25 +49,30 @@ public class Boss : Enemy
 
         // Activate FSM
         stateMachine = GetComponent<BossFSM>();
-        stateMachine.changeState(new Berserk(stateMachine, attackProjectiles[0], animator));
-        //stateMachine.changeState(new Rage(stateMachine, attackProjectiles[0], animator, starAttackPointParent));
-        //stateMachine.changeState(new Sorcerer(stateMachine, attackProjectiles[0], animator, starAttackPointParent));
+        stateMachine.changeState(new God(stateMachine, attackProjectiles[1], animator, pathFinder, this, energeticField));
+        //stateMachine.changeState(new Nightmare(stateMachine, attackProjectiles[1], animator, pathFinder, player.transform));
+        //stateMachine.changeState(new Berserk(stateMachine, attackProjectiles[0], animator, pathFinder, attackPoints[1]));
+        //stateMachine.changeState(new Rage(stateMachine, attackProjectiles[0], animator, pathFinder, attackPoints[1]));
+        //stateMachine.changeState(new Sorcerer(stateMachine, attackProjectiles[0], animator, pathFinder, attackPoints[1]));
+        //stateMachine.changeState(new Weakling(stateMachine, attackProjectiles[0], animator, pathFinder, attackPoints[0]));
     }
 
     private void Update()
     {
         FaceTarget();
-        StartCoroutine(stateMachine.currentBossState.Attack());
+        if (stateMachine.currentBossState != null)
+        {
+            StartCoroutine(stateMachine.currentBossState.Attack());
+        }
     }
 
-    public override void applyDamage(int damage)
+    public void RegenMaxHP()
     {
-        stateMachine.currentBossState.applyDamage(damage);
+        HP = maxHP;
     }
 
     protected override void Die()
     {
-        //stateMachine.changeState(new Dead(stateMachine, this));
         base.Die();
     }
 }
