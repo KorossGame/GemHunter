@@ -25,10 +25,6 @@ public class God : BossState
 
     public override IEnumerator Attack()
     {
-        if (nextAttackTime <= Time.time && delayAttackTime!=0)
-        {
-            nextAttackTime = Time.time + delayAttackTime;
-        }
         return base.Attack();
     }
 

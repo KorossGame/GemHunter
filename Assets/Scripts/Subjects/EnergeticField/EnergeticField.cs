@@ -1,15 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnergeticField : Subject
 {
+    private NavMeshAgent bossObjectAI;
+
     private float rechargeTime = 10f;
     private int maxHP = 4;
 
     void Awake()
     {
         SetHP();
+        bossObjectAI = GameObject.FindGameObjectWithTag("Boss").GetComponent<NavMeshAgent>();
     }
 
     void SetHP()
@@ -38,12 +42,17 @@ public class EnergeticField : Subject
     {
         // Disactivate energetic field
         gameObject.GetComponent<SphereCollider>().enabled = false;
+        bossObjectAI.baseOffset = 0.5f;
 
         // Wait for 10 seconds
         yield return new WaitForSeconds(rechargeTime);
 
+        // As for recharge time boss can be killed we need to check if need to activate field
+        if (!bossObjectAI) Destroy(gameObject);
+
         // Activate the energetic field
         gameObject.GetComponent<SphereCollider>().enabled = true;
+        bossObjectAI.baseOffset = 0.75f;
 
         // Regen the HP
         SetHP();

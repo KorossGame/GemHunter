@@ -123,6 +123,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: b5643c3416893e8439809c9b7b14311b, type: 2}
+--- !u!114 &124137019 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 978657763, guid: db3f6c40e2908f14098a73303539a8e1, type: 3}
+  m_PrefabInstance: {fileID: 706988489}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6762f9acd2a2e9b4f85d068192f77d7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &251334363
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -333,11 +344,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1974418136, guid: db3f6c40e2908f14098a73303539a8e1, type: 3}
       propertyPath: waves.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1974418136, guid: db3f6c40e2908f14098a73303539a8e1, type: 3}
       propertyPath: waves.Array.data[1].spawnPoints.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974418136, guid: db3f6c40e2908f14098a73303539a8e1, type: 3}
+      propertyPath: waves.Array.data[0].spawnPoints.Array.size
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1974418136, guid: db3f6c40e2908f14098a73303539a8e1, type: 3}
       propertyPath: parentObject
@@ -345,7 +360,7 @@ PrefabInstance:
       objectReference: {fileID: 349022487}
     - target: {fileID: 1974418136, guid: db3f6c40e2908f14098a73303539a8e1, type: 3}
       propertyPath: waves.Array.data[0].maxEnemies
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1974418136, guid: db3f6c40e2908f14098a73303539a8e1, type: 3}
       propertyPath: waves.Array.data[0].timeBetweenSpawn
@@ -373,6 +388,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1974418136, guid: db3f6c40e2908f14098a73303539a8e1, type: 3}
       propertyPath: waves.Array.data[1].spawnPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 706988490}
+    - target: {fileID: 1974418136, guid: db3f6c40e2908f14098a73303539a8e1, type: 3}
+      propertyPath: waves.Array.data[0].spawnPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 706988490}
+    - target: {fileID: 1974418136, guid: db3f6c40e2908f14098a73303539a8e1, type: 3}
+      propertyPath: waves.Array.data[0].spawnPoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 124137019}
+    - target: {fileID: 1974418136, guid: db3f6c40e2908f14098a73303539a8e1, type: 3}
+      propertyPath: waves.Array.data[0].spawnPoints.Array.data[2]
+      value: 
+      objectReference: {fileID: 1605036806}
+    - target: {fileID: 1974418136, guid: db3f6c40e2908f14098a73303539a8e1, type: 3}
+      propertyPath: waves.Array.data[0].spawnPoints.Array.data[3]
+      value: 
+      objectReference: {fileID: 1669409021}
+    - target: {fileID: 1974418136, guid: db3f6c40e2908f14098a73303539a8e1, type: 3}
+      propertyPath: waves.Array.data[0].spawnPoints.Array.data[4]
       value: 
       objectReference: {fileID: 706988490}
     - target: {fileID: 8486106855256016008, guid: db3f6c40e2908f14098a73303539a8e1, type: 3}
@@ -589,6 +624,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1256478418 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8486106855256016247, guid: db3f6c40e2908f14098a73303539a8e1, type: 3}
+  m_PrefabInstance: {fileID: 706988489}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1256478419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1256478418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ae87b3bd0290c641985c1edcb4d8d09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1310852376 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8567047990131211985, guid: c77d1d674782cff4883d4d6d529ca3d5, type: 3}
@@ -612,13 +664,35 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1605036806 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1517300025, guid: db3f6c40e2908f14098a73303539a8e1, type: 3}
+  m_PrefabInstance: {fileID: 706988489}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6762f9acd2a2e9b4f85d068192f77d7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1669409021 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 315738582, guid: db3f6c40e2908f14098a73303539a8e1, type: 3}
+  m_PrefabInstance: {fileID: 706988489}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6762f9acd2a2e9b4f85d068192f77d7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &1674577440
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-11338
+  m_Name: pb_Mesh-8952
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -904,6 +978,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level
       objectReference: {fileID: 0}
+    - target: {fileID: 4954733020334939278, guid: 723c52fdb7d0f0946990b5324cb2949a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 69412752b74ab6043812d2e2b1bc2ff3, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 723c52fdb7d0f0946990b5324cb2949a, type: 3}
 --- !u!1001 &5195759692583389821

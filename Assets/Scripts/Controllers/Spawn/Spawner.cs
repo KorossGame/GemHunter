@@ -117,6 +117,7 @@ public class Spawner : MonoBehaviour
 
             // Set current wave as new one
             currentWave = waves[currentWaveNumber];
+            Debug.Log(currentWave);
 
             // Reset timer till next wave
             currentWave.timeToNextWave = Time.time + currentWave.timeToNextWave;

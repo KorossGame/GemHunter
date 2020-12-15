@@ -15,7 +15,7 @@ public abstract class BossState : State
     protected BossBullet bossProjectile;
     protected NavMeshAgent bossPathFinder;
 
-    // Each State have access to boss FSM (to change states), state projectile and animator
+    // Each State have access to boss FSM (to change states), projectile, animator and enemy AI
     public BossState(BossFSM bossFSM, BossBullet projectile, Animator animator, NavMeshAgent pathFinder)
     {
         bossAnimator = animator;
