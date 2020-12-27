@@ -110,14 +110,17 @@ public class Spawner : MonoBehaviour
 
     void NextWave()
     {
-        if (currentWaveNumber+1 <= waves.Length)
+        if (currentWaveNumber <= waves.Length)
         {
-            // We need to kill all enemies till set a new wave
-            KillAllEnemies();
+            // Till wave 0 there can not be any enemies
+            if (currentWaveNumber != 0)
+            {
+                // We need to kill all enemies till set a new wave
+                KillAllEnemies();
+            }
 
             // Set current wave as new one
             currentWave = waves[currentWaveNumber];
-            Debug.Log(currentWave);
 
             // Reset timer till next wave
             currentWave.timeToNextWave = Time.time + currentWave.timeToNextWave;

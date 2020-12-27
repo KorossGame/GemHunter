@@ -55,7 +55,6 @@ abstract public class Gun : MonoBehaviour
             nextShootTime = Time.time + 1f / fireRate;
             ShootBullet(shooter);
         }
-        else return;
     }
 
     protected virtual void ShootBullet(Subject shooter)
@@ -76,6 +75,7 @@ abstract public class Gun : MonoBehaviour
 
         // Create new bullet with passing Gun and Shooter objects there
         Projectile newShoot = Instantiate(bullet, attackPoint.position, attackPoint.rotation);
+        newShoot.tag = "Bullet";
         newShoot.shooter = shooter.transform;
         newShoot.CurrentGun = this;
         newShoot.PowerUPMultiplier = powerUPMultiplier;

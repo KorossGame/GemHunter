@@ -10,7 +10,7 @@ public class Assault : Gun
         ID = 3;
 
         // Damage
-        DamagePerBullet = 300;
+        DamagePerBullet = 30;
 
         // Bullet speed
         BulletSpeed = 40;

@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - NewWeapon
   - Boss
+  - Bullet
+  - ExplosiveBot
   layers:
   - Default
   - TransparentFX

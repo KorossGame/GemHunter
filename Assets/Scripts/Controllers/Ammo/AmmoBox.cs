@@ -5,15 +5,22 @@ using UnityEngine;
 abstract public class AmmoBox : MonoBehaviour
 {
     protected WeaponSwitcher playerInventory;
+    protected int weaponID;
 
-    void Awake()
+    protected void Start()
     {
         playerInventory = PlayerManager.instance.player.GetComponent<Player>().inventory;
     }
 
     protected virtual void PickUP()
     {
-        // Destory an object of ammo box
+        // If player has this type of weapon - add ammo
+        if (playerInventory.availableGuns[weaponID])
+        {
+            playerInventory.availableGuns[weaponID].RefillAmmo();
+        }
+
+        // Destroy a ammo box object
         Destroy(gameObject);
     }
 

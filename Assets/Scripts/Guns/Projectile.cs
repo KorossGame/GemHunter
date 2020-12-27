@@ -11,6 +11,7 @@ public class Projectile : MonoBehaviour
 
     // Speed of bullet
     public float Speed { private get; set; } = 10f;
+    private float moveDistance;
 
     public Gun CurrentGun { private get; set; }
     public int PowerUPMultiplier { private get; set; }
@@ -45,10 +46,12 @@ public class Projectile : MonoBehaviour
 
     protected void FixedUpdate()
     {
-        float moveDistance = Speed * Time.fixedDeltaTime;
-        DetectCollisions(moveDistance);
-        rb.MovePosition(transform.position + (transform.forward * moveDistance));
-        Debug.DrawLine(transform.position, transform.position + (transform.forward * moveDistance));
+        if (gameObject)
+        {
+            moveDistance = Speed * Time.fixedDeltaTime;
+            DetectCollisions(moveDistance);
+            rb.MovePosition(transform.position + (transform.forward * moveDistance));
+        }
     }
 
     protected virtual void DetectCollisions(float moveDistance)

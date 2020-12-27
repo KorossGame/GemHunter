@@ -1,6 +1,12 @@
 ﻿public class GameFSM : FSM
 {
+    public static GameFSM instance;
     public GameState currentGameState;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     public void changeState(GameState newState)
     {

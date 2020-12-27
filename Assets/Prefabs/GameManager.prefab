@@ -43,7 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ec8c1b9259059f469e0f12319e98c16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  instance: {fileID: 0}
   visible: 0
   unwalkableMask:
     serializedVersion: 2
@@ -169,8 +168,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoBoxes:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 6562186066733046758, guid: a47059773e156ff42bc917708ae7f2f2, type: 3}
+  - {fileID: 8050048856718239800, guid: 123d127e29c769c4fb020afd8da2e847, type: 3}
+  - {fileID: 2475691306024174111, guid: 2891b95a386799446ae294bc35e599bf, type: 3}
+  - {fileID: 9121956719733680422, guid: 14061544763f4a346b45dd10f19998d3, type: 3}
 --- !u!1001 &1903875566827945734
 PrefabInstance:
   m_ObjectHideFlags: 0

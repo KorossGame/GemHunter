@@ -5,8 +5,9 @@ using UnityEngine.AI;
 
 abstract public class Enemy : Subject
 {
-    [Header("PowerUP")]
+    [Header("Drops")]
     private float powerUPdropChance = 10f;
+    private float ammoBoxDropChance = 40f;
 
     [Header("Pathfinder")]
     protected NavMeshAgent pathFinder;
@@ -145,8 +146,11 @@ abstract public class Enemy : Subject
         dead = true;
         // Animation and Sound of death
 
-        // Generate power up
-        GeneratePowerUP();
+        // If enemy didn't drop power up we may drop some ammo
+        if (!GeneratePowerUP())
+        {
+            GenerateAmmoBox();
+        }
 
         // Spawner interaction event
         OnDeath?.Invoke();
@@ -163,7 +167,7 @@ abstract public class Enemy : Subject
         base.applyDamage(damage);
     }
 
-    protected void GeneratePowerUP()
+    protected bool GeneratePowerUP()
     {
         // Generate new number to define if generate powerUP is needed
         int randomNumber = (int)Random.Range(0, 100);
@@ -175,6 +179,23 @@ abstract public class Enemy : Subject
 
             // Create PowerUP object
             Instantiate(PowerUPManager.instance.powerUPs[randomPowerUP], transform.position + new Vector3(0, 0.5f, 0), transform.rotation);
+            return true;
+        }
+        return false;
+    }
+
+    protected void GenerateAmmoBox()
+    {
+        // Generate new number to define if generate an ammo box
+        int randomNumber = (int)Random.Range(0, 100);
+
+        if (randomNumber <= ammoBoxDropChance)
+        {
+            // Which powerUP going to be dropped
+            int randomAmmoBox = Random.Range(0, AmmoManager.instance.ammoBoxes.Length - 1);
+
+            // Create ammo box object
+            Instantiate(AmmoManager.instance.ammoBoxes[randomAmmoBox], transform.position + new Vector3(0, 0.5f, 0), transform.rotation);
         }
     }
 

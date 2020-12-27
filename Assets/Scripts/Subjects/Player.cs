@@ -25,7 +25,7 @@ public class Player : Subject
     void Start()
     {
         Speed = 10f;
-        HP = 9999999;
+        HP = 100;
         Spawn();
     }
 
@@ -52,9 +52,8 @@ public class Player : Subject
                 inventory.gameObject.SetActive(false);
             }
 
-            // Kill all enemies and set spawner inactive
-            Spawner.instance.KillAllEnemies();
-            Spawner.instance.active = false;
+            // Activate game restart
+            GameFSM.instance.changeState(new RestartState());
 
             // Respawn player
             StartCoroutine(Respawn());
