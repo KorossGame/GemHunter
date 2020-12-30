@@ -12,11 +12,11 @@ Not Ready Yet
 | Weapon System				| :heavy_check_mark: |
 | Enemy AI					| :heavy_check_mark: |
 | Boss Mechanics			| :heavy_check_mark: |
-| Game States				| :x: |
+| Game States				| :heavy_check_mark: |
 | Console					| :x: |
-| Ammo Boxes				| :x: |
-| Tutorial Level			| :x: |
-| Sound & Music				| :x: |
+| Ammo Boxes				| :heavy_check_mark: |
+| Tutorial Level			| In Progress |
+| Sound & Music				| :heavy_check_mark: |
 | Graphics (SFX)			| :x: |
 | Animations				| :x: |
 | Themes (Dynamic weather)	| :x: |
