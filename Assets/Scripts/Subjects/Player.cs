@@ -53,7 +53,7 @@ public class Player : Subject
             }
 
             // Activate game restart
-            GameFSM.instance.changeState(new RestartState());
+            // Game.instance.stateMachine.changeState(new RestartState(Game.instance.stateMachine));
 
             // Respawn player
             StartCoroutine(Respawn());
@@ -72,12 +72,9 @@ public class Player : Subject
             gameObject.transform.position = new Vector3(0, 0.5f, 0);
         }
 
-
-        // Reset HP to default
-        HP = 100;
-
+        /*
         // Set spawner status back to active
-        Spawner.instance.active = true;
+        if (Spawner.instance != null) Spawner.instance.active = true;
 
         // Enable Visual player object
         visualObject.GetComponent<MeshRenderer>().enabled = true;
@@ -87,6 +84,7 @@ public class Player : Subject
         {
             inventory.gameObject.SetActive(true);
         }
+        */
     }
 
     private IEnumerator Respawn()

@@ -1,12 +1,10 @@
-﻿public class GameFSM : FSM
-{
-    public static GameFSM instance;
-    public GameState currentGameState;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 
-    private void Awake()
-    {
-        instance = this;
-    }
+public class GameFSM : FSM
+{
+    public GameState currentGameState;
 
     public void changeState(GameState newState)
     {

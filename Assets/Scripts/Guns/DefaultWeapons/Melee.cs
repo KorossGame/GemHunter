@@ -25,10 +25,17 @@ public class Melee : Gun
 
         // Reload
         fireRate = 2f;
+
+        // Sounds
+        shootSound = "MeleeAttack";
+        reloadSound = "";
     }
 
     protected override void ShootBullet(Subject shooter)
     {
+        // Play sound of attack
+        AudioManager.instance.PlaySound(shootSound);
+
         int powerUPMultiplier;
         // Check if power shooter is player or enemy
         if (shooter.transform.tag == "Player")

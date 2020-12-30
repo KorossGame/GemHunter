@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RestartState : GameState
 {
-    public RestartState() : base()
+    public RestartState(GameFSM FSM) : base(FSM)
     {
         // Kill all enemies and set spawner inactive
         Spawner.instance.active = false;

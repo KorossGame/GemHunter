@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class WinState : GameState
 {
-    public WinState(): base()
+    public WinState(GameFSM FSM) : base(FSM)
     {
 
     }

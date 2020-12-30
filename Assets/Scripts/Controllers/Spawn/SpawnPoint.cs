@@ -24,6 +24,8 @@ public class SpawnPoint : MonoBehaviour
 
     void Start()
     {
+        if (PlayerManager.instance.player == null) return;
+
         // Get player transform
         playerTransform = PlayerManager.instance.player.transform;
         

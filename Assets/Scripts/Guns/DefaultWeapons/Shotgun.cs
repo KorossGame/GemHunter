@@ -32,10 +32,17 @@ public class Shotgun : Gun
 
         // Fire Rate (1/fireRate)
         fireRate = 1.3f;
+
+        // Sounds
+        shootSound = "ShotgunShootingSound";
+        reloadSound = "ShotgunReloadSound";
     }
 
     protected override void ShootBullet(Subject shooter)
     {
+        // Play Sound
+        AudioManager.instance.PlaySound(shootSound);
+
         int powerUPMultiplier;
         // Check if power shooter is player or enemy
         if (shooter.transform.tag == "Player")

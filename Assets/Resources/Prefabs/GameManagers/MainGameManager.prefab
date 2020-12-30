@@ -1,0 +1,206 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2803576538523303999
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2803576538523303996}
+  - component: {fileID: 2803576538523303938}
+  - component: {fileID: 2803576538523303936}
+  - component: {fileID: 2803576538523303939}
+  - component: {fileID: 2803576538523303997}
+  m_Layer: 0
+  m_Name: MainGameManager
+  m_TagString: GameController
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2803576538523303996
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2803576538523303999}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2803576538523303938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2803576538523303999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c402b3533036f244ba9da5b233f3106, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stateMachine: {fileID: 0}
+--- !u!114 &2803576538523303936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2803576538523303999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a1a945d0e9a19140a889ed3f62b9e00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mixer: {fileID: 24100000, guid: 1f5ddb65f63ebf94c8d084884fc29ac8, type: 2}
+  soundMixerGroup: {fileID: 600600401581485836, guid: 1f5ddb65f63ebf94c8d084884fc29ac8, type: 2}
+  musicMixerGroup: {fileID: 1027504842186869722, guid: 1f5ddb65f63ebf94c8d084884fc29ac8, type: 2}
+  sounds:
+  - audioType: 1
+    name: MainMenuMusic
+    clip: {fileID: 8300000, guid: dbb37b8cef1002f4283f0322fd3e9d84, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - audioType: 0
+    name: ClickSound
+    clip: {fileID: 8300000, guid: ca5741155b22f3344bfd6bbf45f42f51, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: MainThemeMusic
+    clip: {fileID: 8300000, guid: 810364186f855b049a8a61563a08bee2, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - audioType: 1
+    name: BossThemeMusic
+    clip: {fileID: 8300000, guid: 16c6e4001f92aaf4fb4a5db1b37f5704, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - audioType: 0
+    name: PlayerHitSound
+    clip: {fileID: 8300000, guid: a23f936f42c19ea4181c46c0e0c49cfb, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - audioType: 0
+    name: PowerPickUPSound
+    clip: {fileID: 8300000, guid: 926f7334f6eb2024dbee5412ee4b2028, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - audioType: 0
+    name: MeleeAttack
+    clip: {fileID: 8300000, guid: 3c9a11afdf507f443bb4d8ff5912227e, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - audioType: 0
+    name: AssaultShootingSound
+    clip: {fileID: 8300000, guid: a647bbc3aebe2d84c88bedd5594b8d7f, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - audioType: 0
+    name: AssaultReloadSound
+    clip: {fileID: 8300000, guid: ae020c18d329b44489a794b7e0fd24f0, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - audioType: 0
+    name: PistolShootingSound
+    clip: {fileID: 8300000, guid: 6e37c8a270956264b84cb97b5ca4737e, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - audioType: 0
+    name: PistolReloadSound
+    clip: {fileID: 8300000, guid: 6671e3fcb3245484f8b029f2393845eb, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - audioType: 0
+    name: RPGShootingSound
+    clip: {fileID: 8300000, guid: d7d8e75d21b864648af0a71c7574181b, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - audioType: 0
+    name: RPGReloadSound
+    clip: {fileID: 8300000, guid: 485283878b422c64daf6168e3b175d8b, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - audioType: 0
+    name: RPGExplosion
+    clip: {fileID: 8300000, guid: ac7c8bb981163874d914dd5aec302832, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - audioType: 0
+    name: ShotgunShootingSound
+    clip: {fileID: 8300000, guid: 2bf618cb3df2b2d44b376e79ad8807a1, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - audioType: 0
+    name: ShotgunReloadSound
+    clip: {fileID: 8300000, guid: f3bb58a2704cbbc42b8ab0ee4e92a221, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+--- !u!114 &2803576538523303939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2803576538523303999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58a879d372e891b489103f7ab84baef3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultValue: 0.01
+  musicSlider: {fileID: 0}
+  soundSlider: {fileID: 0}
+  musicTextValue: {fileID: 0}
+  soundTextValue: {fileID: 0}
+--- !u!114 &2803576538523303997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2803576538523303999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ae87b3bd0290c641985c1edcb4d8d09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

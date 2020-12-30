@@ -28,5 +28,9 @@ public class Pistol : Gun
 
         // Fire Rate (1/fireRate)
         fireRate = 4f;
+
+        // Sounds
+        shootSound = "PistolShootingSound";
+        reloadSound = "PistolReloadSound";
     }
 }

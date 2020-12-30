@@ -30,5 +30,9 @@ public class Assault : Gun
 
         // Fire Rate (1/fireRate)
         fireRate = 13.5f;
+
+        // Sounds
+        shootSound = "AssaultShootingSound";
+        reloadSound = "AssaultReloadSound";
     }
 }

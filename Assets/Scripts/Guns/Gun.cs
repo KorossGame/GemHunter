@@ -34,6 +34,10 @@ abstract public class Gun : MonoBehaviour
     public Projectile bullet;
     protected int BulletSpeed { get; set; }
 
+    // Sounds name
+    protected string shootSound;
+    protected string reloadSound;
+
     private void OnEnable()
     {
         // If player switches the weapon while reloading, we need to reset reload process
@@ -59,6 +63,9 @@ abstract public class Gun : MonoBehaviour
 
     protected virtual void ShootBullet(Subject shooter)
     {
+        // Play shoot sound
+        AudioManager.instance.PlaySound(shootSound);
+
         int powerUPMultiplier;
         // Check if power shooter is player or enemy
         if (shooter.transform.tag == "Player")
@@ -112,6 +119,7 @@ abstract public class Gun : MonoBehaviour
                 reloadProcess = true;
 
                 // Play animation + sound
+                AudioManager.instance.PlaySound(reloadSound);
 
                 // Wait for time
                 yield return new WaitForSeconds(reloadTime);

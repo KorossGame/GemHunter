@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PauseState : GameState
 {
-    public PauseState() : base()
+    public PauseState(GameFSM FSM) : base(FSM)
     {
 
     }

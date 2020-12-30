@@ -30,6 +30,10 @@ public class RPG : Gun
 
         // Fire Rate (1/fireRate)
         fireRate = 1f;
+
+        // Sounds
+        shootSound = "RPGShootingSound";
+        reloadSound = "RPGReloadSound";
     }
 
     private void applyShereDamage()

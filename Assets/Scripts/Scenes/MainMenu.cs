@@ -7,20 +7,20 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
 
-    void Update()
-    {
-
-    }
-
     public void StartGame()
     {
-        SceneManager.LoadScene("Game");
+        PlayClickSound();
+        Game.instance.stateMachine.changeState(new PlayState(Game.instance.stateMachine));
     }
 
     public void Exit()
     {
-        Debug.Log("Quit");
+        PlayClickSound();
         Application.Quit();
     }
 
+    public void PlayClickSound()
+    {
+        AudioManager.instance.PlaySound("ClickSound");
+    }
 }

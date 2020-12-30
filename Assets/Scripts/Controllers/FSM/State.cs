@@ -2,6 +2,7 @@
 
 public abstract class State
 {
+
     public virtual IEnumerator Enter()
     {
         yield break;

@@ -4,7 +4,7 @@ using UnityEngine;
 public class LoseState : GameState
 {
 
-    public LoseState() : base()
+    public LoseState(GameFSM FSM) : base(FSM)
     {
 
     }
