@@ -44,6 +44,14 @@ abstract public class Gun : MonoBehaviour
         reloadProcess = false;
     }
 
+    private void OnDisable()
+    {
+        if (reloadProcess) {
+            // We need to stop reload sound till switch the weapon
+            AudioManager.instance.StopSound(reloadSound);
+        }
+    }
+
     public void Shoot(Subject shooter)
     {
         // Check if gun have ammo

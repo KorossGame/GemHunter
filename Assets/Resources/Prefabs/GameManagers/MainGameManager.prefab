@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2803576538523303996}
   - component: {fileID: 2803576538523303938}
   - component: {fileID: 2803576538523303936}
-  - component: {fileID: 2803576538523303939}
   - component: {fileID: 2803576538523303997}
   m_Layer: 0
   m_Name: MainGameManager
@@ -28,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2803576538523303999}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -59,9 +58,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a1a945d0e9a19140a889ed3f62b9e00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mixer: {fileID: 24100000, guid: 1f5ddb65f63ebf94c8d084884fc29ac8, type: 2}
   soundMixerGroup: {fileID: 600600401581485836, guid: 1f5ddb65f63ebf94c8d084884fc29ac8, type: 2}
   musicMixerGroup: {fileID: 1027504842186869722, guid: 1f5ddb65f63ebf94c8d084884fc29ac8, type: 2}
+  defaultMusicLevel: 0.001
+  defaultSoundLevel: 0.001
   sounds:
   - audioType: 1
     name: MainMenuMusic
@@ -175,23 +175,6 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
---- !u!114 &2803576538523303939
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2803576538523303999}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58a879d372e891b489103f7ab84baef3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultValue: 0.01
-  musicSlider: {fileID: 0}
-  soundSlider: {fileID: 0}
-  musicTextValue: {fileID: 0}
-  soundTextValue: {fileID: 0}
 --- !u!114 &2803576538523303997
 MonoBehaviour:
   m_ObjectHideFlags: 0

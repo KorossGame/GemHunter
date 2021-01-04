@@ -11,6 +11,7 @@ public class PauseState : GameState
 
     public override IEnumerator Enter()
     {
+        PauseMenu.instance.gameObject.SetActive(true);
         Time.timeScale = 0;
         yield break;
     }
@@ -18,6 +19,15 @@ public class PauseState : GameState
     public override IEnumerator Exit()
     {
         Time.timeScale = 1;
+        yield break;
+    }
+
+    public override IEnumerator Play()
+    {
+        if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape))
+        {
+            gameFSMObject.changeState(new PlayState(gameFSMObject));
+        }
         yield break;
     }
 }

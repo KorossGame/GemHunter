@@ -8,6 +8,16 @@ public class WeaponSwitcher : MonoBehaviour
     public Gun WeaponEquiped { get; private set; }
     public Gun[] availableGuns;
 
+    void OnEnable()
+    {
+        EventManager.AllWeaponsUnlocked += TutorialGameManager.EnemyPhase;
+    }
+
+    void OnDisable()
+    {
+        EventManager.AllWeaponsUnlocked -= TutorialGameManager.EnemyPhase;
+    }
+
     void Start()
     {
         availableGuns = new Gun[GunManager.instance.guns.Length];
@@ -41,6 +51,7 @@ public class WeaponSwitcher : MonoBehaviour
 
     public void UnlockWeapon(Gun toUnlock)
     {
+        // If player has weapon don't need to unlock twice
         foreach (Gun gun in availableGuns)
         {
             if (gun == toUnlock) return;
@@ -52,6 +63,7 @@ public class WeaponSwitcher : MonoBehaviour
         // Move gun to inventory of player
         toUnlock.transform.parent = gameObject.transform;
         
+        // If nothing is equiped - equip new weapon
         if (WeaponEquiped == null)
         {
             EquipWeapon(toUnlock.ID);
@@ -60,6 +72,16 @@ public class WeaponSwitcher : MonoBehaviour
         {
             toUnlock.gameObject.SetActive(false);
         }
+        checkUnlockedWeapons();
+    }
+
+    private void checkUnlockedWeapons()
+    {
+        foreach (Gun gun in availableGuns)
+        {
+            if (gun == null) return;
+        }
+        EventManager.WeaponsUnlockedEvent();
     }
 
     public int GetCurrentWeaponID()

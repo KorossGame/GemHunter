@@ -19,8 +19,13 @@ public class Player : Subject
     // Inventory system
     public WeaponSwitcher inventory;
 
-    // Store PowerUP multiplier value
+    /* Multipliers better to make as listeners and throw an event when player picks up a powerup (Security reasons) */
+
+    // Damage multiplier value for guns (for power up mechanics)
     public byte GunPowerUPMultiplier { get; set; } = 1;
+
+    // If player can be damaged (for power up mechanics)
+    public bool GodMode { get; set; } = false;
 
     void Start()
     {
@@ -32,9 +37,11 @@ public class Player : Subject
     public override void applyDamage(int damage)
     {
         // Play custom animation and sound
-
-        // Calc damage
-        base.applyDamage(damage);
+        if (!GodMode)
+        {
+            // Calc damage
+            base.applyDamage(damage);
+        }
     }
 
     protected override void Die()

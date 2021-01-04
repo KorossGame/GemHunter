@@ -8,15 +8,21 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
 
-    public AudioMixer mixer;
-    [SerializeField] private AudioMixerGroup soundMixerGroup;
-    [SerializeField] private AudioMixerGroup musicMixerGroup;
-    
+    // Initialize audio mixers for sound and sound
+    [SerializeField] private AudioMixerGroup soundMixerGroup, musicMixerGroup;
+
+    // Default values for music and sound levels
+    public float musicLevel { get; set; } = -50;
+    public float soundLevel { get; set; } = -50;
+
+    // Array of sounds to be played by this object
     public Sound[] sounds;
 
     void Awake()
     {
         instance = this;
+
+        // Setup each sound/musuiuc source
         foreach (Sound s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
@@ -39,10 +45,23 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        if (SettingsScript.instance != null)
+        {
+            SettingsScript.instance.SetSoundLevel(soundLevel);
+            SettingsScript.instance.SetMusicLevel(musicLevel);
+        }
+        else
+        {
+            UpdateMixer();
+        }
+    }
+
     public void PlaySound(string name)
     {
         Sound newSound = Array.Find(sounds, sound => sound.name == name);
-        if (newSound == null) 
+        if (newSound == null)
         {
             Debug.LogWarning(newSound + " sound/music was not found!");
             return;
@@ -63,7 +82,7 @@ public class AudioManager : MonoBehaviour
 
     public void UpdateMixer()
     {
-        soundMixerGroup.audioMixer.SetFloat("SoundVol", Mathf.Log10(AudioMixerManager.soundVolume) * 20);
-        musicMixerGroup.audioMixer.SetFloat("MusicVol", Mathf.Log10(AudioMixerManager.musicVolume) * 20);
+        soundMixerGroup.audioMixer.SetFloat("SoundVol", soundLevel);
+        musicMixerGroup.audioMixer.SetFloat("MusicVol", musicLevel);
     }
 }

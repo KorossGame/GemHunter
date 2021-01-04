@@ -13,14 +13,13 @@ public class MenuState : GameState
 
     public override IEnumerator Enter()
     {
-        AudioManager.instance.PlaySound("MainMenuMusic");
+        SceneManager.LoadScene("Menu");
         return base.Enter();
     }
 
     public override IEnumerator Exit()
     {
         AudioManager.instance.StopSound("MainMenuMusic");
-        SceneManager.LoadScene(1);
-        yield return new WaitForEndOfFrame();
+        return base.Exit();
     }
 }

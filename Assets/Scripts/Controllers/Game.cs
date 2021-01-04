@@ -9,7 +9,9 @@ public class Game : MonoBehaviour
     [Header("FSM")]
     public GameFSM stateMachine;
 
-    void Awake()
+    public bool loadedGameManagers { get; set; } = false;
+
+    private void Awake()
     {
         if (instance == null)
         {
@@ -26,6 +28,11 @@ public class Game : MonoBehaviour
     private void Start()
     {
         stateMachine = GetComponent<GameFSM>();
-        stateMachine.changeState(new MenuState(stateMachine));
+        stateMachine.changeState(new PreMenuState(stateMachine));
+    }
+
+    private void Update()
+    {
+        StartCoroutine(stateMachine.currentGameState.Play());
     }
 }

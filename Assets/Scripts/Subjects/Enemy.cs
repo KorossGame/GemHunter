@@ -1,13 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.AI;
 
 abstract public class Enemy : Subject
 {
-    [Header("Drops")]
-    private float powerUPdropChance = 10f;
-    private float ammoBoxDropChance = 40f;
+    public float powerUPdropChance { get; set; } = 10f;
+    public float ammoBoxDropChance { get; set; } = 40f;
 
     [Header("Pathfinder")]
     protected NavMeshAgent pathFinder;
@@ -20,7 +20,7 @@ abstract public class Enemy : Subject
     protected Gun currentWeapon;
     
     [HideInInspector]
-    public event System.Action OnDeath;
+    public event Action OnDeath;
 
     [Header("Weapon")]
     // Chances of spawn enemy with particular weapon (e.g. 10 for melee - represents values (0-10])
@@ -36,7 +36,7 @@ abstract public class Enemy : Subject
     void Start()
     {
         // Set random seed
-        Random.InitState((int)System.DateTime.Now.Ticks);
+        UnityEngine.Random.InitState((int)System.DateTime.Now.Ticks);
 
         // Weapon chance array
         generatePartialSum();
@@ -82,7 +82,7 @@ abstract public class Enemy : Subject
         if (weaponChance != null)
         {
             // Get random number
-            float gunRandom = Random.Range(0f, 100.0f);
+            float gunRandom = UnityEngine.Random.Range(0f, 100.0f);
 
             // Set current weapon
             if (gunRandom <= weaponChance[0])
@@ -152,7 +152,7 @@ abstract public class Enemy : Subject
             GenerateAmmoBox();
         }
 
-        // Spawner interaction event
+        // Call OnDeath event
         OnDeath?.Invoke();
 
         // Destroy GameObject
@@ -170,12 +170,12 @@ abstract public class Enemy : Subject
     protected bool GeneratePowerUP()
     {
         // Generate new number to define if generate powerUP is needed
-        int randomNumber = (int)Random.Range(0, 100);
+        int randomNumber = (int)UnityEngine.Random.Range(0, 100);
 
         if (randomNumber <= powerUPdropChance)
         {
             // Which powerUP going to be dropped
-            int randomPowerUP = Random.Range(0, PowerUPManager.instance.powerUPs.Length - 1);
+            int randomPowerUP = UnityEngine.Random.Range(0, PowerUPManager.instance.powerUPs.Length - 1);
 
             // Create PowerUP object
             Instantiate(PowerUPManager.instance.powerUPs[randomPowerUP], transform.position + new Vector3(0, 0.5f, 0), transform.rotation);
@@ -187,12 +187,12 @@ abstract public class Enemy : Subject
     protected void GenerateAmmoBox()
     {
         // Generate new number to define if generate an ammo box
-        int randomNumber = (int)Random.Range(0, 100);
+        int randomNumber = (int)UnityEngine.Random.Range(0, 100);
 
         if (randomNumber <= ammoBoxDropChance)
         {
             // Which powerUP going to be dropped
-            int randomAmmoBox = Random.Range(0, AmmoManager.instance.ammoBoxes.Length - 1);
+            int randomAmmoBox = UnityEngine.Random.Range(0, AmmoManager.instance.ammoBoxes.Length - 1);
 
             // Create ammo box object
             Instantiate(AmmoManager.instance.ammoBoxes[randomAmmoBox], transform.position + new Vector3(0, 0.5f, 0), transform.rotation);

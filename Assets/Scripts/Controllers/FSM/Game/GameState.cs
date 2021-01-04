@@ -1,4 +1,6 @@
-﻿
+﻿using System.Collections;
+using UnityEngine;
+
 public abstract class GameState : State
 {
     protected GameFSM gameFSMObject;
@@ -7,5 +9,10 @@ public abstract class GameState : State
     public GameState(GameFSM FSM)
     {
         gameFSMObject = FSM;
+    }
+
+    public virtual IEnumerator Play()
+    {
+        yield break;
     }
 }
