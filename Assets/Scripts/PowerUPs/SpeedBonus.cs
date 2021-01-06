@@ -22,7 +22,7 @@ public class SpeedBonus : PowerUP
         // Activate powerUP
         playerGameObject.Speed *= 2;
 
-        // Wait for active time
+        // Wait particular amount of time
         yield return new WaitForSeconds(activeTime);
 
         // Reverse PowerUP

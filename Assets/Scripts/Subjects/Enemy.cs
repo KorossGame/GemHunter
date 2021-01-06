@@ -9,6 +9,9 @@ abstract public class Enemy : Subject
     public float powerUPdropChance { get; set; } = 10f;
     public float ammoBoxDropChance { get; set; } = 40f;
 
+    [Header("Tutorial")]
+    public bool activated = true;
+
     [Header("Pathfinder")]
     protected NavMeshAgent pathFinder;
     protected Transform player;
@@ -32,6 +35,11 @@ abstract public class Enemy : Subject
     [HideInInspector]
     // Object of enemy
     private Subject enemyObject;
+
+    private void OnDisable()
+    {
+        OnDeath = null;
+    }
 
     void Start()
     {
@@ -63,7 +71,7 @@ abstract public class Enemy : Subject
 
     void Update()
     {
-        if (player && currentWeapon)
+        if (player && currentWeapon && activated)
         {
             if (pathFinder.remainingDistance <= pathFinder.stoppingDistance)
             {
@@ -117,7 +125,7 @@ abstract public class Enemy : Subject
     protected IEnumerator UpdatePath()
     {
         float refreshRate = 0.25f;
-        while (player && !dead)
+        while (player && !dead && activated)
         {
             Vector3 PlayerPos = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
             pathFinder.SetDestination(PlayerPos);
@@ -125,7 +133,7 @@ abstract public class Enemy : Subject
         }
 
         // If no player - stay on place
-        if (!player)
+        if (!player || !activated)
         {
             pathFinder.SetDestination(transform.position);
         }

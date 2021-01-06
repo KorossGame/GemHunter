@@ -8,17 +8,17 @@ public class WeaponSwitcher : MonoBehaviour
     public Gun WeaponEquiped { get; private set; }
     public Gun[] availableGuns;
 
-    void OnEnable()
+    private void OnEnable()
     {
-        EventManager.AllWeaponsUnlocked += TutorialGameManager.EnemyPhase;
+        EventManager.instance.AllWeaponsUnlocked += TutorialGameManager.instance.EnemyPhase;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
-        EventManager.AllWeaponsUnlocked -= TutorialGameManager.EnemyPhase;
+        EventManager.instance.AllWeaponsUnlocked -= TutorialGameManager.instance.EnemyPhase;
     }
 
-    void Start()
+    private void Start()
     {
         availableGuns = new Gun[GunManager.instance.guns.Length];
     }
@@ -72,16 +72,21 @@ public class WeaponSwitcher : MonoBehaviour
         {
             toUnlock.gameObject.SetActive(false);
         }
+
+        // Check if player unlocked all the weapons
         checkUnlockedWeapons();
     }
 
     private void checkUnlockedWeapons()
     {
+        // Check if any gun is not unlocked yet
         foreach (Gun gun in availableGuns)
         {
             if (gun == null) return;
         }
-        EventManager.WeaponsUnlockedEvent();
+
+        // If all guns were unlocked - trigger event
+        EventManager.instance.WeaponsUnlockedEvent();
     }
 
     public int GetCurrentWeaponID()

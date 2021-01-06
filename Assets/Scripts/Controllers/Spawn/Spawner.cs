@@ -20,11 +20,8 @@ public class Spawner : MonoBehaviour
     // Reference to all types of enemies
     public Enemy[] enemyTypes;
 
-    [Header("Parent for Enemies")]
-    public Transform parentObject;
-
-    [Header("Flags")]
-    public bool active;
+    [HideInInspector]
+    public bool active { private get; set; } = false;
     
     void Awake()
     {
@@ -33,21 +30,14 @@ public class Spawner : MonoBehaviour
 
     void Start()
     {
-        if (enemyTypes.Length > 0)
-        {
-            active = true;
-            NextWave();
-
-            // Set random seed
-            Random.InitState((int)System.DateTime.Now.Ticks);
-        }
+        // Set random seed
+        Random.InitState((int)System.DateTime.Now.Ticks);
     }
 
     void Update()
     {
-
         // Spawn the enemy if spawner is activated
-        if (Time.time > nextSpawnTime && PlayerManager.instance.player && active && currentWave != null)
+        if (Time.time > nextSpawnTime && active && currentWave != null && enemyTypes.Length > 0)
         {
             // Check if wave time passed and we need to call next wave
             if (Time.time > currentWave.timeToNextWave)
@@ -69,6 +59,7 @@ public class Spawner : MonoBehaviour
         int maxSpawnPoints = (currentWave.spawnPoints.Length);
         if (maxSpawnPoints > 0)
         {
+            // Choose random point
             int newPoint = Random.Range(0, maxSpawnPoints);
             SpawnPoint randomSpawnPoint = currentWave.spawnPoints[newPoint];
 
@@ -90,7 +81,9 @@ public class Spawner : MonoBehaviour
             }
 
             // Array of pointers for spawning enemies
-            Enemy spawnedEnemy = Instantiate(enemyTypes[enemyIndexToSpawn], randomSpawnPoint.transform.position, Quaternion.identity, parentObject);
+            Enemy spawnedEnemy = Instantiate(enemyTypes[enemyIndexToSpawn], randomSpawnPoint.transform.position, Quaternion.identity, gameObject.transform);
+            
+            // On death call event
             spawnedEnemy.OnDeath += OnEnemyDeath;
             currentWave.currentEnemies++;
         }
@@ -99,7 +92,8 @@ public class Spawner : MonoBehaviour
     void OnEnemyDeath()
     {
         currentWave.currentEnemies--;
-        /*
+        /* If there is target enemies to kill (not timer as it is done right now)
+         * 
         currentWave.enemyToKill--;
         if (currentWave.enemyToKill == 0)
         {
@@ -132,11 +126,15 @@ public class Spawner : MonoBehaviour
 
     public void KillAllEnemies()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject enemyObject in enemies)
+        /* Might be improved by object pool */
+
+        // Get every child of this object and destroy it
+        foreach (GameObject enemyObject in gameObject.transform)
         {
             Destroy(enemyObject);
         }
+
+        // Set current enemies count to 0
         currentWave.currentEnemies = 0;
     }
 }

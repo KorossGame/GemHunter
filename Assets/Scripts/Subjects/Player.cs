@@ -79,7 +79,6 @@ public class Player : Subject
             gameObject.transform.position = new Vector3(0, 0.5f, 0);
         }
 
-        /*
         // Set spawner status back to active
         if (Spawner.instance != null) Spawner.instance.active = true;
 
@@ -91,7 +90,6 @@ public class Player : Subject
         {
             inventory.gameObject.SetActive(true);
         }
-        */
     }
 
     private IEnumerator Respawn()

@@ -12,8 +12,11 @@ public class PlayerManager : MonoBehaviour
         instance = this;
     }
 
-    private void Start()
+    private void Update()
     {
-        player = (GameObject)Instantiate(Resources.Load("Prefabs/Player"), new Vector3(0, 0.5f, 0), Quaternion.identity);
+        if (!player)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ abstract public class AmmoBox : MonoBehaviour
 {
     protected WeaponSwitcher playerInventory;
     protected int weaponID;
+    public event Action OnPickUP;
 
     protected void Start()
     {
@@ -14,6 +16,8 @@ abstract public class AmmoBox : MonoBehaviour
 
     protected virtual void PickUP()
     {
+        OnPickUP?.Invoke();
+
         // If player has this type of weapon - add ammo
         if (playerInventory.availableGuns[weaponID])
         {

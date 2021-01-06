@@ -9,6 +9,7 @@ public class Wave
     public float maxEnemies;
     
     // Current enemies count
+    [HideInInspector]
     public float currentEnemies;
 
     // Delta time between spawns of enemies

@@ -8,17 +8,16 @@ public class CameraController : MonoBehaviour
     public float movementSpeed;
     public Vector3 targetOffset;
 
-    void Start()
-    {
-        target = PlayerManager.instance.player.transform;
-    }
-
     void Update()
     {
         if (target)
         {
             MoveCamera();
             transform.LookAt(target);
+        }
+        else
+        {
+            target = PlayerManager.instance.player.transform;
         }
     }
 

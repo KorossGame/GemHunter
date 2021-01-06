@@ -10,6 +10,8 @@ public class PauseMenu : MonoBehaviour
     void Awake()
     {
         instance = this;
+        // By default set set it off
+        gameObject.SetActive(false);
     }
 
     public void ContinueGame()
@@ -19,6 +21,7 @@ public class PauseMenu : MonoBehaviour
 
     public void ExitToMenu()
     {
+        SceneManager.LoadScene("Menu");
         Game.instance.stateMachine.changeState(new MenuState(Game.instance.stateMachine));
     }
 }

@@ -18,9 +18,18 @@ public class PlayState : GameState
         // If player pause the game we dont need to load game managers again
         if (!Game.instance.loadedGameManagers)
         {
-            // Add game managers as empty childs of game controller
+            // Load Pause Menu UI
+            GameObject.Instantiate(Resources.Load("Prefabs/UI/PauseMenu"), gameFSMObject.transform.position, Quaternion.identity, gameFSMObject.transform);
+
+            // Add event manager
+            GameObject.Instantiate(Resources.Load("Prefabs/GameManagers/CustomEventManager"), gameFSMObject.transform.position, Quaternion.identity, gameFSMObject.transform);
+
+            // Add player game managers
             GameObject.Instantiate(Resources.Load("Prefabs/GameManagers/GunManager"), gameFSMObject.transform.position, Quaternion.identity, gameFSMObject.transform);
             GameObject.Instantiate(Resources.Load("Prefabs/GameManagers/PlayerManager"), gameFSMObject.transform.position, Quaternion.identity, gameFSMObject.transform);
+
+            // Add enemy game managers
+            GameObject.Instantiate(Resources.Load("Prefabs/GameManagers/EnemyManager"), gameFSMObject.transform.position, Quaternion.identity, gameFSMObject.transform);
 
             // Add supportive game managers
             GameObject.Instantiate(Resources.Load("Prefabs/GameManagers/PowerUPManager"), gameFSMObject.transform.position, Quaternion.identity, gameFSMObject.transform);

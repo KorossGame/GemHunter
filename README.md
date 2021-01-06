@@ -13,14 +13,22 @@ Not Ready Yet
 | Enemy AI					| :heavy_check_mark: |
 | Boss Mechanics			| :heavy_check_mark: |
 | Game States				| :heavy_check_mark: |
-| Console					| :x: |
 | Ammo Boxes				| :heavy_check_mark: |
-| Tutorial Level			| In Progress |
-| Sound & Music				| :heavy_check_mark: |
-| Graphics (SFX)			| :x: |
+| Tutorial Level			| :heavy_check_mark: |
+| Default Level				| :x: |
+| Boss Level				| :x: |
+| Sound & Music				| :x: |
 | Animations				| :x: |
-| Themes (Dynamic weather)	| :x: |
+| Boss Cinematic			| :x: |
+| UI						| :x: |
+| Graphics (SFX)			| :x: |
 | Demo						| :x: |
+
+## Ideas
+| Task | Done |
+| ---- | :----: |
+| Console					| :x: |
+| Themes (Dynamic weather)	| :x: |
 | Multiplayer				| :x: |
 
 ## About
