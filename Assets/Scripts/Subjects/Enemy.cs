@@ -1,15 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.AI;
 
 abstract public class Enemy : Subject
 {
-    [Header("PowerUP")]
-    private float powerUPdropChance = 10f;
+    public float powerUPdropChance { get; set; } = 10f;
+    public float ammoBoxDropChance { get; set; } = 40f;
+
+    [Header("Tutorial")]
+    public bool activated = true;
 
     [Header("Pathfinder")]
-    private NavMeshAgent pathFinder;
+    protected NavMeshAgent pathFinder;
     protected Transform player;
     private bool dead = false;
 
@@ -19,7 +23,7 @@ abstract public class Enemy : Subject
     protected Gun currentWeapon;
     
     [HideInInspector]
-    public event System.Action OnDeath;
+    public event Action OnDeath;
 
     [Header("Weapon")]
     // Chances of spawn enemy with particular weapon (e.g. 10 for melee - represents values (0-10])
@@ -32,10 +36,15 @@ abstract public class Enemy : Subject
     // Object of enemy
     private Subject enemyObject;
 
+    private void OnDisable()
+    {
+        OnDeath = null;
+    }
+
     void Start()
     {
         // Set random seed
-        Random.InitState((int)System.DateTime.Now.Ticks);
+        UnityEngine.Random.InitState((int)System.DateTime.Now.Ticks);
 
         // Weapon chance array
         generatePartialSum();
@@ -62,7 +71,7 @@ abstract public class Enemy : Subject
 
     void Update()
     {
-        if (player)
+        if (player && currentWeapon && activated)
         {
             if (pathFinder.remainingDistance <= pathFinder.stoppingDistance)
             {
@@ -71,55 +80,60 @@ abstract public class Enemy : Subject
         }
     }
 
-    void FixedUpdate()
+    protected void FixedUpdate()
     {
         FaceTarget();
     }
 
-    protected void getWeapon()
+    protected virtual void getWeapon()
     {
-        // Get random number
-        float gunRandom = Random.Range(0f, 100.0f);
+        if (weaponChance != null)
+        {
+            // Get random number
+            float gunRandom = UnityEngine.Random.Range(0f, 100.0f);
 
-        // Set current weapon
-        if (gunRandom <= weaponChance[0])
-        {
-            currentWeapon = GunManager.instance.guns[0];
-        }
-        else if (gunRandom <= weaponChance[1])
-        {
-            currentWeapon = GunManager.instance.guns[1];
-        }
-        else if (gunRandom <= weaponChance[2])
-        {
-            currentWeapon = GunManager.instance.guns[2];
-        }
-        else if (gunRandom <= weaponChance[3])
-        {
-            currentWeapon = GunManager.instance.guns[3];
-        }
-        else if (gunRandom <= weaponChance[4])
-        {
-            currentWeapon = GunManager.instance.guns[4];
-        }
+            // Set current weapon
+            if (gunRandom <= weaponChance[0])
+            {
+                currentWeapon = GunManager.instance.guns[0];
+            }
+            else if (gunRandom <= weaponChance[1])
+            {
+                currentWeapon = GunManager.instance.guns[1];
+            }
+            else if (gunRandom <= weaponChance[2])
+            {
+                currentWeapon = GunManager.instance.guns[2];
+            }
+            else if (gunRandom <= weaponChance[3])
+            {
+                currentWeapon = GunManager.instance.guns[3];
+            }
+            else if (gunRandom <= weaponChance[4])
+            {
+                currentWeapon = GunManager.instance.guns[4];
+            }
 
-        // Create a new gun for enemy in holder point position
-        currentWeapon = Instantiate(currentWeapon, holderPoint.transform.position, gameObject.transform.rotation, holderPoint.transform);
+            // Create a new gun for enemy in holder point position
+            currentWeapon = Instantiate(currentWeapon, holderPoint.transform.position, gameObject.transform.rotation, holderPoint.transform);
 
-        // Change Nav Mesh agent stopping distance depending on gun got
-        ChangeStopDistance();
+            // Change Nav Mesh agent stopping distance depending on gun got
+            ChangeStopDistance();
+        }
     }
 
-    IEnumerator UpdatePath()
+    protected IEnumerator UpdatePath()
     {
         float refreshRate = 0.25f;
-        while (player && !dead)
+        while (player && !dead && activated)
         {
             Vector3 PlayerPos = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
             pathFinder.SetDestination(PlayerPos);
             yield return new WaitForSeconds(refreshRate);
         }
-        if (!player)
+
+        // If no player - stay on place
+        if (!player || !activated)
         {
             pathFinder.SetDestination(transform.position);
         }
@@ -140,12 +154,14 @@ abstract public class Enemy : Subject
         dead = true;
         // Animation and Sound of death
 
-        // Generate power up
-        GeneratePowerUP();
+        // If enemy didn't drop power up we may drop some ammo
+        if (!GeneratePowerUP())
+        {
+            GenerateAmmoBox();
+        }
 
-        // Spawner interaction event
+        // Call OnDeath event
         OnDeath?.Invoke();
-
 
         // Destroy GameObject
         base.Die();
@@ -159,24 +175,41 @@ abstract public class Enemy : Subject
         base.applyDamage(damage);
     }
 
-    protected void GeneratePowerUP()
+    protected bool GeneratePowerUP()
     {
         // Generate new number to define if generate powerUP is needed
-        int randomNumber = (int)Random.Range(0, 100);
+        int randomNumber = (int)UnityEngine.Random.Range(0, 100);
 
         if (randomNumber <= powerUPdropChance)
         {
             // Which powerUP going to be dropped
-            int randomPowerUP = Random.Range(0, PowerUPManager.instance.powerUPs.Length - 1);
+            int randomPowerUP = UnityEngine.Random.Range(0, PowerUPManager.instance.powerUPs.Length - 1);
 
             // Create PowerUP object
             Instantiate(PowerUPManager.instance.powerUPs[randomPowerUP], transform.position + new Vector3(0, 0.5f, 0), transform.rotation);
+            return true;
+        }
+        return false;
+    }
+
+    protected void GenerateAmmoBox()
+    {
+        // Generate new number to define if generate an ammo box
+        int randomNumber = (int)UnityEngine.Random.Range(0, 100);
+
+        if (randomNumber <= ammoBoxDropChance)
+        {
+            // Which powerUP going to be dropped
+            int randomAmmoBox = UnityEngine.Random.Range(0, AmmoManager.instance.ammoBoxes.Length - 1);
+
+            // Create ammo box object
+            Instantiate(AmmoManager.instance.ammoBoxes[randomAmmoBox], transform.position + new Vector3(0, 0.5f, 0), transform.rotation);
         }
     }
 
 
     // Change Nav Mesh agent stopping distance depending on gun got
-    protected void ChangeStopDistance()
+    protected virtual void ChangeStopDistance()
     {
         pathFinder.stoppingDistance = currentWeapon.EffectiveRange * 1.5f;
     }
@@ -184,7 +217,7 @@ abstract public class Enemy : Subject
     protected void generatePartialSum()
     {
         double counter = 0;
-        for (int i = 0; i < weaponChance.Length; i++)
+        for (byte i = 0; i < weaponChance.Length; i++)
         {
             counter += weaponChance[i];
             weaponChance[i] = counter;

@@ -4,9 +4,9 @@ using UnityEngine;
 
 abstract public class Gun : MonoBehaviour
 {
-    public int ID { get; protected set; }
+    public byte ID { get; protected set; }
     public int DamagePerBullet { get; protected set; }
-    public int CurrentAmmo { get; protected set; }
+    protected int CurrentAmmo { get; set; }
 
     // Ammo block
     protected int ammoInClip;
@@ -23,17 +23,33 @@ abstract public class Gun : MonoBehaviour
     private float nextShootTime = 1f;
     private bool reloadProcess = false;
 
+    // Switch weapon trigger
+    private bool switchProcess = false;
+    private float switchTime = 0.5f;
+
     // Attack point/Bullet point reference
     public Transform attackPoint;
 
     // Projectile
     public Projectile bullet;
-    public int BulletSpeed;
+    protected int BulletSpeed { get; set; }
+
+    // Sounds name
+    protected string shootSound;
+    protected string reloadSound;
 
     private void OnEnable()
     {
         // If player switches the weapon while reloading, we need to reset reload process
         reloadProcess = false;
+    }
+
+    private void OnDisable()
+    {
+        if (reloadProcess) {
+            // We need to stop reload sound till switch the weapon
+            AudioManager.instance.StopSound(reloadSound);
+        }
     }
 
     public void Shoot(Subject shooter)
@@ -46,16 +62,18 @@ abstract public class Gun : MonoBehaviour
         }
 
         // Check if we can shoot
-        if (Time.time >= nextShootTime && !reloadProcess)
+        if (Time.time >= nextShootTime && !reloadProcess && !switchProcess)
         {
             nextShootTime = Time.time + 1f / fireRate;
             ShootBullet(shooter);
         }
-        else return;
     }
 
     protected virtual void ShootBullet(Subject shooter)
     {
+        // Play shoot sound
+        AudioManager.instance.PlaySound(shootSound);
+
         int powerUPMultiplier;
         // Check if power shooter is player or enemy
         if (shooter.transform.tag == "Player")
@@ -72,6 +90,7 @@ abstract public class Gun : MonoBehaviour
 
         // Create new bullet with passing Gun and Shooter objects there
         Projectile newShoot = Instantiate(bullet, attackPoint.position, attackPoint.rotation);
+        newShoot.tag = "Bullet";
         newShoot.shooter = shooter.transform;
         newShoot.CurrentGun = this;
         newShoot.PowerUPMultiplier = powerUPMultiplier;
@@ -81,6 +100,21 @@ abstract public class Gun : MonoBehaviour
     public void ForceReload()
     {
         StartCoroutine(Reload());
+    }
+
+    public void ForceDelayShot()
+    {
+        switchProcess = true;
+        StartCoroutine(DelayShot());
+    }
+
+    protected IEnumerator DelayShot()
+    {
+        if (switchProcess)
+        {
+            yield return new WaitForSeconds(switchTime);
+            switchProcess = false;
+        }
     }
 
     protected IEnumerator Reload()
@@ -93,6 +127,7 @@ abstract public class Gun : MonoBehaviour
                 reloadProcess = true;
 
                 // Play animation + sound
+                AudioManager.instance.PlaySound(reloadSound);
 
                 // Wait for time
                 yield return new WaitForSeconds(reloadTime);

@@ -19,8 +19,13 @@ public class Player : Subject
     // Inventory system
     public WeaponSwitcher inventory;
 
-    // Store PowerUP multiplier value
-    public int GunPowerUPMultiplier { get; set; } = 1;
+    /* Multipliers better to make as listeners and throw an event when player picks up a powerup (Security reasons) */
+
+    // Damage multiplier value for guns (for power up mechanics)
+    public byte GunPowerUPMultiplier { get; set; } = 1;
+
+    // If player can be damaged (for power up mechanics)
+    public bool GodMode { get; set; } = false;
 
     void Start()
     {
@@ -32,9 +37,11 @@ public class Player : Subject
     public override void applyDamage(int damage)
     {
         // Play custom animation and sound
-
-        // Calc damage
-        base.applyDamage(damage);
+        if (!GodMode)
+        {
+            // Calc damage
+            base.applyDamage(damage);
+        }
     }
 
     protected override void Die()
@@ -52,9 +59,8 @@ public class Player : Subject
                 inventory.gameObject.SetActive(false);
             }
 
-            // Kill all enemies and set spawner inactive
-            Spawner.instance.KillAllEnemies();
-            Spawner.instance.active = false;
+            // Activate game restart
+            // Game.instance.stateMachine.changeState(new RestartState(Game.instance.stateMachine));
 
             // Respawn player
             StartCoroutine(Respawn());
@@ -73,12 +79,8 @@ public class Player : Subject
             gameObject.transform.position = new Vector3(0, 0.5f, 0);
         }
 
-
-        // Reset HP to default
-        HP = 100;
-
         // Set spawner status back to active
-        Spawner.instance.active = true;
+        if (Spawner.instance != null) Spawner.instance.active = true;
 
         // Enable Visual player object
         visualObject.GetComponent<MeshRenderer>().enabled = true;
