@@ -15,18 +15,21 @@ public class SpeedBonus : PowerUP
         // Get Player class from visual object
         Player playerGameObject = player.GetComponent<Player>();
 
+        // Stop previous powerups
+        StopAllCoroutines();
+
         // Get collider and mesh renderer components for this class object and disable them
         gameObject.GetComponent<MeshRenderer>().enabled = false;
         gameObject.GetComponent<Collider>().enabled = false;
 
         // Activate powerUP
-        playerGameObject.Speed *= 2;
+        playerGameObject.Speed *= multiplier;
 
         // Wait particular amount of time
         yield return new WaitForSeconds(activeTime);
 
         // Reverse PowerUP
-        playerGameObject.Speed /= 2;
+        playerGameObject.Speed /= multiplier;
 
         // Delete PowerUP Object
         Destroy(gameObject);

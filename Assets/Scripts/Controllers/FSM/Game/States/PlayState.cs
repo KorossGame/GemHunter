@@ -18,13 +18,18 @@ public class PlayState : GameState
         // If player pause the game we dont need to load game managers again
         if (!Game.instance.loadedGameManagers)
         {
+            GameObject.Instantiate(Resources.Load("Prefabs/Game/Player"), gameFSMObject.transform.position, Quaternion.identity);
+
             // Load Pause Menu UI
             GameObject.Instantiate(Resources.Load("Prefabs/UI/PauseMenu"), gameFSMObject.transform.position, Quaternion.identity, gameFSMObject.transform);
 
             // Add event manager
             GameObject.Instantiate(Resources.Load("Prefabs/GameManagers/CustomEventManager"), gameFSMObject.transform.position, Quaternion.identity, gameFSMObject.transform);
 
-            // Add player game managers
+            // Add Grid manager
+            GameObject.Instantiate(Resources.Load("Prefabs/GameManagers/GridManager"), gameFSMObject.transform.position, Quaternion.identity, gameFSMObject.transform);
+
+            // Add player and gun managers
             GameObject.Instantiate(Resources.Load("Prefabs/GameManagers/GunManager"), gameFSMObject.transform.position, Quaternion.identity, gameFSMObject.transform);
             GameObject.Instantiate(Resources.Load("Prefabs/GameManagers/PlayerManager"), gameFSMObject.transform.position, Quaternion.identity, gameFSMObject.transform);
 
@@ -38,6 +43,11 @@ public class PlayState : GameState
             // Spawn Camera
             GameObject.Instantiate(Resources.Load("Prefabs/Game/MainCamera"), gameFSMObject.transform.position, Quaternion.identity, gameFSMObject.transform);
             Game.instance.loadedGameManagers = true;
+        }
+
+        if (PlayerManager.instance.player != null)
+        {
+            PlayerManager.instance.player.SetActive(true);
         }
 
         yield break;

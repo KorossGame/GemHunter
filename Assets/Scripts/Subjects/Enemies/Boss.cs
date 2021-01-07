@@ -8,6 +8,7 @@ public class Boss : Enemy
 {
     [Header("Stats")]
     private int maxHP;
+    public bool godActivated = false;
 
     [Header("FSM")]
     private BossFSM stateMachine;
@@ -23,6 +24,11 @@ public class Boss : Enemy
 
     // Object for last phase
     public GameObject energeticField;
+
+    void OnEnable()
+    {
+        StartCoroutine(Spawner.instance.KillAllEnemies());
+    }
 
     void Awake()
     {
@@ -49,12 +55,17 @@ public class Boss : Enemy
 
         // Activate FSM
         stateMachine = GetComponent<BossFSM>();
-        stateMachine.changeState(new God(stateMachine, attackProjectiles[1], animator, pathFinder, this, energeticField));
-        //stateMachine.changeState(new Nightmare(stateMachine, attackProjectiles[1], animator, pathFinder, player.transform));
-        //stateMachine.changeState(new Berserk(stateMachine, attackProjectiles[0], animator, pathFinder, attackPoints[1]));
-        //stateMachine.changeState(new Rage(stateMachine, attackProjectiles[0], animator, pathFinder, attackPoints[1]));
-        //stateMachine.changeState(new Sorcerer(stateMachine, attackProjectiles[0], animator, pathFinder, attackPoints[1]));
-        //stateMachine.changeState(new Weakling(stateMachine, attackProjectiles[0], animator, pathFinder, attackPoints[0]));
+
+        // Add all possible states to stateMachine
+        stateMachine.AddState(new Weakling(stateMachine, attackProjectiles[0], animator, pathFinder, attackPoints[0]));
+        stateMachine.AddState(new Sorcerer(stateMachine, attackProjectiles[0], animator, pathFinder, attackPoints[1]));
+        stateMachine.AddState(new Rage(stateMachine, attackProjectiles[0], animator, pathFinder, attackPoints[1]));
+        stateMachine.AddState(new Berserk(stateMachine, attackProjectiles[0], animator, pathFinder, attackPoints[1]));
+        stateMachine.AddState(new Nightmare(stateMachine, attackProjectiles[1], animator, pathFinder, player.transform));
+        stateMachine.AddState(new God(stateMachine, attackProjectiles[1], animator, pathFinder, this, energeticField));
+
+        // Switch to first state
+        stateMachine.changeState(stateMachine.possibleStates[0]);
     }
 
     private void Update()
@@ -69,6 +80,54 @@ public class Boss : Enemy
     public void RegenMaxHP()
     {
         HP = maxHP;
+    }
+
+    public override void applyDamage(int damage)
+    {
+        /*
+         * 100%: 2001-2500
+         * 80%:  1501-2000
+         * 60%:  1001-1500
+         * 40%:  501-1000
+         * 20%:  126-500
+         * 5%:   0-125
+         */
+        
+        if (stateMachine.currentBossState == stateMachine.possibleStates[4] && HP - damage <= 0)
+        {
+            damage = HP - 10;
+        }
+
+        HP -= damage;
+
+        if (HP >= 2001)
+        {
+            stateMachine.changeState(stateMachine.possibleStates[0]);
+        }
+        else if (HP >= 1501)
+        {
+            stateMachine.changeState(stateMachine.possibleStates[1]);
+        }
+        else if (HP >= 1001)
+        {
+            stateMachine.changeState(stateMachine.possibleStates[2]);
+        }
+        else if (HP >= 501)
+        {
+            stateMachine.changeState(stateMachine.possibleStates[3]);
+        }
+        else if (HP >= 126)
+        {
+            stateMachine.changeState(stateMachine.possibleStates[4]);
+        }
+        else if (HP > 0)
+        {
+            stateMachine.changeState(stateMachine.possibleStates[5]);
+        }
+        else
+        {
+            Die();
+        }
     }
 
     protected override void Die()

@@ -13,6 +13,10 @@ public class MenuState : GameState
 
     public override IEnumerator Enter()
     {
+        if (PlayerManager.instance != null && PlayerManager.instance.player != null)
+        {
+            PlayerManager.instance.player.SetActive(false);
+        }
         SceneManager.LoadScene("Menu");
         return base.Enter();
     }

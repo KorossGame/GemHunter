@@ -5,7 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class SpawnPoint : MonoBehaviour
 {
-
     // Distance to player
     private float distanceToPlayer;
 
@@ -21,23 +20,28 @@ public class SpawnPoint : MonoBehaviour
     private float phase2 = 10;
     private float phase3 = 15;
 
-
-    void Start()
+    private void Start()
     {
-        if (PlayerManager.instance.player == null) return;
-
-        // Get player transform
-        playerTransform = PlayerManager.instance.player.transform;
-        
         // Get lenght of enemy types array
-        enemyTypes = GameObject.FindGameObjectWithTag("GameController").GetComponent<Spawner>().enemyTypes.Length;
-        
+        enemyTypes = Spawner.instance.enemyTypes.Length;
+
         // Create new array to store spawn numbers
         spawnChance = new float[enemyTypes];
     }
 
+    private void Update()
+    {
+        if (!playerTransform)
+        {
+            // Get player transform
+            playerTransform = PlayerManager.instance.player.transform;
+        }
+    }
+
     public void GenerateSpawnChances()
     {
+        if (playerTransform == null) return;
+
         distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
 
         // 80:20 (melee-ranged)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Spawner : MonoBehaviour
 {
@@ -11,7 +12,8 @@ public class Spawner : MonoBehaviour
     // Waves
     public Wave[] waves;
     private Wave currentWave;
-    private byte currentWaveNumber;
+    private byte totalWaves;
+    private byte currentWaveNumber = 0;
 
     // Spawner properties
     private float nextSpawnTime;
@@ -21,7 +23,8 @@ public class Spawner : MonoBehaviour
     public Enemy[] enemyTypes;
 
     [HideInInspector]
-    public bool active { private get; set; } = false;
+    // Control of spawner
+    public bool active { get; set; } = false;
     
     void Awake()
     {
@@ -32,23 +35,33 @@ public class Spawner : MonoBehaviour
     {
         // Set random seed
         Random.InitState((int)System.DateTime.Now.Ticks);
+
+        // Get total waves count
+        totalWaves = (byte)(waves.Length - 1);
     }
 
     void Update()
     {
         // Spawn the enemy if spawner is activated
-        if (Time.time > nextSpawnTime && active && currentWave != null && enemyTypes.Length > 0)
+        if (Time.time > nextSpawnTime && active && enemyTypes.Length > 0)
         {
-            // Check if wave time passed and we need to call next wave
-            if (Time.time > currentWave.timeToNextWave)
+            if (currentWaveNumber != 0)
+            {
+                // Check if wave time passed and we need to call next wave
+                if (Time.time > currentWave.timeToNextWave)
+                {
+                    NextWave();
+                }
+                // Check if enemies count is less than max
+                if (currentWave.currentEnemies < currentWave.maxEnemies)
+                {
+                    nextSpawnTime = Time.time + currentWave.timeBetweenSpawn;
+                    SpawnEnemy();
+                }
+            }
+            else
             {
                 NextWave();
-            }
-            // Check if enemies count is less than max
-            if (currentWave.currentEnemies < currentWave.maxEnemies)
-            {
-                nextSpawnTime = Time.time + currentWave.timeBetweenSpawn;
-                SpawnEnemy();
             }
         }
     }
@@ -56,8 +69,8 @@ public class Spawner : MonoBehaviour
     void SpawnEnemy()
     {
         // Create random spawn point
-        int maxSpawnPoints = (currentWave.spawnPoints.Length);
-        if (maxSpawnPoints > 0)
+        int maxSpawnPoints = currentWave.spawnPoints.Length - 1;
+        if (maxSpawnPoints >= 0)
         {
             // Choose random point
             int newPoint = Random.Range(0, maxSpawnPoints);
@@ -102,39 +115,49 @@ public class Spawner : MonoBehaviour
         */
     }
 
-    void NextWave()
+    public void NextWave()
     {
-        if (currentWaveNumber <= waves.Length)
+        if (currentWaveNumber+1 <= totalWaves)
         {
-            // Till wave 0 there can not be any enemies
-            if (currentWaveNumber != 0)
-            {
-                // We need to kill all enemies till set a new wave
-                KillAllEnemies();
-            }
+            // Increment current Wave number
+            currentWaveNumber++;
+
+            // We need to kill all enemies till set a new wave
+            StartCoroutine(KillAllEnemies());
 
             // Set current wave as new one
             currentWave = waves[currentWaveNumber];
 
             // Reset timer till next wave
             currentWave.timeToNextWave = Time.time + currentWave.timeToNextWave;
-
-            // Increment current wave number
-            currentWaveNumber++;
+        }
+        else
+        {
+            active = false;
+            SceneManager.LoadScene("BossScene");
         }
     }
 
-    public void KillAllEnemies()
+    public IEnumerator KillAllEnemies()
     {
         /* Might be improved by object pool */
 
-        // Get every child of this object and destroy it
-        foreach (GameObject enemyObject in gameObject.transform)
+        // Get every child of spawner object with tag enemy and destroy it
+        foreach (Transform enemyObject in transform)
         {
-            Destroy(enemyObject);
+            if (enemyObject.gameObject.CompareTag("Enemy")){
+                Destroy(enemyObject.gameObject);
+            }
         }
 
-        // Set current enemies count to 0
-        currentWave.currentEnemies = 0;
+        // In case it is wave 0 - we dont have currentWave yet
+        if (currentWave != null)
+        {
+            // Set current enemies count to 0
+            currentWave.currentEnemies = 0;
+        }
+
+        // Delay between wave switching
+        yield return new WaitForSeconds(3f);
     }
 }

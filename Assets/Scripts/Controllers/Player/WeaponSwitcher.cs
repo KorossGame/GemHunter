@@ -8,10 +8,7 @@ public class WeaponSwitcher : MonoBehaviour
     public Gun WeaponEquiped { get; private set; }
     public Gun[] availableGuns;
 
-    private void OnEnable()
-    {
-        EventManager.instance.AllWeaponsUnlocked += TutorialGameManager.instance.EnemyPhase;
-    }
+    private bool assignedEvent = false;
 
     private void OnDisable()
     {
@@ -21,6 +18,15 @@ public class WeaponSwitcher : MonoBehaviour
     private void Start()
     {
         availableGuns = new Gun[GunManager.instance.guns.Length];
+    }
+
+    private void Update()
+    {
+        if (!assignedEvent && EventManager.instance && TutorialGameManager.instance)
+        {
+            EventManager.instance.AllWeaponsUnlocked += TutorialGameManager.instance.EnemyPhase;
+            assignedEvent = true;
+        }
     }
 
     public void EquipWeapon(int gunIndex)
@@ -64,7 +70,7 @@ public class WeaponSwitcher : MonoBehaviour
         toUnlock.transform.parent = gameObject.transform;
         
         // If nothing is equiped - equip new weapon
-        if (WeaponEquiped == null)
+        if (!WeaponEquiped)
         {
             EquipWeapon(toUnlock.ID);
         }

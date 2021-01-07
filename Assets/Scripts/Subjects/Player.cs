@@ -24,10 +24,19 @@ public class Player : Subject
     // Damage multiplier value for guns (for power up mechanics)
     public byte GunPowerUPMultiplier { get; set; } = 1;
 
+    // Check if powerups are activated
+    public bool damagePowerUPActivated = false;
+    public bool speedBonusActivated = false;
+
     // If player can be damaged (for power up mechanics)
     public bool GodMode { get; set; } = false;
 
-    void Start()
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
     {
         Speed = 10f;
         HP = 100;
@@ -50,6 +59,9 @@ public class Player : Subject
 
         if (!respawning)
         {
+            // Disable spawner for time while player respawns
+            Spawner.instance.active = false;
+            
             // Disable Visual player object and Gun visual object
             visualObject.GetComponent<MeshRenderer>().enabled = false;
 
@@ -64,6 +76,9 @@ public class Player : Subject
 
             // Respawn player
             StartCoroutine(Respawn());
+
+            // Enable spawner
+            Spawner.instance.active = true;
         }
     }
 
@@ -79,17 +94,8 @@ public class Player : Subject
             gameObject.transform.position = new Vector3(0, 0.5f, 0);
         }
 
-        // Set spawner status back to active
-        if (Spawner.instance != null) Spawner.instance.active = true;
-
         // Enable Visual player object
         visualObject.GetComponent<MeshRenderer>().enabled = true;
-
-        // Enable gun visual
-        if (inventory.WeaponEquiped)
-        {
-            inventory.gameObject.SetActive(true);
-        }
     }
 
     private IEnumerator Respawn()

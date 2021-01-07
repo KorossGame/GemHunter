@@ -4,7 +4,19 @@ using UnityEngine;
 
 public class BossFSM : FSM
 {
+    public List<BossState> possibleStates;
+
     public BossState currentBossState;
+
+    public void Start()
+    {
+        possibleStates = new List<BossState>();
+    }
+
+    public void AddState(BossState gameState)
+    {
+        possibleStates.Add(gameState);
+    }
 
     public void changeState(BossState newState)
     {

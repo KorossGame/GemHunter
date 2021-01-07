@@ -10,7 +10,7 @@ public class RPG : Gun
         ID = 4;
 
         // Damage
-        DamagePerBullet = 500;
+        DamagePerBullet = 350;
 
         // Bullet speed
         BulletSpeed = 15;

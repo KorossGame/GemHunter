@@ -16,10 +16,14 @@ public class God : BossState
 
     public override IEnumerator Enter()
     {
-        TeleportToCenterAndTurnGravityOff();
-        ChangeStopDistance();
-        bossObject.RegenMaxHP();
-        SpawnTurrets();
+        if (!bossObject.godActivated)
+        {
+            bossObject.godActivated = true;
+            TeleportToCenterAndTurnGravityOff();
+            ChangeStopDistance();
+            bossObject.RegenMaxHP();
+            SpawnTurrets();
+        }
         return base.Enter();
     }
 

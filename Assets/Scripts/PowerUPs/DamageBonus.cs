@@ -14,24 +14,22 @@ public class DamageBonus : PowerUP
 
         // Get Player class from visual object
         Player playerGameObject = player.GetComponent<Player>();
-        
-        // Apply powerup
-        if (playerGameObject)
-        {
-            playerGameObject.GunPowerUPMultiplier *= multiplier;
 
-            // Get collider and mesh renderer components and Disable them
-            gameObject.GetComponent<MeshRenderer>().enabled = false;
-            gameObject.GetComponent<Collider>().enabled = false;
+        // Stop previous powerups
+        StopAllCoroutines();
+        playerGameObject.GunPowerUPMultiplier *= multiplier;
 
-            // Wait particular amount of time
-            yield return new WaitForSeconds(activeTime);
+        // Get collider and mesh renderer components and Disable them
+        gameObject.GetComponent<MeshRenderer>().enabled = false;
+        gameObject.GetComponent<Collider>().enabled = false;
 
-            // Reverse powerup
-            playerGameObject.GunPowerUPMultiplier /= multiplier;
+        // Wait particular amount of time
+        yield return new WaitForSeconds(activeTime);
 
-            // Delete powerUP object
-            Destroy(gameObject);
-        }
+        // Reverse powerup
+        playerGameObject.GunPowerUPMultiplier /= multiplier;
+
+        // Delete powerUP object
+        Destroy(gameObject);
     }
 }
