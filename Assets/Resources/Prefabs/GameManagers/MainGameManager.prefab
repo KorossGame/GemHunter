@@ -60,8 +60,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundMixerGroup: {fileID: 600600401581485836, guid: 1f5ddb65f63ebf94c8d084884fc29ac8, type: 2}
   musicMixerGroup: {fileID: 1027504842186869722, guid: 1f5ddb65f63ebf94c8d084884fc29ac8, type: 2}
-  defaultMusicLevel: 0.001
-  defaultSoundLevel: 0.001
   sounds:
   - audioType: 1
     name: MainMenuMusic
@@ -92,36 +90,8 @@ MonoBehaviour:
     loop: 1
     source: {fileID: 0}
   - audioType: 0
-    name: PlayerHitSound
-    clip: {fileID: 8300000, guid: a23f936f42c19ea4181c46c0e0c49cfb, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - audioType: 0
-    name: PowerPickUPSound
-    clip: {fileID: 8300000, guid: 926f7334f6eb2024dbee5412ee4b2028, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - audioType: 0
     name: MeleeAttack
     clip: {fileID: 8300000, guid: 3c9a11afdf507f443bb4d8ff5912227e, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - audioType: 0
-    name: AssaultShootingSound
-    clip: {fileID: 8300000, guid: a647bbc3aebe2d84c88bedd5594b8d7f, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - audioType: 0
-    name: AssaultReloadSound
-    clip: {fileID: 8300000, guid: ae020c18d329b44489a794b7e0fd24f0, type: 3}
     volume: 1
     pitch: 1
     loop: 0
@@ -136,6 +106,34 @@ MonoBehaviour:
   - audioType: 0
     name: PistolReloadSound
     clip: {fileID: 8300000, guid: 6671e3fcb3245484f8b029f2393845eb, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - audioType: 0
+    name: ShotgunShootingSound
+    clip: {fileID: 8300000, guid: 2bf618cb3df2b2d44b376e79ad8807a1, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - audioType: 0
+    name: ShotgunReloadSound
+    clip: {fileID: 8300000, guid: f3bb58a2704cbbc42b8ab0ee4e92a221, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - audioType: 0
+    name: AssaultShootingSound
+    clip: {fileID: 8300000, guid: a647bbc3aebe2d84c88bedd5594b8d7f, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - audioType: 0
+    name: AssaultReloadSound
+    clip: {fileID: 8300000, guid: ae020c18d329b44489a794b7e0fd24f0, type: 3}
     volume: 1
     pitch: 1
     loop: 0
@@ -162,15 +160,15 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
   - audioType: 0
-    name: ShotgunShootingSound
-    clip: {fileID: 8300000, guid: 2bf618cb3df2b2d44b376e79ad8807a1, type: 3}
+    name: Hit
+    clip: {fileID: 8300000, guid: a23f936f42c19ea4181c46c0e0c49cfb, type: 3}
     volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - audioType: 0
-    name: ShotgunReloadSound
-    clip: {fileID: 8300000, guid: f3bb58a2704cbbc42b8ab0ee4e92a221, type: 3}
+    name: PowerUPPickUP
+    clip: {fileID: 8300000, guid: 926f7334f6eb2024dbee5412ee4b2028, type: 3}
     volume: 1
     pitch: 1
     loop: 0

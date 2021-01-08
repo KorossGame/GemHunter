@@ -47,7 +47,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 2612050730075958314}
   bullet: {fileID: 0}
-  BulletSpeed: 0
 --- !u!1 &2612050730012062354
 GameObject:
   m_ObjectHideFlags: 0
