@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 662922347356481959}
   - component: {fileID: 1682091854}
   - component: {fileID: 4298978263104249439}
+  - component: {fileID: 7679400527617133182}
   m_Layer: 10
   m_Name: Citizen
   m_TagString: Enemy
@@ -99,7 +100,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 943ef818d8d79bd40a817d170e0926bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activated: 1
   holderPoint: {fileID: 4966118958020825301}
+--- !u!95 &7679400527617133182
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662922345983092177}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e9e634738449dee4aaec8886d508d050, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &662922346181530014
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,7 +180,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8630d3ed0a1ea8947be8d034847f43de, type: 2}
+  - {fileID: 2100000, guid: 0c074bcf93d43a240aafffefd5c82021, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

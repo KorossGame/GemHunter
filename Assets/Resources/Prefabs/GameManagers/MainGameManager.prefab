@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stateMachine: {fileID: 0}
+  latestGameScene: 0
 --- !u!114 &2803576538523303936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,7 +64,7 @@ MonoBehaviour:
   sounds:
   - audioType: 1
     name: MainMenuMusic
-    clip: {fileID: 8300000, guid: dbb37b8cef1002f4283f0322fd3e9d84, type: 3}
+    clip: {fileID: 8300000, guid: 8ee972419d9115941af88bd6b6ea834c, type: 3}
     volume: 1
     pitch: 1
     loop: 1
@@ -76,14 +77,14 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
   - audioType: 1
-    name: MainThemeMusic
-    clip: {fileID: 8300000, guid: 810364186f855b049a8a61563a08bee2, type: 3}
+    name: LevelMusic
+    clip: {fileID: 8300000, guid: 05b519ac247396544bff6a1804f65284, type: 3}
     volume: 1
     pitch: 1
     loop: 1
     source: {fileID: 0}
   - audioType: 1
-    name: BossThemeMusic
+    name: BossMusic
     clip: {fileID: 8300000, guid: 16c6e4001f92aaf4fb4a5db1b37f5704, type: 3}
     volume: 1
     pitch: 1
@@ -169,6 +170,41 @@ MonoBehaviour:
   - audioType: 0
     name: PowerUPPickUP
     clip: {fileID: 8300000, guid: 926f7334f6eb2024dbee5412ee4b2028, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - audioType: 1
+    name: WinMusic
+    clip: {fileID: 8300000, guid: 67178ab21657ac0429ef0dfba566b106, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - audioType: 1
+    name: TutorialMusic
+    clip: {fileID: 8300000, guid: 5d9a2a5d29223504c92cc49a424a3ab1, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - audioType: 0
+    name: AmmoPickUP
+    clip: {fileID: 8300000, guid: 0297285148766314988603af6ffcd4f9, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - audioType: 0
+    name: DieSound
+    clip: {fileID: 8300000, guid: 86f1a619c58642a43bbc6bef4c1d7006, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - audioType: 0
+    name: BossDie
+    clip: {fileID: 8300000, guid: 7e0b389054dfb3b47bf3bab105975629, type: 3}
     volume: 1
     pitch: 1
     loop: 0

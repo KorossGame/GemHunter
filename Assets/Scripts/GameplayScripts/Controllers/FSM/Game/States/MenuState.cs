@@ -13,10 +13,26 @@ public class MenuState : GameState
 
     public override IEnumerator Enter()
     {
-        if (PlayerManager.instance != null && PlayerManager.instance.player != null)
+        if (Spawner.instance)
         {
-            PlayerManager.instance.player.SetActive(false);
+            // Kill all enemies and set spawner inactive
+            Spawner.instance.active = false;
+            Spawner.instance.StartCoroutine(Spawner.instance.KillAllEnemies());
+            Spawner.instance.ResetWaveNumber();
         }
+
+        if (PlayerManager.instance && PlayerManager.instance.player)
+        {
+            PlayerManager.instance.player.GetComponent<Player>().ChangeAnimationState("Die");
+        }
+
+        // If player exits from level there is no main menu music playing
+        if (!AudioManager.instance.checkIfPlaying("MainMenuMusic"))
+        {
+            AudioManager.instance.PlaySound("MainMenuMusic");
+        }
+
+        // Load Menu scene
         SceneManager.LoadScene("Menu");
         return base.Enter();
     }

@@ -9,9 +9,6 @@ abstract public class Enemy : Subject
     public float powerUPdropChance { get; set; } = 10f;
     public float ammoBoxDropChance { get; set; } = 40f;
 
-    [Header("Tutorial")]
-    public bool activated = true;
-
     [Header("Pathfinder")]
     protected NavMeshAgent pathFinder;
     protected Transform player;
@@ -41,8 +38,10 @@ abstract public class Enemy : Subject
         OnDeath = null;
     }
 
-    void Start()
+    private void Start()
     {
+        animator = GetComponent<Animator>();
+
         // Set random seed
         UnityEngine.Random.InitState((int)System.DateTime.Now.Ticks);
 
@@ -51,9 +50,6 @@ abstract public class Enemy : Subject
 
         // Get object itself
         enemyObject = GetComponent<Subject>();
-
-        // Get player reference
-        player = PlayerManager.instance.player.transform;
 
         // Set AI movement speed
         pathFinder = GetComponent<NavMeshAgent>();
@@ -65,12 +61,24 @@ abstract public class Enemy : Subject
         // Get Weapon for Enemy
         getWeapon();
 
+        // Get player reference
+        findPlayerReference();
+
         // Start infinite loop of finding path to player
         StartCoroutine(UpdatePath());
     }
 
-    void Update()
+    private void Update()
     {
+
+        // If player still is not set up - try to find it
+        if (!player)
+        {
+            findPlayerReference();
+            return;
+        }
+
+        // Shoot player
         if (player && currentWeapon && activated)
         {
             if (pathFinder.remainingDistance <= pathFinder.stoppingDistance)
@@ -83,6 +91,21 @@ abstract public class Enemy : Subject
     protected void FixedUpdate()
     {
         FaceTarget();
+    }
+
+    private void findPlayerReference()
+    {
+        try
+        {
+            if (PlayerManager.instance && PlayerManager.instance.player)
+            {
+                player = PlayerManager.instance.player.transform;
+            }
+        }
+        catch (UnassignedReferenceException)
+        {
+            player = null;
+        }
     }
 
     protected virtual void getWeapon()
@@ -153,8 +176,13 @@ abstract public class Enemy : Subject
 
     protected override void Die()
     {
+        if (dead) return;
+
         dead = true;
+
         // Animation and Sound of death
+        AudioManager.instance.PlaySound("DieSound");
+        ChangeAnimationState("Die");
 
         // If enemy didn't drop power up we may drop some ammo
         if (!GeneratePowerUP())
@@ -164,9 +192,6 @@ abstract public class Enemy : Subject
 
         // Call OnDeath event
         OnDeath?.Invoke();
-
-        // Destroy GameObject
-        base.Die();
     }
 
     public override void applyDamage(int damage)
@@ -205,7 +230,6 @@ abstract public class Enemy : Subject
             Instantiate(AmmoManager.instance.ammoBoxes[randomAmmoBox], transform.position + new Vector3(0, 0.5f, 0), transform.rotation);
         }
     }
-
 
     // Change Nav Mesh agent stopping distance depending on gun got
     protected virtual void ChangeStopDistance()

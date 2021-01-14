@@ -244,7 +244,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 662922345983092177}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5, z: 0}
+  m_LocalPosition: {x: 0, y: 1.5, z: 20}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 662922346181530009}
@@ -316,7 +316,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dde4b9a4a429074b9152df2c0991589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activated: 1
   holderPoint: {fileID: 1715839394}
+  godActivated: 0
   attackProjectiles:
   - {fileID: 8890055821506742848, guid: 398b749f1e8791e46995feb52a8a3588, type: 3}
   - {fileID: 8890055821506742848, guid: 3ce5722d66b89174493c08d235e45280, type: 3}

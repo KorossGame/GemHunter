@@ -6,9 +6,15 @@ abstract public class Subject : MonoBehaviour
     public byte Shield { get; protected set; }
     public float Speed { get; set; }
 
+    public bool activated = true;
+
+    protected Animator animator;
+    protected string currentState;
+
     public virtual void applyDamage(int damage)
     {
         AudioManager.instance.PlaySound("Hit");
+        ChangeAnimationState("DamageAnimation");
 
         // Substract hp and check if object should die
         HP -= damage;
@@ -18,6 +24,19 @@ abstract public class Subject : MonoBehaviour
 
     protected virtual void Die()
     {
+        DeleteObject();
+    }
+
+    protected void DeleteObject()
+    {
         Destroy(gameObject);
+    }
+
+    public void ChangeAnimationState(string newState)
+    {
+        if (currentState == "Die") return;
+        if (currentState == newState) return;
+        animator.Play(newState);
+        currentState = newState;
     }
 }

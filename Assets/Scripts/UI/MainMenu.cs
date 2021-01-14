@@ -7,12 +7,27 @@ using UnityEngine.EventSystems;
 
 public class MainMenu : MonoBehaviour
 {
+    [SerializeField] private Animator animator;
+    [SerializeField] private GameObject settingsObject;
+    private string currentState;
 
     public void StartGame()
     {
         PlayClickSound();
-        SceneManager.LoadScene("Tutorial");
+        SceneManager.LoadScene("LoadingScreen");
         Game.instance.stateMachine.changeState(new PlayState(Game.instance.stateMachine));
+    }
+
+    public void EnterSettings()
+    {
+        PlayClickSound();
+        ChangeAnimationState("OpenSettings");
+    }
+
+    public void ExitSettings()
+    {
+        PlayClickSound();
+        ChangeAnimationState("CloseSettings");
     }
 
     public void Exit()
@@ -24,5 +39,12 @@ public class MainMenu : MonoBehaviour
     public void PlayClickSound()
     {
         AudioManager.instance.PlaySound("ClickSound");
+    }
+
+    void ChangeAnimationState(string newState)
+    {
+        if (currentState == newState) return;
+        animator.Play(newState);
+        currentState = newState;
     }
 }

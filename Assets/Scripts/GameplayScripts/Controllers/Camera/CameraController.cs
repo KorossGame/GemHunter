@@ -17,7 +17,10 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            target = PlayerManager.instance.player.transform;
+            if (PlayerManager.instance.player)
+            {
+                target = PlayerManager.instance.player.transform;
+            }
         }
     }
 

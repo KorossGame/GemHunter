@@ -6,12 +6,12 @@ abstract public class Gun : MonoBehaviour
 {
     public byte ID { get; protected set; }
     public int DamagePerBullet { get; protected set; }
-    protected int CurrentAmmo { get; set; }
+    public int CurrentAmmo { get; protected set; }
 
     // Ammo block
     protected int ammoInClip;
     public int MaxAmmo { protected get; set; }
-    protected int ammoLeft;
+    public int ammoLeft;
 
     // Range
     public float EffectiveRange { get; protected set; }

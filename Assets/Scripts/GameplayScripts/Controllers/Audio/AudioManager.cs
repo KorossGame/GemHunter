@@ -85,4 +85,10 @@ public class AudioManager : MonoBehaviour
         soundMixerGroup.audioMixer.SetFloat("SoundVol", soundLevel);
         musicMixerGroup.audioMixer.SetFloat("MusicVol", musicLevel);
     }
+
+    public bool checkIfPlaying(string name)
+    {
+        Sound newSound = Array.Find(sounds, sound => sound.name == name);
+        return newSound.source.isPlaying;
+    }
 }

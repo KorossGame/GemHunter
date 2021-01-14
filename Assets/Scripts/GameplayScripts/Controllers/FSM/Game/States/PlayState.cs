@@ -12,9 +12,11 @@ public class PlayState : GameState
     public override IEnumerator Enter()
     {
 
-        // Change music theme
-        AudioManager.instance.PlaySound("MainThemeMusic");
-        
+        if (PlayerManager.instance && !PlayerManager.instance.player)
+        {
+            GameObject.Instantiate(Resources.Load("Prefabs/Game/Player"), gameFSMObject.transform.position, Quaternion.identity);
+        }
+
         // If player pause the game we dont need to load game managers again
         if (!Game.instance.loadedGameManagers)
         {
@@ -55,13 +57,12 @@ public class PlayState : GameState
 
     public override IEnumerator Exit()
     {
-        // Change music theme
-        AudioManager.instance.StopSound("MainThemeMusic");
         yield break;
     }
 
     public override IEnumerator Play()
     {
+
         if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape))
         {
             gameFSMObject.changeState(new PauseState(gameFSMObject));

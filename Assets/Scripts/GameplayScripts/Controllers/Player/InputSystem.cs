@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent (typeof (Player))]
 public class InputSystem : MonoBehaviour
@@ -16,13 +17,19 @@ public class InputSystem : MonoBehaviour
 
     // Movement Boost
     private bool boosted = false;
-    private float boostCoefficient = 1.25f;
+    private float boostCoefficient = 1.5f;
 
     // Players vision
     private Plane playerPlane;
 
+    // UI
+    [SerializeField] private Text currentWeaponText;
+    [SerializeField] private Text currentAmmoText;
+
     void Start()
     {
+        currentAmmoText.text = "";
+        currentWeaponText.text = "";
         playerPhysicalObject = GetComponent<Player>();
         rb = GetComponent<Rigidbody>();
         playerPlane = new Plane(Vector3.up, playerVisualObject.transform.position);
@@ -42,13 +49,13 @@ public class InputSystem : MonoBehaviour
     void HandleInput()
     {
         // Check if player is respawning
-        if (playerPhysicalObject.respawning)
+        if (!playerPhysicalObject.activated)
         {
             horizontal = 0;
             vertical = 0;
             return;
         }
-        
+
         // Movement boost
         if (Input.GetKey(KeyCode.LeftShift))
         {
@@ -70,6 +77,12 @@ public class InputSystem : MonoBehaviour
         // Get movement axis value
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
+
+        // Update UI
+        if (playerPhysicalObject.inventory.WeaponEquiped)
+        {
+            currentAmmoText.text = playerPhysicalObject.inventory.WeaponEquiped.CurrentAmmo.ToString() + " / " + playerPhysicalObject.inventory.WeaponEquiped.ammoLeft.ToString();
+        }
 
         // Weapons block
         if (playerPhysicalObject.inventory)
@@ -103,7 +116,7 @@ public class InputSystem : MonoBehaviour
         movement = Vector3.ClampMagnitude(movement, 1);
 
         // Set velocity of player
-        rb.velocity = movement * playerPhysicalObject.Speed;
+        rb.velocity = movement * playerPhysicalObject.Speed * playerPhysicalObject.SpeedBonusMultiplier;
     }
 
     void HandleRotation()
@@ -165,6 +178,11 @@ public class InputSystem : MonoBehaviour
         if (currentWeapon != savedWeapon)
         {
             playerPhysicalObject.inventory.EquipWeapon(currentWeapon);
+        }
+
+        // Set current weapon text to weapon equiped name
+        if (playerPhysicalObject.inventory.WeaponEquiped) {
+            currentWeaponText.text = playerPhysicalObject.inventory.WeaponEquiped.name;
         }
     }
 }

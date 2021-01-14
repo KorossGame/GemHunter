@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpeedBonus : PowerUP
 {
     public GameObject pickupEffect;
-    private byte multiplier = 2;
+    private float multiplier = 1.75f;
 
     protected override IEnumerator Pickup(Collider player)
     {
@@ -15,21 +15,29 @@ public class SpeedBonus : PowerUP
         // Get Player class from visual object
         Player playerGameObject = player.GetComponent<Player>();
 
-        // Stop previous powerups
-        StopAllCoroutines();
+        // Activate UI
+        playerGameObject.speedPowerUP.SetActive(true);
 
         // Get collider and mesh renderer components for this class object and disable them
         gameObject.GetComponent<MeshRenderer>().enabled = false;
         gameObject.GetComponent<Collider>().enabled = false;
 
         // Activate powerUP
-        playerGameObject.Speed *= multiplier;
+        if (playerGameObject.SpeedBonusMultiplier == 1)
+        {
+            playerGameObject.SpeedBonusMultiplier *= multiplier;
+        }
 
         // Wait particular amount of time
         yield return new WaitForSeconds(activeTime);
 
         // Reverse PowerUP
-        playerGameObject.Speed /= multiplier;
+        if (playerGameObject.SpeedBonusMultiplier > 1)
+        {
+            playerGameObject.SpeedBonusMultiplier /= multiplier;
+        }
+
+        playerGameObject.speedPowerUP.SetActive(false);
 
         // Delete PowerUP Object
         Destroy(gameObject);

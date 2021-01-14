@@ -7,12 +7,27 @@ using UnityEngine;
 abstract public class PowerUP : MonoBehaviour
 {
     protected float activeTime = 15f;
-    public event Action OnPickUP;
 
+    // Events
+    public event Action OnPickUP;
+    public event Action OnDestroy;
+
+    // Auto-destroy in case no picking up in time
+    private Coroutine destroy;
+    private float destroyTime = 10f;
+
+    private void OnEnable()
+    {
+        // If player enters the level - power up should stay
+        DontDestroyOnLoad(gameObject);
+        destroy = StartCoroutine(DestroyMe());
+    }
+    
     protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+            StopCoroutine(destroy);
             OnPickUP?.Invoke();
             AudioManager.instance.PlaySound("PowerUPPickUP");
             StartCoroutine(Pickup(other));
@@ -21,6 +36,13 @@ abstract public class PowerUP : MonoBehaviour
 
     protected virtual IEnumerator Pickup(Collider player)
     {
-        yield return new WaitForSeconds(activeTime);
+        yield break;
+    }
+
+    private IEnumerator DestroyMe()
+    {
+        yield return new WaitForSeconds(destroyTime);
+        OnDestroy?.Invoke();
+        Destroy(gameObject);
     }
 }

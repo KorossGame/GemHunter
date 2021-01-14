@@ -25,19 +25,7 @@ public class Boss : Enemy
     // Object for last phase
     public GameObject energeticField;
 
-    void OnEnable()
-    {
-        AudioManager.instance.StopSound("MainThemeMusic");
-        StartCoroutine(Spawner.instance.KillAllEnemies());
-        AudioManager.instance.PlaySound("BossThemeMusic");
-    }
-
-    void OnDisable()
-    {
-        AudioManager.instance.StopSound("BossThemeMusic");
-    }
-
-    void Awake()
+    private void Awake()
     {
         // HP and Speed of movement
         HP = 2500;
@@ -73,12 +61,15 @@ public class Boss : Enemy
 
         // Switch to first state
         stateMachine.changeState(stateMachine.possibleStates[0]);
+
+        // Wait for cutscene to play
+        activated = false;
     }
 
     private void Update()
     {
         FaceTarget();
-        if (stateMachine.currentBossState != null)
+        if (stateMachine.currentBossState != null && activated)
         {
             StartCoroutine(stateMachine.currentBossState.Attack());
         }
@@ -136,6 +127,7 @@ public class Boss : Enemy
 
     protected override void Die()
     {
+        AudioManager.instance.PlaySound("BossDie");
         base.Die();
     }
 }

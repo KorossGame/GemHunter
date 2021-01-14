@@ -18,7 +18,7 @@ public class Wave
     // How much enemies need to die
     // public byte enemyToKill;
 
-    // How many time left till NextWave
+    // How many time till NextWave
     public float timeToNextWave;
 
     // Spawn points with dynamic spawn chances

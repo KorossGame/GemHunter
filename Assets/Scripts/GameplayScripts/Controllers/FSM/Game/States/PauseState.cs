@@ -17,7 +17,6 @@ public class PauseState : GameState
 
     public override IEnumerator Exit()
     {
-
         PauseMenu.instance.gameObject.SetActive(false);
         Time.timeScale = 1;
         yield break;
