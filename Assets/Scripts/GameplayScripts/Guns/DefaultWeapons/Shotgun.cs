@@ -28,10 +28,10 @@ public class Shotgun : Gun
         maxRange = 25f;
 
         // Reload
-        reloadTime = 2.5f;
+        reloadTime = 1.25f;
 
         // Fire Rate (1/fireRate)
-        fireRate = 1.3f;
+        fireRate = 1.4f;
 
         // Sounds
         shootSound = "ShotgunShootingSound";

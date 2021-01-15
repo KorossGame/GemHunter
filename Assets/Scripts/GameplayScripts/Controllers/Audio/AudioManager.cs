@@ -12,8 +12,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioMixerGroup soundMixerGroup, musicMixerGroup;
 
     // Default values for music and sound levels
-    public float musicLevel { get; set; } = -50;
-    public float soundLevel { get; set; } = -50;
+    public float musicLevel { get; set; } = 0;
+    public float soundLevel { get; set; } = 0;
 
     // Array of sounds to be played by this object
     public Sound[] sounds;
@@ -84,5 +84,11 @@ public class AudioManager : MonoBehaviour
     {
         soundMixerGroup.audioMixer.SetFloat("SoundVol", soundLevel);
         musicMixerGroup.audioMixer.SetFloat("MusicVol", musicLevel);
+    }
+
+    public bool checkIfPlaying(string name)
+    {
+        Sound newSound = Array.Find(sounds, sound => sound.name == name);
+        return newSound.source.isPlaying;
     }
 }

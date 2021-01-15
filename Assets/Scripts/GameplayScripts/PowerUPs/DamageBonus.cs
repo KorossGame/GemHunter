@@ -8,17 +8,21 @@ public class DamageBonus : PowerUP
 
     protected override IEnumerator Pickup(Collider player)
     {
-
         // Create particles
         //Instantiate(pickupEffect, transform.position, transform.rotation);
 
         // Get Player class from visual object
         Player playerGameObject = player.GetComponent<Player>();
 
-        // Stop previous powerups
-        StopAllCoroutines();
-        playerGameObject.GunPowerUPMultiplier *= multiplier;
+        // Activate UI
+        playerGameObject.damagePowerUP.SetActive(true);
 
+        // Activate new power UP
+        if (playerGameObject.GunPowerUPMultiplier == 1)
+        {
+            playerGameObject.GunPowerUPMultiplier *= multiplier;
+        }
+        
         // Get collider and mesh renderer components and Disable them
         gameObject.GetComponent<MeshRenderer>().enabled = false;
         gameObject.GetComponent<Collider>().enabled = false;
@@ -27,7 +31,12 @@ public class DamageBonus : PowerUP
         yield return new WaitForSeconds(activeTime);
 
         // Reverse powerup
-        playerGameObject.GunPowerUPMultiplier /= multiplier;
+        if (playerGameObject.GunPowerUPMultiplier > 1)
+        {
+            playerGameObject.GunPowerUPMultiplier /= multiplier;
+        }
+
+        playerGameObject.damagePowerUP.SetActive(false);
 
         // Delete powerUP object
         Destroy(gameObject);

@@ -10,7 +10,7 @@ public class Assault : Gun
         ID = 3;
 
         // Damage
-        DamagePerBullet = 30;
+        DamagePerBullet = 45;
 
         // Bullet speed
         BulletSpeed = 40;
@@ -26,10 +26,10 @@ public class Assault : Gun
         maxRange = 25f;
 
         // Reload
-        reloadTime = 3.5f;
+        reloadTime = 1f;
 
         // Fire Rate (1/fireRate)
-        fireRate = 13.5f;
+        fireRate = 4f;
 
         // Sounds
         shootSound = "AssaultShootingSound";

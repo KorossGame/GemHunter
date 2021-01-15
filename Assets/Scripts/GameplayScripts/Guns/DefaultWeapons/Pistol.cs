@@ -8,7 +8,7 @@ public class Pistol : Gun
         ID = 1;
 
         // Damage
-        DamagePerBullet = 15;
+        DamagePerBullet = 10;
 
         // Bullet speed
         BulletSpeed = 25;
@@ -24,10 +24,10 @@ public class Pistol : Gun
         maxRange = 25f;
 
         // Reload
-        reloadTime = 3f;
+        reloadTime = 0.75f;
 
-        // Fire Rate (1/fireRate)
-        fireRate = 4f;
+        // Fire Rate (1/fireRate) - bigger value -> faster
+        fireRate = 5f;
 
         // Sounds
         shootSound = "PistolShootingSound";

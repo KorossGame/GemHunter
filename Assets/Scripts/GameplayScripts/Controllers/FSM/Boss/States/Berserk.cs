@@ -18,6 +18,7 @@ public class Berserk : BossState
 
     public override IEnumerator Enter()
     {
+        bossPathFinder.stoppingDistance = 200f;
         return base.Enter();
     }
 

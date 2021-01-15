@@ -33,8 +33,11 @@ public class SpawnPoint : MonoBehaviour
     {
         if (!playerTransform)
         {
-            // Get player transform
-            playerTransform = PlayerManager.instance.player.transform;
+            if (PlayerManager.instance.player)
+            {
+                // Get player transform
+                playerTransform = PlayerManager.instance.player.transform;
+            }
         }
     }
 

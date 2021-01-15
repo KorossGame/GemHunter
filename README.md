@@ -15,12 +15,13 @@ Not Ready Yet
 | Game States				| :heavy_check_mark: |
 | Ammo Boxes				| :heavy_check_mark: |
 | Tutorial Level			| :heavy_check_mark: |
-| Default Level				| :x: |
-| Boss Level				| :x: |
-| Sound & Music				| :x: |
-| Animations				| :x: |
-| Boss Cinematic			| :x: |
-| UI						| :x: |
+| Default Level				| :heavy_check_mark: |
+| Boss Level				| :heavy_check_mark: |
+| Sound & Music				| :heavy_check_mark: |
+| Animations				| :heavy_check_mark: |
+| Boss Cinematic			| :heavy_check_mark: |
+| UI						| :heavy_check_mark: |
+| Level Design				| :x: |
 | Graphics (SFX)			| :x: |
 | Demo						| :x: |
 

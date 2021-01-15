@@ -9,6 +9,8 @@ public class BossBullet : Projectile
 
     private void Start()
     {
+        shooter = GameObject.FindGameObjectWithTag("Boss").transform;
+
         // Get Rigidbody reference
         rb = GetComponent<Rigidbody>();
 

@@ -15,11 +15,14 @@ public class Invincibility : PowerUP
         // Get Player class from visual object
         Player playerGameObject = player.GetComponent<Player>();
 
-        // Stop previous powerups
-        StopAllCoroutines();
+        // Activate UI
+        playerGameObject.godPowerUP.SetActive(true);
 
         // Apply powerup
-        playerGameObject.GodMode = true;
+        if (playerGameObject.GodMode == false)
+        {
+            playerGameObject.GodMode = true;
+        }
 
         // Get collider and mesh renderer components and Disable them
         gameObject.GetComponent<MeshRenderer>().enabled = false;
@@ -29,7 +32,12 @@ public class Invincibility : PowerUP
         yield return new WaitForSeconds(activeTime);
 
         // Reverse powerup
-        playerGameObject.GodMode = false;
+        if (playerGameObject.GodMode)
+        {
+            playerGameObject.GodMode = false;
+        }
+
+        playerGameObject.godPowerUP.SetActive(false);
 
         // Delete powerUP object
         Destroy(gameObject);

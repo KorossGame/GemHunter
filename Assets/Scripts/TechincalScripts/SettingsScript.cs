@@ -25,6 +25,11 @@ public class SettingsScript : MonoBehaviour
             SetSoundLevel(AudioManager.instance.soundLevel);
         }
         SetFullscreen(true);
+
+        if (Game.instance != null)
+        {
+            SetGodMode(Game.instance.GodModeActivated);
+        }
     }
 
     private void Start()
@@ -58,6 +63,11 @@ public class SettingsScript : MonoBehaviour
         {
             screenModesDropdown.interactable = false;
         }
+    }
+
+    public void SetGodMode(bool godModeValue)
+    {
+        Game.instance.GodModeActivated = godModeValue;
     }
 
     public void SetResolution(int resolutionIndex)

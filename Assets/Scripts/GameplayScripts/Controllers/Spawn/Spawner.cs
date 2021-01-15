@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Spawner : MonoBehaviour
 {
     public static Spawner instance;
+
+    public Text timerText;
+    [SerializeField] private int nextTimeWave = 3;
 
     [Header("Waves")]
     // Waves
@@ -17,6 +21,7 @@ public class Spawner : MonoBehaviour
 
     // Spawner properties
     private float nextSpawnTime;
+    private float nextWaveTime;
 
     [Header("Enemy Types Available")]
     // Reference to all types of enemies
@@ -40,6 +45,14 @@ public class Spawner : MonoBehaviour
         totalWaves = (byte)(waves.Length - 1);
     }
 
+    void FixedUpdate()
+    {
+        if (!active)
+        {
+            StartCoroutine(KillAllEnemies());
+        }
+    }
+
     void Update()
     {
         // Spawn the enemy if spawner is activated
@@ -48,10 +61,11 @@ public class Spawner : MonoBehaviour
             if (currentWaveNumber != 0)
             {
                 // Check if wave time passed and we need to call next wave
-                if (Time.time > currentWave.timeToNextWave)
+                if (Time.time >= nextWaveTime)
                 {
-                    NextWave();
+                    StartCoroutine(NextWave());
                 }
+
                 // Check if enemies count is less than max
                 if (currentWave.currentEnemies < currentWave.maxEnemies)
                 {
@@ -61,7 +75,7 @@ public class Spawner : MonoBehaviour
             }
             else
             {
-                NextWave();
+                StartCoroutine(NextWave());
             }
         }
     }
@@ -69,7 +83,7 @@ public class Spawner : MonoBehaviour
     void SpawnEnemy()
     {
         // Create random spawn point
-        int maxSpawnPoints = currentWave.spawnPoints.Length - 1;
+        int maxSpawnPoints = currentWave.spawnPoints.Length;
         if (maxSpawnPoints >= 0)
         {
             // Choose random point
@@ -84,7 +98,7 @@ public class Spawner : MonoBehaviour
             int enemyIndexToSpawn = 0;
 
             // Get enemy index to spawn depending on partial sums
-            for (int i = 0; i < enemyTypes.Length - 1; i++)
+            for (int i = 0; i < enemyTypes.Length; i++)
             {
                 if (randomNumber <= randomSpawnPoint.spawnChance[i])
                 {
@@ -115,26 +129,50 @@ public class Spawner : MonoBehaviour
         */
     }
 
-    public void NextWave()
+    public IEnumerator NextWave()
     {
+        
         if (currentWaveNumber+1 <= totalWaves)
         {
+            active = false;
+
             // Increment current Wave number
             currentWaveNumber++;
 
             // We need to kill all enemies till set a new wave
             StartCoroutine(KillAllEnemies());
 
+            // Delay between switch
+            timerText.gameObject.SetActive(true);
+            for (int i = nextTimeWave; i > 0; i--)
+            {
+                timerText.text = i.ToString();
+                yield return new WaitForSeconds(1f);
+            }
+            timerText.gameObject.SetActive(false);
+
             // Set current wave as new one
             currentWave = waves[currentWaveNumber];
 
             // Reset timer till next wave
-            currentWave.timeToNextWave = Time.time + currentWave.timeToNextWave;
+            nextWaveTime = Time.time + currentWave.timeToNextWave;
+            active = true;
         }
         else
         {
             active = false;
-            SceneManager.LoadScene("BossScene");
+
+            // Delay between switch
+            timerText.gameObject.SetActive(true);
+            for (int i = nextTimeWave; i > 0; i--)
+            {
+                timerText.text = i.ToString();
+                yield return new WaitForSeconds(1f);
+            }
+            timerText.gameObject.SetActive(false);
+
+            // Load next scene
+            SceneManager.LoadScene("LoadingScreen");
         }
     }
 
@@ -146,7 +184,7 @@ public class Spawner : MonoBehaviour
         foreach (Transform enemyObject in transform)
         {
             if (enemyObject.gameObject.CompareTag("Enemy")){
-                Destroy(enemyObject.gameObject);
+                enemyObject.GetComponent<Enemy>().ChangeAnimationState("Die");
             }
         }
 
@@ -157,7 +195,11 @@ public class Spawner : MonoBehaviour
             currentWave.currentEnemies = 0;
         }
 
-        // Delay between wave switching
-        yield return new WaitForSeconds(3f);
+        yield break;
+    }
+
+    public void ResetWaveNumber()
+    {
+        currentWaveNumber = 0;
     }
 }

@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Game/Level.unity
     guid: e409603160c85ca4583d67c5a0e05cf4
   - enabled: 1
-    path: Assets/Scenes/Game/BossScene.unity
+    path: Assets/Scenes/Game/Boss.unity
     guid: 374af562f1f82e64f8a0c89782ae796a
+  - enabled: 1
+    path: Assets/Scenes/Game/LoadingScreen.unity
+    guid: 7dd04793cf46962498542e21bbd0f95b
   m_configObjects: {}

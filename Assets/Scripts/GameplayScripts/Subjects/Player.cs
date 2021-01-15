@@ -1,9 +1,19 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Player : Subject
 {
+    private float maxHP;
+
+    // UI
+    [SerializeField] private Image hpValue;
+    public GameObject damagePowerUP;
+    public GameObject speedPowerUP;
+    public GameObject godPowerUP;
+
     public GameObject visualObject;
 
     // Respawn point
@@ -12,9 +22,6 @@ public class Player : Subject
     // Time till respawn the player
     private float respawnTime = 5f;
 
-    // Flag to check if respawn in process
-    public bool respawning = false;
-
     // Inventory system
     public WeaponSwitcher inventory;
 
@@ -22,23 +29,24 @@ public class Player : Subject
 
     // Damage multiplier value for guns (for power up mechanics)
     public byte GunPowerUPMultiplier { get; set; } = 1;
-
-    // Check if powerups are activated
-    public bool damagePowerUPActivated = false;
-    public bool speedBonusActivated = false;
+    public float SpeedBonusMultiplier { get; set; } = 1;
 
     // If player can be damaged (for power up mechanics)
     public bool GodMode { get; set; } = false;
 
     private void Awake()
     {
+        animator = GetComponent<Animator>();
         DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
     {
+        GodMode = Game.instance.GodModeActivated;
         Speed = 10f;
-        HP = 100;
+        HP = 250;
+        maxHP = HP;
+        hpValue.fillAmount = HP / maxHP;
         Spawn();
     }
 
@@ -48,32 +56,23 @@ public class Player : Subject
         {
             // Calc damage
             base.applyDamage(damage);
+            hpValue.fillAmount = HP / maxHP;
         }
     }
 
     protected override void Die()
     {
-        // Play custom animation and sound
-
-        if (!respawning)
+        AudioManager.instance.PlaySound("DieSound");
+        if (animator != null)
         {
-            // Disable spawner for time while player respawns
-            Spawner.instance.active = false;
-            
-            // Disable Visual player object and Gun visual object
-            visualObject.GetComponent<MeshRenderer>().enabled = false;
-            inventory.gameObject.SetActive(false);
-
-            // Activate game restart
-            // Game.instance.stateMachine.changeState(new RestartState(Game.instance.stateMachine));
-
-            // Respawn player
-            StartCoroutine(Respawn());
-
-            // Enable spawner
-            Spawner.instance.active = true;
-            inventory.gameObject.SetActive(true);
+            ChangeAnimationState("Die");
         }
+    }
+
+    protected override void GoToMenu()
+    {
+        // Used by animations
+        Game.instance.stateMachine.changeState(new MenuState(Game.instance.stateMachine));
     }
 
     private void Spawn()
@@ -90,20 +89,5 @@ public class Player : Subject
 
         // Enable Visual player object
         visualObject.GetComponent<MeshRenderer>().enabled = true;
-    }
-
-    private IEnumerator Respawn()
-    {
-        // Set respawn process to True
-        respawning = true;
-
-        // Wait for some time
-        yield return new WaitForSeconds(respawnTime);
-
-        // Spawn
-        Spawn();
-
-        // Set respawning process to false
-        respawning = false;
     }
 }

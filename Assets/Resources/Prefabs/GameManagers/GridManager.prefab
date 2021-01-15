@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ec8c1b9259059f469e0f12319e98c16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visible: 1
+  visible: 0
   unwalkableMask:
     serializedVersion: 2
     m_Bits: 1024
