@@ -14,7 +14,7 @@ public class Melee : Gun
         ID = 0;
 
         // Damage
-        DamagePerBullet = 5;
+        DamagePerBullet = 35;
 
         // Ammo
         CurrentAmmo = -1;

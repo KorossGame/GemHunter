@@ -26,6 +26,7 @@ public class Rage : BossState
 
     public override IEnumerator Enter()
     {
+        bossPathFinder.stoppingDistance = 15f;
         return base.Enter();
     }
 
@@ -39,7 +40,7 @@ public class Rage : BossState
         return base.Attack();
     }
 
-    public void CircleAttack()
+    private void CircleAttack()
     {
         // Local position of attack point relatively of boss zero point
         Vector3 localAttackPoint = frontAttackPoint.position - bossZeroPoint.transform.position;

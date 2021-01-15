@@ -18,8 +18,6 @@ abstract public class PowerUP : MonoBehaviour
 
     private void OnEnable()
     {
-        // If player enters the level - power up should stay
-        DontDestroyOnLoad(gameObject);
         destroy = StartCoroutine(DestroyMe());
     }
     
@@ -27,6 +25,8 @@ abstract public class PowerUP : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            // If player enters the level - power up should stay
+            DontDestroyOnLoad(gameObject);
             StopCoroutine(destroy);
             OnPickUP?.Invoke();
             AudioManager.instance.PlaySound("PowerUPPickUP");

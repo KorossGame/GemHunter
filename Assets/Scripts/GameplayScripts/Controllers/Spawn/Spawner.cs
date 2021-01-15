@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Spawner : MonoBehaviour
 {
     public static Spawner instance;
+
+    public Text timerText;
+    [SerializeField] private int nextTimeWave = 3;
 
     [Header("Waves")]
     // Waves
@@ -41,6 +45,14 @@ public class Spawner : MonoBehaviour
         totalWaves = (byte)(waves.Length - 1);
     }
 
+    void FixedUpdate()
+    {
+        if (!active)
+        {
+            StartCoroutine(KillAllEnemies());
+        }
+    }
+
     void Update()
     {
         // Spawn the enemy if spawner is activated
@@ -51,7 +63,7 @@ public class Spawner : MonoBehaviour
                 // Check if wave time passed and we need to call next wave
                 if (Time.time >= nextWaveTime)
                 {
-                    NextWave();
+                    StartCoroutine(NextWave());
                 }
 
                 // Check if enemies count is less than max
@@ -63,12 +75,8 @@ public class Spawner : MonoBehaviour
             }
             else
             {
-                NextWave();
+                StartCoroutine(NextWave());
             }
-        }
-        else if (!active)
-        {
-            StartCoroutine(KillAllEnemies());
         }
     }
 
@@ -121,25 +129,49 @@ public class Spawner : MonoBehaviour
         */
     }
 
-    public void NextWave()
+    public IEnumerator NextWave()
     {
+        
         if (currentWaveNumber+1 <= totalWaves)
         {
+            active = false;
+
             // Increment current Wave number
             currentWaveNumber++;
 
             // We need to kill all enemies till set a new wave
             StartCoroutine(KillAllEnemies());
 
+            // Delay between switch
+            timerText.gameObject.SetActive(true);
+            for (int i = nextTimeWave; i > 0; i--)
+            {
+                timerText.text = i.ToString();
+                yield return new WaitForSeconds(1f);
+            }
+            timerText.gameObject.SetActive(false);
+
             // Set current wave as new one
             currentWave = waves[currentWaveNumber];
 
             // Reset timer till next wave
             nextWaveTime = Time.time + currentWave.timeToNextWave;
+            active = true;
         }
         else
         {
             active = false;
+
+            // Delay between switch
+            timerText.gameObject.SetActive(true);
+            for (int i = nextTimeWave; i > 0; i--)
+            {
+                timerText.text = i.ToString();
+                yield return new WaitForSeconds(1f);
+            }
+            timerText.gameObject.SetActive(false);
+
+            // Load next scene
             SceneManager.LoadScene("LoadingScreen");
         }
     }
@@ -163,8 +195,7 @@ public class Spawner : MonoBehaviour
             currentWave.currentEnemies = 0;
         }
 
-        // Delay between wave switching
-        yield return new WaitForSeconds(3f);
+        yield break;
     }
 
     public void ResetWaveNumber()

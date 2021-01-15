@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class Player : Subject
 {
+    private float maxHP;
+
     // UI
     [SerializeField] private Image hpValue;
     public GameObject damagePowerUP;
@@ -40,9 +42,11 @@ public class Player : Subject
 
     private void Start()
     {
+        GodMode = Game.instance.GodModeActivated;
         Speed = 10f;
-        HP = 100;
-        hpValue.fillAmount = HP / 100.0f;
+        HP = 250;
+        maxHP = HP;
+        hpValue.fillAmount = HP / maxHP;
         Spawn();
     }
 
@@ -52,17 +56,20 @@ public class Player : Subject
         {
             // Calc damage
             base.applyDamage(damage);
-            hpValue.fillAmount = HP / 100.0f;
+            hpValue.fillAmount = HP / maxHP;
         }
     }
 
     protected override void Die()
     {
         AudioManager.instance.PlaySound("DieSound");
-        ChangeAnimationState("Die");
+        if (animator != null)
+        {
+            ChangeAnimationState("Die");
+        }
     }
 
-    private void GoToMenu()
+    protected override void GoToMenu()
     {
         // Used by animations
         Game.instance.stateMachine.changeState(new MenuState(Game.instance.stateMachine));

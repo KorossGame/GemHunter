@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class EnergeticField : Subject
 {
     private NavMeshAgent bossObjectAI;
+    [SerializeField] private GameObject sphereVisual;
 
     private float rechargeTime = 10f;
     private int maxHP = 4;
@@ -35,6 +36,7 @@ public class EnergeticField : Subject
 
     protected override void Die()
     {
+        sphereVisual.SetActive(false);
         StartCoroutine(Recharge());
     }
 

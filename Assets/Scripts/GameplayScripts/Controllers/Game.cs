@@ -14,7 +14,7 @@ public class Game : MonoBehaviour
     public bool loadedGameManagers { get; set; } = false;
     public int latestGameScene;
 
-    public GameObject customCursor;
+    public bool GodModeActivated { get; set; } = false;
 
     private void OnEnable()
     {

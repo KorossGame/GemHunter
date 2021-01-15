@@ -14,7 +14,11 @@ abstract public class Subject : MonoBehaviour
     public virtual void applyDamage(int damage)
     {
         AudioManager.instance.PlaySound("Hit");
-        ChangeAnimationState("DamageAnimation");
+
+        if (animator != null)
+        {
+            ChangeAnimationState("DamageAnimation");
+        }
 
         // Substract hp and check if object should die
         HP -= damage;
@@ -38,5 +42,10 @@ abstract public class Subject : MonoBehaviour
         if (currentState == newState) return;
         animator.Play(newState);
         currentState = newState;
+    }
+
+    protected virtual void GoToMenu()
+    {
+        //
     }
 }

@@ -13,9 +13,6 @@ public class Boss : Enemy
     [Header("FSM")]
     private BossFSM stateMachine;
 
-    [Header("Animator")]
-    private Animator animator;
-
     [Header("Attack projectiles for different states")]
     public BossBullet[] attackProjectiles;
 
@@ -24,6 +21,8 @@ public class Boss : Enemy
 
     // Object for last phase
     public GameObject energeticField;
+
+    private Coroutine c;
 
     private void Awake()
     {
@@ -35,6 +34,11 @@ public class Boss : Enemy
 
     private void Start()
     {
+        if (HPBar)
+        {
+            HPBar.fillAmount = HP * 1.0f / maxHP * 1.0f;
+        }
+
         // Get player reference
         player = PlayerManager.instance.player.transform;
 
@@ -44,9 +48,6 @@ public class Boss : Enemy
 
         // Set weapon holder
         holderPoint = transform.Find("HolderPoint");
-
-        // Start infinite loop of finding path to player
-        StartCoroutine(UpdatePath());
 
         // Activate FSM
         stateMachine = GetComponent<BossFSM>();
@@ -68,16 +69,29 @@ public class Boss : Enemy
 
     private void Update()
     {
-        FaceTarget();
-        if (stateMachine.currentBossState != null && activated)
+        if (activated)
         {
-            StartCoroutine(stateMachine.currentBossState.Attack());
+            if (c == null)
+            {
+                // Start loop of finding path to player
+                c = StartCoroutine(UpdatePath());
+            }
+            
+            FaceTarget();
+
+            if (stateMachine.currentBossState != null && activated)
+            {
+                if (pathFinder.remainingDistance <= pathFinder.stoppingDistance)
+                {
+                    StartCoroutine(stateMachine.currentBossState.Attack());
+                }
+            }
         }
     }
 
     public void RegenMaxHP()
     {
-        HP = maxHP;
+        HP = maxHP / 3;
     }
 
     public override void applyDamage(int damage)
@@ -122,6 +136,12 @@ public class Boss : Enemy
         else
         {
             Die();
+        }
+
+        // Update UI
+        if (HPBar)
+        {
+            HPBar.fillAmount = HP * 1.0f / maxHP * 1.0f;
         }
     }
 

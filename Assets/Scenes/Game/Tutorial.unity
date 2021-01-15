@@ -187,8 +187,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 57}
-  m_SizeDelta: {x: 550, y: 60}
+  m_AnchoredPosition: {x: 0, y: 125}
+  m_SizeDelta: {x: 400, y: 125.32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &29255304
 MonoBehaviour:
@@ -223,7 +223,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Press [E] to teleport
+  m_Text: Press [E] to teleport to Level
 --- !u!222 &29255305
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -885,6 +885,22 @@ PrefabInstance:
       propertyPath: m_TagString
       value: NewWeapon
       objectReference: {fileID: 0}
+    - target: {fileID: 2612050730012062354, guid: 4e54f4fe1d5854d43b69b721c97ce5cf, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2612050730075958315, guid: 4e54f4fe1d5854d43b69b721c97ce5cf, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2612050730510016745, guid: 4e54f4fe1d5854d43b69b721c97ce5cf, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5091700795811323727, guid: 4e54f4fe1d5854d43b69b721c97ce5cf, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e54f4fe1d5854d43b69b721c97ce5cf, type: 3}
 --- !u!1 &1290801662 stripped
@@ -1155,7 +1171,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-171590
+  m_Name: pb_Mesh-518574
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1449,6 +1465,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: dbfb0216c78847e41a4fc620ce2f2bb9, type: 2}
+    - target: {fileID: 4954733019789645767, guid: 723c52fdb7d0f0946990b5324cb2949a, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4954733019789645784, guid: 723c52fdb7d0f0946990b5324cb2949a, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -1457,6 +1477,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1674577440}
+    - target: {fileID: 4954733019789645786, guid: 723c52fdb7d0f0946990b5324cb2949a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4954733019962329811, guid: 723c52fdb7d0f0946990b5324cb2949a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

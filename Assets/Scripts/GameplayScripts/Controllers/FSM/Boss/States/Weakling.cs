@@ -15,6 +15,7 @@ public class Weakling : BossState
 
     public override IEnumerator Enter()
     {
+        bossPathFinder.stoppingDistance = 200f;
         return base.Enter();
     }
 

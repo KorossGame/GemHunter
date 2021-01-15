@@ -3,9 +3,13 @@ using System.Collections;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 abstract public class Enemy : Subject
 {
+    protected int initialHP;
+    public Image HPBar;
+
     public float powerUPdropChance { get; set; } = 10f;
     public float ammoBoxDropChance { get; set; } = 40f;
 
@@ -40,6 +44,12 @@ abstract public class Enemy : Subject
 
     private void Start()
     {
+        initialHP = HP;
+        if (HPBar)
+        {
+            HPBar.fillAmount = HP * 1.0f / initialHP * 1.0f;
+        }
+
         animator = GetComponent<Animator>();
 
         // Set random seed
@@ -70,7 +80,6 @@ abstract public class Enemy : Subject
 
     private void Update()
     {
-
         // If player still is not set up - try to find it
         if (!player)
         {
@@ -182,7 +191,11 @@ abstract public class Enemy : Subject
 
         // Animation and Sound of death
         AudioManager.instance.PlaySound("DieSound");
-        ChangeAnimationState("Die");
+        
+        if (animator != null)
+        {
+            ChangeAnimationState("Die");
+        }
 
         // If enemy didn't drop power up we may drop some ammo
         if (!GeneratePowerUP())
@@ -197,6 +210,11 @@ abstract public class Enemy : Subject
     public override void applyDamage(int damage)
     {
         base.applyDamage(damage);
+        
+        if (HPBar)
+        {
+            HPBar.fillAmount = HP * 1.0f / initialHP * 1.0f;
+        }
     }
 
     protected bool GeneratePowerUP()

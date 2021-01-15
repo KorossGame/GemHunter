@@ -16,7 +16,9 @@ public class MenuState : GameState
         if (Spawner.instance)
         {
             // Kill all enemies and set spawner inactive
+            Spawner.instance.StopAllCoroutines();
             Spawner.instance.active = false;
+            Spawner.instance.timerText.gameObject.SetActive(false);
             Spawner.instance.StartCoroutine(Spawner.instance.KillAllEnemies());
             Spawner.instance.ResetWaveNumber();
         }

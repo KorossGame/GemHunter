@@ -4,11 +4,18 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public static CameraController instance;
+
     private Transform target;
     public float movementSpeed;
     public Vector3 targetOffset;
 
-    void Update()
+    private void Awake()
+    {
+        instance = this;
+    }
+
+    private void Update()
     {
         if (target)
         {
@@ -24,7 +31,7 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    void MoveCamera()
+    private void MoveCamera()
     {
         transform.position = Vector3.Lerp(transform.position, target.position + targetOffset, movementSpeed * Time.deltaTime);
     }

@@ -11,6 +11,7 @@ public class BossLevelEnter : MonoBehaviour
 
     public PlayableDirector playableDirector;
     public Boss boss;
+    public GameObject canvas;
 
     private void OnEnable()
     {
@@ -39,6 +40,7 @@ public class BossLevelEnter : MonoBehaviour
         cinematicCamera.SetActive(false);
         PlayerManager.instance.player.SetActive(true);
         boss.activated = true;
+        canvas.SetActive(true);
     }
 
     private void SetupPlayer()

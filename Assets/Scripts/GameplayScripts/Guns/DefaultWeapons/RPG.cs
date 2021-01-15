@@ -28,7 +28,7 @@ public class RPG : Gun
         maxRange = 1000f;
 
         // Reload
-        reloadTime = 5f;
+        reloadTime = 2.5f;
 
         // Fire Rate (1/fireRate)
         fireRate = 1f;

@@ -19,8 +19,8 @@ public class God : BossState
         if (!bossObject.godActivated)
         {
             bossObject.godActivated = true;
+            bossPathFinder.stoppingDistance = 200f;
             TeleportToCenterAndTurnGravityOff();
-            ChangeStopDistance();
             bossObject.RegenMaxHP();
             SpawnTurrets();
         }
@@ -42,10 +42,5 @@ public class God : BossState
     private void SpawnTurrets()
     {
         UnityEngine.Object.Instantiate(energeticFieldObject, new Vector3(0, 1.5f, 0), Quaternion.identity);
-    }
-
-    protected override void ChangeStopDistance()
-    {
-        bossPathFinder.stoppingDistance = 200f;
     }
 }

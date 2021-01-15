@@ -12,8 +12,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioMixerGroup soundMixerGroup, musicMixerGroup;
 
     // Default values for music and sound levels
-    public float musicLevel { get; set; } = -50;
-    public float soundLevel { get; set; } = -50;
+    public float musicLevel { get; set; } = 0;
+    public float soundLevel { get; set; } = 0;
 
     // Array of sounds to be played by this object
     public Sound[] sounds;

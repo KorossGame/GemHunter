@@ -38,6 +38,9 @@ abstract public class Gun : MonoBehaviour
     protected string shootSound;
     protected string reloadSound;
 
+    // Muzzle flash
+    [SerializeField] protected ParticleSystem muzzleFlash;
+
     private void OnEnable()
     {
         // If player switches the weapon while reloading, we need to reset reload process

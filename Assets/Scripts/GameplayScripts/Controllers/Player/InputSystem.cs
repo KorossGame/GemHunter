@@ -7,6 +7,9 @@ using UnityEngine.UI;
 [RequireComponent (typeof (Player))]
 public class InputSystem : MonoBehaviour
 {
+    // Particle effects
+    [SerializeField] private ParticleSystem dust;
+
     // Physics
     private Player playerPhysicalObject;
     public GameObject playerVisualObject;
@@ -74,6 +77,9 @@ public class InputSystem : MonoBehaviour
             }
         }
 
+        // Create dust particles
+        dust.Play();
+
         // Get movement axis value
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
@@ -81,7 +87,14 @@ public class InputSystem : MonoBehaviour
         // Update UI
         if (playerPhysicalObject.inventory.WeaponEquiped)
         {
-            currentAmmoText.text = playerPhysicalObject.inventory.WeaponEquiped.CurrentAmmo.ToString() + " / " + playerPhysicalObject.inventory.WeaponEquiped.ammoLeft.ToString();
+            if (playerPhysicalObject.inventory.WeaponEquiped.ID == 0)
+            {
+                currentAmmoText.text = ("∞ / ∞");
+            }
+            else
+            {
+                currentAmmoText.text = playerPhysicalObject.inventory.WeaponEquiped.CurrentAmmo.ToString() + " / " + playerPhysicalObject.inventory.WeaponEquiped.ammoLeft.ToString();
+            }
         }
 
         // Weapons block
@@ -110,6 +123,7 @@ public class InputSystem : MonoBehaviour
 
     void ApplyMovement()
     {
+        // Calculate movement
         Vector3 movement = new Vector3(horizontal, 0, vertical);
 
         // Normalize the magnitude of movement vector

@@ -46,11 +46,15 @@ public class Projectile : MonoBehaviour
 
     protected void FixedUpdate()
     {
-        if (gameObject)
+        if (gameObject && shooter)
         {
             moveDistance = Speed * Time.fixedDeltaTime;
             DetectCollisions(moveDistance);
             rb.MovePosition(transform.position + (transform.forward * moveDistance));
+        }
+        else if (!shooter)
+        {
+            Destroy(gameObject);
         }
     }
 
