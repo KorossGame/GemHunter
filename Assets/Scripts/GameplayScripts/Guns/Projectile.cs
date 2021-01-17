@@ -81,7 +81,7 @@ public class Projectile : MonoBehaviour
                 }
                 else
                 {
-                    // Formula: newDamage = Damage * 0.85**(Range)
+                    // Formula: newDamage = Damage * 0.85**(Range/2)
                     int newDamage = Mathf.RoundToInt((float)(CurrentGun.DamagePerBullet * Math.Pow(0.85f, hitDistance / 2)));
                     target.applyDamage(newDamage * PowerUPMultiplier);
                 }

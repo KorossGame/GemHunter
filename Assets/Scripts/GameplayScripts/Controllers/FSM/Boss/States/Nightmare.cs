@@ -10,7 +10,7 @@ public class Nightmare : BossState
     private float maxAngle = 45f;
     private int radius = 10;
     private int height = 30;
-    private int meteorCount = 5;
+    private int meteorCount = 8;
 
     public Nightmare(BossFSM bossFSM, BossBullet projectile, Animator animator, NavMeshAgent pathFinder, Transform nullPoint) : base(bossFSM, projectile, animator, pathFinder)
     {

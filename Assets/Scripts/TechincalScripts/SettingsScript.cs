@@ -16,6 +16,9 @@ public class SettingsScript : MonoBehaviour
     [Header("Screen Modes")]
     [SerializeField] private Dropdown screenModesDropdown;
 
+    [Header("Cheats")]
+    [SerializeField] private Toggle godMode;
+
     private void Awake()
     {
         instance = this;
@@ -67,6 +70,8 @@ public class SettingsScript : MonoBehaviour
 
     public void SetGodMode(bool godModeValue)
     {
+        // Change UI if players exits from game, but cheats were activated
+        godMode.isOn = godModeValue;
         Game.instance.GodModeActivated = godModeValue;
     }
 
@@ -94,7 +99,7 @@ public class SettingsScript : MonoBehaviour
         List<string> resolutionOptions = new List<string>();
         for (int i = 0; i < resolutions.Length; i++)
         {
-            resolutionOptions.Add(resolutions[i].width + "x" + resolutions[i].height);
+            resolutionOptions.Add(resolutions[i].width + "x" + resolutions[i].height + " @ " + resolutions[i].refreshRate + "Hz");
 
             if (resolutions[i].height == Screen.currentResolution.height &&
                 resolutions[i].width == Screen.currentResolution.width)

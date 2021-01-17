@@ -55,7 +55,7 @@ public class Boss : Enemy
         // Add all possible states to stateMachine
         stateMachine.AddState(new Weakling(stateMachine, attackProjectiles[0], animator, pathFinder, attackPoints[0]));
         stateMachine.AddState(new Sorcerer(stateMachine, attackProjectiles[0], animator, pathFinder, attackPoints[1]));
-        stateMachine.AddState(new Rage(stateMachine, attackProjectiles[0], animator, pathFinder, attackPoints[1]));
+        stateMachine.AddState(new Rage(stateMachine, attackProjectiles[0], animator, pathFinder, attackPoints[1], this));
         stateMachine.AddState(new Berserk(stateMachine, attackProjectiles[0], animator, pathFinder, attackPoints[1]));
         stateMachine.AddState(new Nightmare(stateMachine, attackProjectiles[1], animator, pathFinder, player.transform));
         stateMachine.AddState(new God(stateMachine, attackProjectiles[1], animator, pathFinder, this, energeticField));

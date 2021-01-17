@@ -34,5 +34,9 @@ public class Pillar : Subject
     public void SetHP()
     {
         HP = maxHP;
+        if (HPBar)
+        {
+            HPBar.fillAmount = HP * 1.0f / maxHP * 1.0f;
+        }
     }
 }
