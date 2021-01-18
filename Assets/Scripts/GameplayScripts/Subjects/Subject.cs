@@ -38,7 +38,7 @@ abstract public class Subject : MonoBehaviour
 
     public void ChangeAnimationState(string newState)
     {
-        if (currentState == "Die") return;
+        if (currentState == "Die" || currentState == "BossDieClip") return;
         if (currentState == newState) return;
         animator.Play(newState);
         currentState = newState;

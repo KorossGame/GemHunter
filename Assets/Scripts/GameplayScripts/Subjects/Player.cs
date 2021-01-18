@@ -6,6 +6,11 @@ using UnityEngine.UI;
 
 public class Player : Subject
 {
+    // SFX
+    [SerializeField] private ParticleSystem spawnParticle;
+    [SerializeField] private ParticleSystem dieParticle;
+
+    // Max HP for UI
     private float maxHP;
 
     // UI
@@ -62,6 +67,7 @@ public class Player : Subject
 
     protected override void Die()
     {
+        dieParticle.Play();
         AudioManager.instance.PlaySound("DieSound");
         if (animator != null)
         {
@@ -89,5 +95,6 @@ public class Player : Subject
 
         // Enable Visual player object
         visualObject.GetComponent<MeshRenderer>().enabled = true;
+        spawnParticle.Play();
     }
 }

@@ -46,7 +46,7 @@ public class Rage : BossState
     private void CircleAttack()
     {
         // Apply passive damage to boss
-        bossReference.applyDamage(20);
+        bossReference.applyDamage(75);
 
         // Local position of attack point relatively of boss zero point
         Vector3 localAttackPoint = frontAttackPoint.position - bossZeroPoint.transform.position;

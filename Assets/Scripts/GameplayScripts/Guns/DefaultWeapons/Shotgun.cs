@@ -48,14 +48,14 @@ public class Shotgun : Gun
         if (shooter.transform.tag == "Player")
         {
             powerUPMultiplier = PlayerManager.instance.player.GetComponent<Player>().GunPowerUPMultiplier;
-
-            // Substract each shot for player
-            CurrentAmmo--;
         }
         else
         {
             powerUPMultiplier = 1;
         }
+
+        // Substract each shot
+        CurrentAmmo--;
 
         // Spawn count of bullets defined by variable
         for (int bulletCount = 0; bulletCount < bulletShootCount; bulletCount++)

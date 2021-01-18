@@ -8,7 +8,7 @@ public class Fast : Enemy
     {
         // HP and Speed of movement
         HP = 10;
-        Speed = 15f;
+        Speed = 12f;
 
         // Weapon chances
         weaponChance = new double[] { 100, 0, 0, 0, 0 };

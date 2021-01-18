@@ -8,6 +8,8 @@ public class Game : MonoBehaviour
 {
     public static Game instance;
 
+    public bool isCompleted { get; set; } = false;
+
     [Header("FSM")]
     public GameFSM stateMachine;
 
@@ -15,6 +17,8 @@ public class Game : MonoBehaviour
     public int latestGameScene;
 
     public bool GodModeActivated { get; set; } = false;
+    public bool InfiniteAmmoActivated { get; set; } = false;
+
 
     private void OnEnable()
     {

@@ -7,9 +7,6 @@ using UnityEngine.UI;
 [RequireComponent (typeof (Player))]
 public class InputSystem : MonoBehaviour
 {
-    // Particle effects
-    [SerializeField] private ParticleSystem dust;
-
     // Physics
     private Player playerPhysicalObject;
     public GameObject playerVisualObject;
@@ -77,9 +74,6 @@ public class InputSystem : MonoBehaviour
             }
         }
 
-        // Create dust particles
-        dust.Play();
-
         // Get movement axis value
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
@@ -93,7 +87,9 @@ public class InputSystem : MonoBehaviour
             }
             else
             {
-                currentAmmoText.text = playerPhysicalObject.inventory.WeaponEquiped.CurrentAmmo.ToString() + " / " + playerPhysicalObject.inventory.WeaponEquiped.ammoLeft.ToString();
+                string ammoText = playerPhysicalObject.inventory.WeaponEquiped.CurrentAmmo.ToString();
+                string maxAmmoText = Game.instance.InfiniteAmmoActivated ? "∞" : playerPhysicalObject.inventory.WeaponEquiped.ammoLeft.ToString();
+                currentAmmoText.text = ammoText + " / " + maxAmmoText;
             }
         }
 
@@ -112,7 +108,7 @@ public class InputSystem : MonoBehaviour
                 // Reload gun
                 if (Input.GetButtonDown("Reload"))
                 {
-                    playerPhysicalObject.inventory.WeaponEquiped.ForceReload();
+                    playerPhysicalObject.inventory.WeaponEquiped.ForceReload(playerPhysicalObject);
                 }
             }
 

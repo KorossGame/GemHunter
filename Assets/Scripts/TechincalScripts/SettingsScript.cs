@@ -8,6 +8,11 @@ public class SettingsScript : MonoBehaviour
 {
     public static SettingsScript instance;
 
+    [Header("Audio")]
+    [SerializeField] private Slider musicSlider;
+    [SerializeField] private Slider soundSlider;
+
+
     [Header("Resolution")]
     Resolution[] resolutions;
     [SerializeField] private Dropdown resolutionDropdown;
@@ -15,9 +20,6 @@ public class SettingsScript : MonoBehaviour
 
     [Header("Screen Modes")]
     [SerializeField] private Dropdown screenModesDropdown;
-
-    [Header("Cheats")]
-    [SerializeField] private Toggle godMode;
 
     private void Awake()
     {
@@ -28,11 +30,6 @@ public class SettingsScript : MonoBehaviour
             SetSoundLevel(AudioManager.instance.soundLevel);
         }
         SetFullscreen(true);
-
-        if (Game.instance != null)
-        {
-            SetGodMode(Game.instance.GodModeActivated);
-        }
     }
 
     private void Start()
@@ -43,12 +40,14 @@ public class SettingsScript : MonoBehaviour
 
     public void SetMusicLevel(float sliderValue)
     {
+        musicSlider.value = sliderValue;
         AudioManager.instance.musicLevel = sliderValue;
         AudioManager.instance.UpdateMixer();
     }
 
     public void SetSoundLevel(float sliderValue)
     {
+        soundSlider.value = sliderValue;
         AudioManager.instance.soundLevel = sliderValue;
         AudioManager.instance.UpdateMixer();
     }
@@ -66,13 +65,6 @@ public class SettingsScript : MonoBehaviour
         {
             screenModesDropdown.interactable = false;
         }
-    }
-
-    public void SetGodMode(bool godModeValue)
-    {
-        // Change UI if players exits from game, but cheats were activated
-        godMode.isOn = godModeValue;
-        Game.instance.GodModeActivated = godModeValue;
     }
 
     public void SetResolution(int resolutionIndex)

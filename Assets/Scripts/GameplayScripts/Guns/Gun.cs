@@ -60,7 +60,7 @@ abstract public class Gun : MonoBehaviour
         // Check if gun have ammo
         if (CurrentAmmo == 0)
         {
-            ForceReload();
+            ForceReload(shooter);
             return;
         }
 
@@ -79,17 +79,17 @@ abstract public class Gun : MonoBehaviour
 
         int powerUPMultiplier;
         // Check if power shooter is player or enemy
-        if (shooter.transform.tag == "Player")
+        if (shooter.CompareTag("Player"))
         {
             powerUPMultiplier = PlayerManager.instance.player.GetComponent<Player>().GunPowerUPMultiplier;
-
-            // Substract each shot for player
-            CurrentAmmo--;
         }
         else
         {
             powerUPMultiplier = 1;
         }
+
+        // Player and enemies both should have reload process for game balance
+        CurrentAmmo--;
 
         // Create new bullet with passing Gun and Shooter objects there
         Projectile newShoot = Instantiate(bullet, attackPoint.position, attackPoint.rotation);
@@ -100,9 +100,9 @@ abstract public class Gun : MonoBehaviour
         newShoot.Speed = BulletSpeed;
     }
 
-    public void ForceReload()
+    public void ForceReload(Subject shooter)
     {
-        StartCoroutine(Reload());
+        StartCoroutine(Reload(shooter));
     }
 
     public void ForceDelayShot()
@@ -120,7 +120,7 @@ abstract public class Gun : MonoBehaviour
         }
     }
 
-    protected IEnumerator Reload()
+    protected IEnumerator Reload(Subject shooter)
     {
         if (!reloadProcess)
         {
@@ -135,17 +135,25 @@ abstract public class Gun : MonoBehaviour
                 // Wait for time
                 yield return new WaitForSeconds(reloadTime);
 
-                // Check if we have enought ammo for whole clip
-                if (ammoInClip > ammoLeft)
+                if ((Game.instance.InfiniteAmmoActivated && shooter.CompareTag("Player")) || shooter.CompareTag("Enemy"))
                 {
-                    CurrentAmmo = ammoLeft;
-                    ammoLeft = 0;
+                    CurrentAmmo = ammoInClip;
                 }
                 else
                 {
-                    CurrentAmmo = ammoInClip;
-                    ammoLeft -= ammoInClip;
+                    // Check if we have enought ammo for whole clip
+                    if (ammoInClip > ammoLeft)
+                    {
+                        CurrentAmmo = ammoLeft;
+                        ammoLeft = 0;
+                    }
+                    else
+                    {
+                        CurrentAmmo = ammoInClip;
+                        ammoLeft -= ammoInClip;
+                    }
                 }
+                
                 reloadProcess = false;
             }
         }

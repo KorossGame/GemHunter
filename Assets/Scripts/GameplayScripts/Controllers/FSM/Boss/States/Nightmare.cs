@@ -8,7 +8,7 @@ public class Nightmare : BossState
     private Transform nullAttackPoint;
 
     private float maxAngle = 45f;
-    private int radius = 10;
+    private int radius = 15;
     private int height = 30;
     private int meteorCount = 8;
 

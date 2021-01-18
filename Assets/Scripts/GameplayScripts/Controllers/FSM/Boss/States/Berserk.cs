@@ -7,7 +7,7 @@ public class Berserk : BossState
 {
     private Transform nullAttackPoint;
 
-    private int radius = 5;
+    private int radius = 7;
     private List<Node> enemySpawnNodes;
 
     private byte maxSpawnedEnemies = 6;

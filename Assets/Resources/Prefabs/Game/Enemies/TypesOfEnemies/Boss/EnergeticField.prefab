@@ -314,9 +314,9 @@ GameObject:
   - component: {fileID: 9027367503138813482}
   - component: {fileID: 9027367503138813485}
   - component: {fileID: 8599118192582626559}
-  m_Layer: 9
+  m_Layer: 13
   m_Name: EnergeticField
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
