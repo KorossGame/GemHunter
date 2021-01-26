@@ -357,19 +357,46 @@ MonoBehaviour:
     - {fileID: 757684483035640614}
     - {fileID: 7683697360731984843}
     - {fileID: 457751069002994057}
-  - maxEnemies: 1
+  - maxEnemies: 5
     currentEnemies: 0
     timeBetweenSpawn: 1
-    timeToNextWave: 500
+    timeToNextWave: 30
     spawnPoints:
     - {fileID: 3828131492089292417}
     - {fileID: 757684483035640614}
     - {fileID: 7683697360731984843}
     - {fileID: 457751069002994057}
-  - maxEnemies: 5
+  - maxEnemies: 6
     currentEnemies: 0
     timeBetweenSpawn: 1
-    timeToNextWave: 10
+    timeToNextWave: 30
+    spawnPoints:
+    - {fileID: 3828131492089292417}
+    - {fileID: 757684483035640614}
+    - {fileID: 7683697360731984843}
+    - {fileID: 457751069002994057}
+  - maxEnemies: 7
+    currentEnemies: 0
+    timeBetweenSpawn: 1
+    timeToNextWave: 30
+    spawnPoints:
+    - {fileID: 3828131492089292417}
+    - {fileID: 757684483035640614}
+    - {fileID: 7683697360731984843}
+    - {fileID: 457751069002994057}
+  - maxEnemies: 8
+    currentEnemies: 0
+    timeBetweenSpawn: 1
+    timeToNextWave: 30
+    spawnPoints:
+    - {fileID: 3828131492089292417}
+    - {fileID: 757684483035640614}
+    - {fileID: 7683697360731984843}
+    - {fileID: 457751069002994057}
+  - maxEnemies: 10
+    currentEnemies: 0
+    timeBetweenSpawn: 1
+    timeToNextWave: 30
     spawnPoints:
     - {fileID: 3828131492089292417}
     - {fileID: 757684483035640614}

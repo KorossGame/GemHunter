@@ -1,5 +1,8 @@
 # Gem Hunter
 
+## About
+Top down shooter with multiple enemy, guns types.
+
 ## Demo
 Not Ready Yet
 
@@ -21,8 +24,9 @@ Not Ready Yet
 | Animations				| :heavy_check_mark: |
 | Boss Cinematic			| :heavy_check_mark: |
 | UI						| :heavy_check_mark: |
-| Level Design				| :x: |
-| Graphics (SFX)			| :x: |
+| Level Design				| :heavy_check_mark: |
+| Graphics (SFX)			| :heavy_check_mark: |
+| Lighting					| :x: |
 | Demo						| :x: |
 
 ## Ideas
@@ -31,6 +35,3 @@ Not Ready Yet
 | Console					| :x: |
 | Themes (Dynamic weather)	| :x: |
 | Multiplayer				| :x: |
-
-## About
-One day I will write here something

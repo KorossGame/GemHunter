@@ -8,8 +8,6 @@ public class Game : MonoBehaviour
 {
     public static Game instance;
 
-    public bool isCompleted { get; set; } = false;
-
     [Header("FSM")]
     public GameFSM stateMachine;
 

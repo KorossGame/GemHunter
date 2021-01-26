@@ -8,7 +8,7 @@ public class Citizen : Enemy
     {
         // HP and Speed of movement
         HP = 50;
-        Speed = 5f;
+        Speed = 4f;
 
         // Weapon chances
         weaponChance = new double[] { 70, 15, 10, 4.9, 0.1 };

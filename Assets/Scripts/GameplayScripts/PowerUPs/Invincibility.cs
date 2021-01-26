@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class Invincibility : PowerUP
 {
-    public GameObject pickupEffect;
 
     protected override IEnumerator Pickup(Collider player)
     {
-
-        // Create particles
-        //Instantiate(pickupEffect, transform.position, transform.rotation);
 
         // Get Player class from visual object
         Player playerGameObject = player.GetComponent<Player>();

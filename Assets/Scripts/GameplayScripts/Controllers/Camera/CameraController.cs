@@ -35,4 +35,24 @@ public class CameraController : MonoBehaviour
     {
         transform.position = Vector3.Lerp(transform.position, target.position + targetOffset, movementSpeed * Time.deltaTime);
     }
+
+    public IEnumerator Shake(float duration, float magnitude)
+    {
+        float elapsed = 0.0f;
+        Vector3 originPos = transform.localPosition;
+
+        while (elapsed < duration)
+        {
+            float x = Random.Range(-1f, 1f) * magnitude;
+            float y = Random.Range(-1f, 1f) * magnitude;
+
+            transform.localPosition = new Vector3(x, y, originPos.z);
+
+            elapsed += Time.deltaTime;
+
+            yield return null;
+        }
+
+        transform.localPosition = originPos;
+    }
 }
