@@ -10,6 +10,8 @@ abstract public class Enemy : Subject
     protected int initialHP;
     public Image HPBar;
 
+    [SerializeField] private ParticleSystem dieParticles;
+
     public float powerUPdropChance { get; set; } = 10f;
     public float ammoBoxDropChance { get; set; } = 40f;
 
@@ -44,6 +46,8 @@ abstract public class Enemy : Subject
 
     private void Start()
     {
+
+        // Set HP and update HP bar
         initialHP = HP;
         if (HPBar)
         {
@@ -183,19 +187,16 @@ abstract public class Enemy : Subject
         }
     }
 
-    protected override void Die()
+    public override void Die()
     {
         if (dead) return;
 
         dead = true;
+        activated = false;
 
         // Animation and Sound of death
         AudioManager.instance.PlaySound("DieSound");
-        
-        if (animator != null)
-        {
-            ChangeAnimationState("Die");
-        }
+        dieParticles.Play();
 
         // If enemy didn't drop power up we may drop some ammo
         if (!GeneratePowerUP())
@@ -205,6 +206,11 @@ abstract public class Enemy : Subject
 
         // Call OnDeath event
         OnDeath?.Invoke();
+
+        if (animator != null)
+        {
+            ChangeAnimationState("Die");
+        }
     }
 
     public override void applyDamage(int damage)

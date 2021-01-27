@@ -25,7 +25,7 @@ public class Pillar : Subject
         }
     }
 
-    protected override void Die()
+    public override void Die()
     {
         field.pillarDestroyed();
         gameObject.SetActive(false);
@@ -34,5 +34,9 @@ public class Pillar : Subject
     public void SetHP()
     {
         HP = maxHP;
+        if (HPBar)
+        {
+            HPBar.fillAmount = HP * 1.0f / maxHP * 1.0f;
+        }
     }
 }

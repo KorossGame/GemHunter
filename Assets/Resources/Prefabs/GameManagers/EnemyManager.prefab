@@ -204,6 +204,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &5458875152273924394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -345,7 +346,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9ba77345eee5514aadb7a6fd3276611, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnParticles: {fileID: 7654903070208903618, guid: 2af3852b707d2914f9c4e019e8cc7ec8, type: 3}
   timerText: {fileID: 3477365786259426652}
+  nextTimeWave: 3
   waves:
   - maxEnemies: 0
     currentEnemies: 0
@@ -356,10 +359,19 @@ MonoBehaviour:
     - {fileID: 757684483035640614}
     - {fileID: 7683697360731984843}
     - {fileID: 457751069002994057}
-  - maxEnemies: 5
+  - maxEnemies: 4
     currentEnemies: 0
     timeBetweenSpawn: 1
-    timeToNextWave: 10
+    timeToNextWave: 30
+    spawnPoints:
+    - {fileID: 3828131492089292417}
+    - {fileID: 757684483035640614}
+    - {fileID: 7683697360731984843}
+    - {fileID: 457751069002994057}
+  - maxEnemies: 5
+    currentEnemies: 0
+    timeBetweenSpawn: 1.5
+    timeToNextWave: 30
     spawnPoints:
     - {fileID: 3828131492089292417}
     - {fileID: 757684483035640614}
@@ -368,7 +380,25 @@ MonoBehaviour:
   - maxEnemies: 5
     currentEnemies: 0
     timeBetweenSpawn: 1
-    timeToNextWave: 10
+    timeToNextWave: 30
+    spawnPoints:
+    - {fileID: 3828131492089292417}
+    - {fileID: 757684483035640614}
+    - {fileID: 7683697360731984843}
+    - {fileID: 457751069002994057}
+  - maxEnemies: 6
+    currentEnemies: 0
+    timeBetweenSpawn: 1.5
+    timeToNextWave: 30
+    spawnPoints:
+    - {fileID: 3828131492089292417}
+    - {fileID: 757684483035640614}
+    - {fileID: 7683697360731984843}
+    - {fileID: 457751069002994057}
+  - maxEnemies: 6
+    currentEnemies: 0
+    timeBetweenSpawn: 1
+    timeToNextWave: 30
     spawnPoints:
     - {fileID: 3828131492089292417}
     - {fileID: 757684483035640614}

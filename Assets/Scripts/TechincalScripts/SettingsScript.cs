@@ -8,6 +8,11 @@ public class SettingsScript : MonoBehaviour
 {
     public static SettingsScript instance;
 
+    [Header("Audio")]
+    [SerializeField] private Slider musicSlider;
+    [SerializeField] private Slider soundSlider;
+
+
     [Header("Resolution")]
     Resolution[] resolutions;
     [SerializeField] private Dropdown resolutionDropdown;
@@ -25,11 +30,6 @@ public class SettingsScript : MonoBehaviour
             SetSoundLevel(AudioManager.instance.soundLevel);
         }
         SetFullscreen(true);
-
-        if (Game.instance != null)
-        {
-            SetGodMode(Game.instance.GodModeActivated);
-        }
     }
 
     private void Start()
@@ -40,12 +40,14 @@ public class SettingsScript : MonoBehaviour
 
     public void SetMusicLevel(float sliderValue)
     {
+        musicSlider.value = sliderValue;
         AudioManager.instance.musicLevel = sliderValue;
         AudioManager.instance.UpdateMixer();
     }
 
     public void SetSoundLevel(float sliderValue)
     {
+        soundSlider.value = sliderValue;
         AudioManager.instance.soundLevel = sliderValue;
         AudioManager.instance.UpdateMixer();
     }
@@ -63,11 +65,6 @@ public class SettingsScript : MonoBehaviour
         {
             screenModesDropdown.interactable = false;
         }
-    }
-
-    public void SetGodMode(bool godModeValue)
-    {
-        Game.instance.GodModeActivated = godModeValue;
     }
 
     public void SetResolution(int resolutionIndex)
@@ -94,7 +91,7 @@ public class SettingsScript : MonoBehaviour
         List<string> resolutionOptions = new List<string>();
         for (int i = 0; i < resolutions.Length; i++)
         {
-            resolutionOptions.Add(resolutions[i].width + "x" + resolutions[i].height);
+            resolutionOptions.Add(resolutions[i].width + "x" + resolutions[i].height + " @ " + resolutions[i].refreshRate + "Hz");
 
             if (resolutions[i].height == Screen.currentResolution.height &&
                 resolutions[i].width == Screen.currentResolution.width)

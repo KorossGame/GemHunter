@@ -19,7 +19,7 @@ public class Shotgun : Gun
 
         // Ammo
         ammoInClip = 5;
-        MaxAmmo = 25;
+        MaxAmmo = 35;
         ammoLeft = MaxAmmo;
         CurrentAmmo = ammoInClip;
 
@@ -43,19 +43,24 @@ public class Shotgun : Gun
         // Play Sound
         AudioManager.instance.PlaySound(shootSound);
 
+        if (shooter.tag == "Player")
+        {
+            CameraController.instance.StartCoroutine(CameraController.instance.Shake());
+        }
+
         int powerUPMultiplier;
         // Check if power shooter is player or enemy
         if (shooter.transform.tag == "Player")
         {
             powerUPMultiplier = PlayerManager.instance.player.GetComponent<Player>().GunPowerUPMultiplier;
-
-            // Substract each shot for player
-            CurrentAmmo--;
         }
         else
         {
             powerUPMultiplier = 1;
         }
+
+        // Substract each shot
+        CurrentAmmo--;
 
         // Spawn count of bullets defined by variable
         for (int bulletCount = 0; bulletCount < bulletShootCount; bulletCount++)

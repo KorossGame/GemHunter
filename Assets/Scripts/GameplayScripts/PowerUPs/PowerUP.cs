@@ -7,6 +7,7 @@ using UnityEngine;
 abstract public class PowerUP : MonoBehaviour
 {
     protected float activeTime = 15f;
+    [SerializeField] protected ParticleSystem pickUPeffect;
 
     // Events
     public event Action OnPickUP;
@@ -25,6 +26,9 @@ abstract public class PowerUP : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            // SFX
+            pickUPeffect.Play();
+
             // If player enters the level - power up should stay
             DontDestroyOnLoad(gameObject);
             StopCoroutine(destroy);

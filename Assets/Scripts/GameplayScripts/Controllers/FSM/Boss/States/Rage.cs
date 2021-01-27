@@ -7,12 +7,15 @@ public class Rage : BossState
 {
     private Transform bossZeroPoint;
     private Transform frontAttackPoint;
+    private Boss bossReference;
 
     private float pointsCount = 20;
     private float angleToRotate;
 
-    public Rage(BossFSM bossFSM, BossBullet projectile, Animator animator, NavMeshAgent pathFinder, Transform bossZero) : base(bossFSM, projectile, animator, pathFinder )
+    public Rage(BossFSM bossFSM, BossBullet projectile, Animator animator, NavMeshAgent pathFinder, Transform bossZero, Boss bossObject) : base(bossFSM, projectile, animator, pathFinder)
     {
+        bossReference = bossObject;
+
         bossZeroPoint = bossZero;
         frontAttackPoint = bossZeroPoint.GetChild(0).transform;
         
@@ -42,6 +45,9 @@ public class Rage : BossState
 
     private void CircleAttack()
     {
+        // Apply passive damage to boss
+        bossReference.applyDamage(40);
+
         // Local position of attack point relatively of boss zero point
         Vector3 localAttackPoint = frontAttackPoint.position - bossZeroPoint.transform.position;
 

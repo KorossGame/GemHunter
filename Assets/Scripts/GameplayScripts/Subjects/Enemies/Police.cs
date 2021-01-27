@@ -9,9 +9,9 @@ public class Police : Enemy
     {
         // HP and Speed of movement
         HP = 70;
-        Speed = 7f;
+        Speed = 5.6f;
 
         // Weapon chances
-        weaponChance = new double[] { 30, 40, 14, 15, 1 };
+        weaponChance = new double[] { 30, 40, 9, 15, 5 };
     }
 }

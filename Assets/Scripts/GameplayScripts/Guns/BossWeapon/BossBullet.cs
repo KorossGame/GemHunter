@@ -35,14 +35,15 @@ public class BossBullet : Projectile
             // Get a subject we hit
             Subject target = enemy.transform.GetComponent<Subject>();
 
+            // Apply damage only if player
             if (target)
             {
-                // Apply damage depending on lenght of vector
                 target.applyDamage(damage);
             }
 
             // Destroy the projectile
             Destroy(gameObject);
         }
+
     }
 }

@@ -8,9 +8,9 @@ public class Default : Enemy
     {
         // HP and Speed of movement
         HP = 45;
-        Speed = 5f;
+        Speed = 4f;
 
         // Weapon chances
-        weaponChance = new double[] { 100, 0, 0, 0, 0 };
+        weaponChance = new double[] { 50, 50, 0, 0, 0 };
     }
 }

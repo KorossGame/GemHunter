@@ -20,8 +20,8 @@ public class Melee : Gun
         CurrentAmmo = -1;
 
         // Range
-        EffectiveRange = 2f;
-        maxRange = 2f;
+        EffectiveRange = 3f;
+        maxRange = 3f;
 
         // Reload
         fireRate = 2f;

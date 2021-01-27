@@ -7,12 +7,15 @@ public class Berserk : BossState
 {
     private Transform nullAttackPoint;
 
-    private int radius = 5;
+    private int radius = 7;
     private List<Node> enemySpawnNodes;
+
+    private byte maxSpawnedEnemies = 6;
+    private byte currentSpawnedEnemies;
 
     public Berserk(BossFSM bossFSM, BossBullet projectile, Animator animator, NavMeshAgent pathFinder, Transform nullPoint) : base(bossFSM, projectile, animator, pathFinder)
     {
-        delayAttackTime = 5f;
+        delayAttackTime = 7.5f;
         nullAttackPoint = nullPoint;
     }
 
@@ -54,19 +57,31 @@ public class Berserk : BossState
 
     private void RandomSpawnEnemy()
     {
-        // generate random number of enemies
-        int randomEnemyCount = Random.Range(1, 4);
-
-        for (int enemyCount=0; enemyCount < randomEnemyCount; enemyCount++)
+        if (currentSpawnedEnemies < maxSpawnedEnemies)
         {
-            // Get random node
-            int randomNode = Random.Range(0, enemySpawnNodes.Count);
+            // generate random number of enemies
+            int randomEnemyCount = Random.Range(1, maxSpawnedEnemies - currentSpawnedEnemies);
 
-            // Get random enemy type
-            Enemy enemyObject = Spawner.instance.enemyTypes[Random.Range(0, Spawner.instance.enemyTypes.Length)];
+            for (int enemyCount = 0; enemyCount < randomEnemyCount; enemyCount++)
+            {
+                // Get random node
+                int randomNode = Random.Range(0, enemySpawnNodes.Count);
 
-            // Spawn
-            UnityEngine.Object.Instantiate(enemyObject, enemySpawnNodes[randomNode].worldPosition, Quaternion.identity);
+                // Get random enemy type
+                Enemy enemyObject = Spawner.instance.enemyTypes[Random.Range(0, Spawner.instance.enemyTypes.Length)];
+
+                // Spawn
+                Enemy e = UnityEngine.Object.Instantiate(enemyObject, enemySpawnNodes[randomNode].worldPosition, Quaternion.identity);
+                e.OnDeath += DecrementSpawnedEnemiesCounter;
+
+                // Increment spawned enemies counter
+                currentSpawnedEnemies++;
+            }
         }
+    }
+
+    private void DecrementSpawnedEnemiesCounter()
+    {
+        currentSpawnedEnemies--;
     }
 }

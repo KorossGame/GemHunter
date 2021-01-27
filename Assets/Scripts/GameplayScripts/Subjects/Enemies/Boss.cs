@@ -21,8 +21,9 @@ public class Boss : Enemy
 
     // Object for last phase
     public GameObject energeticField;
-
     private Coroutine c;
+
+    [SerializeField] private GameObject gemObject;
 
     private void Awake()
     {
@@ -55,7 +56,7 @@ public class Boss : Enemy
         // Add all possible states to stateMachine
         stateMachine.AddState(new Weakling(stateMachine, attackProjectiles[0], animator, pathFinder, attackPoints[0]));
         stateMachine.AddState(new Sorcerer(stateMachine, attackProjectiles[0], animator, pathFinder, attackPoints[1]));
-        stateMachine.AddState(new Rage(stateMachine, attackProjectiles[0], animator, pathFinder, attackPoints[1]));
+        stateMachine.AddState(new Rage(stateMachine, attackProjectiles[0], animator, pathFinder, attackPoints[1], this));
         stateMachine.AddState(new Berserk(stateMachine, attackProjectiles[0], animator, pathFinder, attackPoints[1]));
         stateMachine.AddState(new Nightmare(stateMachine, attackProjectiles[1], animator, pathFinder, player.transform));
         stateMachine.AddState(new God(stateMachine, attackProjectiles[1], animator, pathFinder, this, energeticField));
@@ -65,6 +66,9 @@ public class Boss : Enemy
 
         // Wait for cutscene to play
         activated = false;
+
+        // Get reference to animator
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -98,6 +102,10 @@ public class Boss : Enemy
     {
         // Play sound being hit
         AudioManager.instance.PlaySound("Hit");
+        if (animator != null)
+        {
+            ChangeAnimationState("DamageAnimation");
+        }
 
         // If not last phase but got fatal damage reduce damage
         if (stateMachine.currentBossState == stateMachine.possibleStates[4] && HP - damage <= 0)
@@ -135,7 +143,10 @@ public class Boss : Enemy
         }
         else
         {
-            Die();
+            if (activated)
+            {
+                Die();
+            }
         }
 
         // Update UI
@@ -145,9 +156,11 @@ public class Boss : Enemy
         }
     }
 
-    protected override void Die()
+    public override void Die()
     {
+        activated = false;
         AudioManager.instance.PlaySound("BossDie");
-        base.Die();
+        Instantiate(gemObject, new Vector3(transform.position.x, 1f, transform.position.z), Quaternion.identity);
+        ChangeAnimationState("BossDieClip");
     }
 }

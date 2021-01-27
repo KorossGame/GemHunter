@@ -9,9 +9,9 @@ public class Military : Enemy
     {
         // HP and Speed of movement
         HP = 100;
-        Speed = 8f;
+        Speed = 6.4f;
 
         // Weapon chances
-        weaponChance = new double[] { 0, 20, 30, 45, 5 };
+        weaponChance = new double[] { 0, 20, 30, 40, 10 };
     }
 }

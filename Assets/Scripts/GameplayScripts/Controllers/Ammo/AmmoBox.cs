@@ -36,7 +36,7 @@ abstract public class AmmoBox : MonoBehaviour
         {
             playerInventory = PlayerManager.instance.player.GetComponent<Player>().inventory;
         }
-        catch (UnassignedReferenceException)
+        catch (NullReferenceException)
         {
             playerInventory = null;
         }

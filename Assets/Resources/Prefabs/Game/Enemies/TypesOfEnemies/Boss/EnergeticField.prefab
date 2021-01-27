@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4921170989462986757}
   - component: {fileID: 2399776376653767455}
   - component: {fileID: 9121541035049146593}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 9027367502346935690}
   - component: {fileID: 9027367502346935691}
   - component: {fileID: 4742512110730805917}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Turret_2
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -205,7 +205,7 @@ GameObject:
   - component: {fileID: 9027367502612828050}
   - component: {fileID: 9027367502612828051}
   - component: {fileID: 6887751335674173917}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Turret_1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -314,9 +314,9 @@ GameObject:
   - component: {fileID: 9027367503138813482}
   - component: {fileID: 9027367503138813485}
   - component: {fileID: 8599118192582626559}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: EnergeticField
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -380,7 +380,7 @@ GameObject:
   - component: {fileID: 9027367503266062450}
   - component: {fileID: 9027367503266062451}
   - component: {fileID: 1893382585628523043}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Turret_3
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -491,7 +491,7 @@ GameObject:
   - component: {fileID: 9027367503657750512}
   - component: {fileID: 9027367503657750513}
   - component: {fileID: 264521872419998785}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Turret
   m_TagString: Enemy
   m_Icon: {fileID: 0}

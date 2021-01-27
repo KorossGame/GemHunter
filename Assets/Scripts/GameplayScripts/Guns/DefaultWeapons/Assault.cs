@@ -17,7 +17,7 @@ public class Assault : Gun
 
         // Ammo
         ammoInClip = 30;
-        MaxAmmo = 90;
+        MaxAmmo = 120;
         ammoLeft = MaxAmmo;
         CurrentAmmo = ammoInClip;
 

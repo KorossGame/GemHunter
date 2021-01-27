@@ -30,6 +30,18 @@ public class MainMenu : MonoBehaviour
         ChangeAnimationState("CloseSettings");
     }
 
+    public void EnterCheats()
+    {
+        PlayClickSound();
+        ChangeAnimationState("OpenCheats");
+    }
+
+    public void ExitCheats()
+    {
+        PlayClickSound();
+        ChangeAnimationState("CloseCheats");
+    }
+
     public void Exit()
     {
         PlayClickSound();

@@ -15,6 +15,8 @@ public class Game : MonoBehaviour
     public int latestGameScene;
 
     public bool GodModeActivated { get; set; } = false;
+    public bool InfiniteAmmoActivated { get; set; } = false;
+
 
     private void OnEnable()
     {

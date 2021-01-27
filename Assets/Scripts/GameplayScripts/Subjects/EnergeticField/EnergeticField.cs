@@ -8,7 +8,7 @@ public class EnergeticField : Subject
     private NavMeshAgent bossObjectAI;
     [SerializeField] private GameObject sphereVisual;
 
-    private float rechargeTime = 10f;
+    private float rechargeTime = 15f;
     private int maxHP = 4;
 
     void Awake()
@@ -34,7 +34,7 @@ public class EnergeticField : Subject
             Die();
     }
 
-    protected override void Die()
+    public override void Die()
     {
         sphereVisual.SetActive(false);
         StartCoroutine(Recharge());

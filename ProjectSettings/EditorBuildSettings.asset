@@ -21,6 +21,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Game/Boss.unity
     guid: 374af562f1f82e64f8a0c89782ae796a
   - enabled: 1
+    path: Assets/Scenes/Game/WinScreen.unity
+    guid: b42eb68b967198b498641a0a67d4aaed
+  - enabled: 1
     path: Assets/Scenes/Game/LoadingScreen.unity
     guid: 7dd04793cf46962498542e21bbd0f95b
   m_configObjects: {}

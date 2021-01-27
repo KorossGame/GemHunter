@@ -4,14 +4,10 @@ using UnityEngine;
 
 public class SpeedBonus : PowerUP
 {
-    public GameObject pickupEffect;
     private float multiplier = 1.75f;
 
     protected override IEnumerator Pickup(Collider player)
     {
-        // Create particles
-        //Instantiate(pickupEffect, transform.position, transform.rotation);
-
         // Get Player class from visual object
         Player playerGameObject = player.GetComponent<Player>();
 

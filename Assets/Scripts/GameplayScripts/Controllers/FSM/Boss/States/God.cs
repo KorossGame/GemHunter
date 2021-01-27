@@ -35,7 +35,7 @@ public class God : BossState
     private void TeleportToCenterAndTurnGravityOff()
     {
         bossObject.GetComponent<Rigidbody>().useGravity = false;
-        bossObject.transform.position = new Vector3(0, 2.5f, 0);
+        bossObject.transform.position = new Vector3(0, 3f, 0);
         bossPathFinder.baseOffset = 0.75f;
     }
 
