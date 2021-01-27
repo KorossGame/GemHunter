@@ -16,8 +16,6 @@ public class RPGProjectile : Projectile
         // Use raycast with layer mask (only against colliders in specific layers)
         if (Physics.Raycast(ray, out hit, moveDistance * 5, enemyLayers))
         {
-            print(hit.transform.name);
-
             // Get a subject we hit
             Subject target = hit.transform.GetComponent<Subject>();
 

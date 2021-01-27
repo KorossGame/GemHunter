@@ -1,10 +1,17 @@
 # Gem Hunter
 
 ## About
-Top down shooter with multiple enemy, guns types.
+What is this game? 
+Top down shooter with variation of enemies, guns and powerUPs.
+
+This project was first, big one where architecture of the code was initially planned by author.
+
+Outcome:
+Mostly used OOP approach for code structure.
+Leant about working with FSM, Audio, animations, UI, particle system.
 
 ## Demo
-Not Ready Yet
+
 
 ## Task List
 | Task | Done |
@@ -26,12 +33,8 @@ Not Ready Yet
 | UI						| :heavy_check_mark: |
 | Level Design				| :heavy_check_mark: |
 | Graphics (SFX)			| :heavy_check_mark: |
-| Lighting					| :x: |
-| Demo						| :x: |
+| Lighting					| :heavy_check_mark: |
+| Demo						| :heavy_check_mark: |
 
-## Ideas
-| Task | Done |
-| ---- | :----: |
-| Console					| :x: |
-| Themes (Dynamic weather)	| :x: |
-| Multiplayer				| :x: |
+## Ideas for futher development
+Check ToImproveList.md file

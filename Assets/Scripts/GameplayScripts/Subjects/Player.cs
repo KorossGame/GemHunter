@@ -63,6 +63,11 @@ public class Player : Subject
 
     public override void Heal(int healAmount)
     {
+        if (HP+healAmount > maxHP)
+        {
+            healAmount = (int)maxHP - HP;
+        }
+        
         base.Heal(healAmount);
         hpValue.fillAmount = HP / maxHP;
     }
