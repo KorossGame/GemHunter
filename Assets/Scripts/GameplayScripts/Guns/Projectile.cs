@@ -10,11 +10,11 @@ public class Projectile : MonoBehaviour
     public LayerMask enemyLayers;
 
     // Speed of bullet
-    public float Speed { private get; set; } = 10f;
+    public float Speed { protected get; set; } = 10f;
     private float moveDistance;
 
-    public Gun CurrentGun { private get; set; }
-    public int PowerUPMultiplier { private get; set; }
+    public Gun CurrentGun { protected get; set; }
+    public int PowerUPMultiplier { protected get; set; }
 
     protected float livingEntityTime = 10f;
 
@@ -24,7 +24,7 @@ public class Projectile : MonoBehaviour
     // Reference to rigidbody
     protected Rigidbody rb;
 
-    private void Start()
+    protected void Start()
     {
         // Get Rigidbody reference
         rb = GetComponent<Rigidbody>();

@@ -12,6 +12,10 @@ public class Spawner : MonoBehaviour
     public Text timerText;
     [SerializeField] private int nextTimeWave = 3;
 
+    [Header("UI")]
+    private Text currentWaveText;
+    private Text nextWaveTimerText;
+
     [Header("Waves")]
     // Waves
     public Wave[] waves;
@@ -30,7 +34,7 @@ public class Spawner : MonoBehaviour
     [HideInInspector]
     // Control of spawner
     public bool active { get; set; } = false;
-    
+
     void Awake()
     {
         instance = this;
@@ -76,6 +80,9 @@ public class Spawner : MonoBehaviour
             else
             {
                 StartCoroutine(NextWave());
+                PlayerManager.instance.player.GetComponent<Player>().WaveUI.SetActive(true);
+                currentWaveText = GameObject.Find("WaveCounterText").GetComponent<Text>();
+                nextWaveTimerText = GameObject.Find("nextWaveTimerText").GetComponent<Text>();
             }
         }
     }
@@ -141,6 +148,7 @@ public class Spawner : MonoBehaviour
 
             // We need to kill all enemies till set a new wave
             StartCoroutine(KillAllEnemies());
+            PlayerManager.instance.player.GetComponent<Player>().Heal(50);
 
             // Delay between switch
             timerText.gameObject.SetActive(true);
@@ -153,10 +161,13 @@ public class Spawner : MonoBehaviour
 
             // Set current wave as new one
             currentWave = waves[currentWaveNumber];
+            currentWaveText.text = currentWaveNumber.ToString()+" / "+ (waves.Length - 1).ToString();
 
             // Reset timer till next wave
             nextWaveTime = Time.time + currentWave.timeToNextWave;
             active = true;
+
+            StartCoroutine(UpdateTimer());
         }
         else
         {
@@ -176,6 +187,15 @@ public class Spawner : MonoBehaviour
         }
     }
 
+    private IEnumerator UpdateTimer()
+    {
+        while (Time.time < nextWaveTime)
+        {
+            nextWaveTimerText.text = "Next Wave: " + ((int)(nextWaveTime - Time.time)).ToString();
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
     public IEnumerator KillAllEnemies()
     {
         /* Might be improved by object pool */
@@ -184,7 +204,7 @@ public class Spawner : MonoBehaviour
         foreach (Transform enemyObject in transform)
         {
             if (enemyObject.gameObject.CompareTag("Enemy")){
-                enemyObject.GetComponent<Enemy>().ChangeAnimationState("Die");
+                enemyObject.GetComponent<Enemy>().Die();
             }
         }
 

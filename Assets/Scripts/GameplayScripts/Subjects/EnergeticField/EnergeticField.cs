@@ -34,7 +34,7 @@ public class EnergeticField : Subject
             Die();
     }
 
-    protected override void Die()
+    public override void Die()
     {
         sphereVisual.SetActive(false);
         StartCoroutine(Recharge());

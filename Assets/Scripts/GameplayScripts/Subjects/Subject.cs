@@ -13,6 +13,8 @@ abstract public class Subject : MonoBehaviour
 
     public virtual void applyDamage(int damage)
     {
+        damage = Mathf.Abs(damage);
+
         AudioManager.instance.PlaySound("Hit");
 
         if (animator != null)
@@ -26,7 +28,13 @@ abstract public class Subject : MonoBehaviour
             Die();
     }
 
-    protected virtual void Die()
+    public virtual void Heal(int healAmount)
+    {
+        healAmount = Mathf.Abs(healAmount);
+        HP += healAmount;
+    }
+
+    public virtual void Die()
     {
         DeleteObject();
     }
@@ -36,16 +44,16 @@ abstract public class Subject : MonoBehaviour
         Destroy(gameObject);
     }
 
+    protected virtual void GoToMenu()
+    {
+        //
+    }
+
     public void ChangeAnimationState(string newState)
     {
         if (currentState == "Die" || currentState == "BossDieClip") return;
         if (currentState == newState) return;
         animator.Play(newState);
         currentState = newState;
-    }
-
-    protected virtual void GoToMenu()
-    {
-        //
     }
 }

@@ -156,7 +156,7 @@ public class Boss : Enemy
         }
     }
 
-    protected override void Die()
+    public override void Die()
     {
         activated = false;
         AudioManager.instance.PlaySound("BossDie");

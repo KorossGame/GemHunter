@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class RPG : Gun
 {
-    private string explosionSound;
-
     void Awake()
     {
         // ID of gun
@@ -36,11 +34,15 @@ public class RPG : Gun
         // Sounds
         shootSound = "RPGShootingSound";
         reloadSound = "RPGReloadSound";
-        explosionSound = "RPGExplosion";
     }
 
-    private void applyShereDamage()
+    protected override void ShootBullet(Subject shooter)
     {
-        //
+        // Shake camera
+        if (shooter.tag == "Player")
+        {
+            CameraController.instance.StartCoroutine(CameraController.instance.Shake());
+        }
+        base.ShootBullet(shooter);
     }
 }

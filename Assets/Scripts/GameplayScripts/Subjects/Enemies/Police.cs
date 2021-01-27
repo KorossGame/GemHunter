@@ -12,6 +12,6 @@ public class Police : Enemy
         Speed = 5.6f;
 
         // Weapon chances
-        weaponChance = new double[] { 30, 40, 14, 15, 1 };
+        weaponChance = new double[] { 30, 40, 9, 15, 5 };
     }
 }

@@ -19,7 +19,7 @@ public class Shotgun : Gun
 
         // Ammo
         ammoInClip = 5;
-        MaxAmmo = 25;
+        MaxAmmo = 35;
         ammoLeft = MaxAmmo;
         CurrentAmmo = ammoInClip;
 
@@ -42,6 +42,11 @@ public class Shotgun : Gun
     {
         // Play Sound
         AudioManager.instance.PlaySound(shootSound);
+
+        if (shooter.tag == "Player")
+        {
+            CameraController.instance.StartCoroutine(CameraController.instance.Shake());
+        }
 
         int powerUPMultiplier;
         // Check if power shooter is player or enemy

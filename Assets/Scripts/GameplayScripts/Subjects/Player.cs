@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class Player : Subject
 {
     // SFX
-    [SerializeField] private ParticleSystem spawnParticle;
     [SerializeField] private ParticleSystem dieParticle;
 
     // Max HP for UI
@@ -18,14 +17,12 @@ public class Player : Subject
     public GameObject damagePowerUP;
     public GameObject speedPowerUP;
     public GameObject godPowerUP;
+    public GameObject WaveUI;
 
     public GameObject visualObject;
 
     // Respawn point
     public Transform spawnPoint;
-
-    // Time till respawn the player
-    private float respawnTime = 5f;
 
     // Inventory system
     public WeaponSwitcher inventory;
@@ -59,16 +56,25 @@ public class Player : Subject
     {
         if (!GodMode)
         {
-            // Calc damage
             base.applyDamage(damage);
             hpValue.fillAmount = HP / maxHP;
         }
     }
 
-    protected override void Die()
+    public override void Heal(int healAmount)
     {
+        base.Heal(healAmount);
+        hpValue.fillAmount = HP / maxHP;
+    }
+
+    public override void Die()
+    {
+        activated = false;
+
         dieParticle.Play();
         AudioManager.instance.PlaySound("DieSound");
+        GoToMenu();
+
         if (animator != null)
         {
             ChangeAnimationState("Die");
@@ -95,6 +101,5 @@ public class Player : Subject
 
         // Enable Visual player object
         visualObject.GetComponent<MeshRenderer>().enabled = true;
-        spawnParticle.Play();
     }
 }

@@ -78,7 +78,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ammoLeft: 0
   attackPoint: {fileID: 1621405390629992588}
-  bullet: {fileID: 7549084076358431749, guid: 06c69afa85f925543b46e6d9a32b2651, type: 3}
+  bullet: {fileID: 6846260138072578238, guid: 06c69afa85f925543b46e6d9a32b2651, type: 3}
   muzzleFlash: {fileID: 1389018122338089680, guid: 30633f2f0287839469a2b9f6b7306542, type: 3}
 --- !u!1 &1621405390629992589
 GameObject:
@@ -199,7 +199,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1621405391220331033}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 2cddfc5f19460f64c9ffb26adf384ee4, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2

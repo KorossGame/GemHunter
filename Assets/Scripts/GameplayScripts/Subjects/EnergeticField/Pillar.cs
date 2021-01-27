@@ -25,7 +25,7 @@ public class Pillar : Subject
         }
     }
 
-    protected override void Die()
+    public override void Die()
     {
         field.pillarDestroyed();
         gameObject.SetActive(false);

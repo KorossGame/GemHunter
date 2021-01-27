@@ -11,6 +11,6 @@ public class Citizen : Enemy
         Speed = 4f;
 
         // Weapon chances
-        weaponChance = new double[] { 70, 15, 10, 4.9, 0.1 };
+        weaponChance = new double[] { 70, 15, 9, 4.9, 1 };
     }
 }

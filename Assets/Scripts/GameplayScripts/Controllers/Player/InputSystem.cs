@@ -131,17 +131,20 @@ public class InputSystem : MonoBehaviour
 
     void HandleRotation()
     {
-        // Ray to mousePosition
-        Ray _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        float hitDist = 1.0f;
-
-        if (playerPlane.Raycast(_ray, out hitDist))
+        if (playerPhysicalObject.activated)
         {
-            Vector3 targetPoint = _ray.GetPoint(hitDist);
-            Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
-            targetRotation.x = 0;
-            targetRotation.z = 0;
-            playerVisualObject.transform.rotation = Quaternion.Slerp(playerVisualObject.transform.rotation, targetRotation, 7f * Time.deltaTime);
+            // Ray to mousePosition
+            Ray _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            float hitDist = 1.0f;
+
+            if (playerPlane.Raycast(_ray, out hitDist))
+            {
+                Vector3 targetPoint = _ray.GetPoint(hitDist);
+                Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
+                targetRotation.x = 0;
+                targetRotation.z = 0;
+                playerVisualObject.transform.rotation = Quaternion.Slerp(playerVisualObject.transform.rotation, targetRotation, 7f * Time.deltaTime);
+            }
         }
     }
 

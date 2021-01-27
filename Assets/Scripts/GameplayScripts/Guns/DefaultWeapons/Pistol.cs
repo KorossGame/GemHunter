@@ -8,7 +8,7 @@ public class Pistol : Gun
         ID = 1;
 
         // Damage
-        DamagePerBullet = 10;
+        DamagePerBullet = 20;
 
         // Bullet speed
         BulletSpeed = 25;
