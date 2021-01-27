@@ -28,7 +28,7 @@ public class Invincibility : PowerUP
         yield return new WaitForSeconds(activeTime);
 
         // Reverse powerup
-        if (playerGameObject.GodMode)
+        if (!Game.instance.GodModeActivated && playerGameObject.GodMode)
         {
             playerGameObject.GodMode = false;
         }
