@@ -37,10 +37,4 @@ Leant about working with FSM, Audio, animations, UI, particle system.
 | Demo						| :heavy_check_mark: |
 
 ## Ideas for futher development
-| Task | Done |
-| ---- | :----: |
-| Console for cheats		| :x: |
-| Themes (Dynamic weather)	| :x: |
-| Good SFX					| :x: |
-| Good Lighting				| :x: |
-| Multiplayer				| :x: |
+Check ToImproveList.md file
