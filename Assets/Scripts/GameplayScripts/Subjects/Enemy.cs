@@ -231,7 +231,7 @@ abstract public class Enemy : Subject
         if (randomNumber <= powerUPdropChance)
         {
             // Which powerUP going to be dropped
-            int randomPowerUP = UnityEngine.Random.Range(0, PowerUPManager.instance.powerUPs.Length - 1);
+            int randomPowerUP = UnityEngine.Random.Range(0, PowerUPManager.instance.powerUPs.Length);
 
             // Create PowerUP object
             Instantiate(PowerUPManager.instance.powerUPs[randomPowerUP], transform.position + new Vector3(0, 0.5f, 0), transform.rotation);
@@ -248,7 +248,7 @@ abstract public class Enemy : Subject
         if (randomNumber <= ammoBoxDropChance)
         {
             // Which powerUP going to be dropped
-            int randomAmmoBox = UnityEngine.Random.Range(0, AmmoManager.instance.ammoBoxes.Length - 1);
+            int randomAmmoBox = UnityEngine.Random.Range(0, AmmoManager.instance.ammoBoxes.Length);
 
             // Create ammo box object
             Instantiate(AmmoManager.instance.ammoBoxes[randomAmmoBox], transform.position + new Vector3(0, 0.5f, 0), transform.rotation);
