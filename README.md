@@ -11,7 +11,7 @@ Mostly used OOP approach for code structure.
 Leant about working with FSM, Audio, animations, UI, particle system.
 
 ## Demo
-
+https://www.youtube.com/watch?v=5J2yxELQEa8
 
 ## Task List
 | Task | Done |
